@@ -7,8 +7,9 @@ var {
   View,
 } = ReactNative;
 
-var Header = require('./Header');
+var Header = require('./common/Header');
 var MatrixView = require('./MatrixView/main');
+var TabBar = require('./common/TabBar.js');
 
 var ELApp = React.createClass({
   render() {
@@ -16,7 +17,7 @@ var ELApp = React.createClass({
       <View style={styles.container}>
         <Header />
         <MatrixView />
-        <View style={footer.container}></View>
+        <TabBar />
       </View>
     );
   }
@@ -28,11 +29,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const footer = StyleSheet.create({
-  container: {
-    flex: 1.3,
-    backgroundColor: '#28b0bc',
-  },
-});
 
 module.exports = ELApp;

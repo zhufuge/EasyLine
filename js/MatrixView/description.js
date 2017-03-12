@@ -14,19 +14,19 @@ var Description = React.createClass({
       <View style={styles.container}>
         <View style={[styles.name, styles.common]}>
           <Text style={styles.sectionValue}>A</Text>
-          <Text style={styles.sectionId}>name</Text>
+          <Text style={styles.sectionId}>名称</Text>
         </View>
         <View style={[styles.colAndRow, styles.common]}>
           <Text style={styles.sectionValue}>6</Text>
-          <Text style={styles.sectionId}>col</Text>
+          <Text style={styles.sectionId}>行</Text>
         </View>
         <View style={[styles.colAndRow, styles.common]}>
           <Text style={styles.sectionValue}>6</Text>
-          <Text style={styles.sectionId}>row</Text>
+          <Text style={styles.sectionId}>列</Text>
         </View>
         <View style={[styles.common, styles.mode]}>
           <Text style={styles.sectionValue}>|A|</Text>
-          <Text style={styles.sectionId}>mode</Text>
+          <Text style={styles.sectionId}>模式</Text>
         </View>
       </View>
     );

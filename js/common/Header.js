@@ -13,7 +13,7 @@ var Header = React.createClass({
   render() {
     return (
       <ToolbarAndroid
-        logo={require('./ic_border_all_white_36dp.png')}
+        logo={require('./img/ic_dashboard_white_36dp.png')}
         title="EasyLinear"
         titleColor="white"
         style={styles.toolbar}
@@ -25,7 +25,7 @@ var Header = React.createClass({
 
 var toolbarActions = [{
   title: 'menu',
-  icon: require('./ic_more_vert_white_36dp.png'),
+  icon: require('./img/ic_more_vert_white_36dp.png'),
   show: 'always',
   showWithText: false
 }];

@@ -25,9 +25,9 @@ var MatrixView = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 9,
-    marginTop: 12,
-    marginBottom: 12,
+    flex: 8.5,
+    marginTop: 24,
+    marginBottom: 24,
     marginLeft: 20,
     marginRight: 20,
     flexDirection: 'column',
