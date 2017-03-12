@@ -7,15 +7,17 @@ var {
   View,
 } = ReactNative;
 
-var Description = require('./description.js');
+var Description = require('./description');
+var Matrix = require('./matrix');
+var Record = require('./record');
 
 var MatrixView = React.createClass({
   render() {
     return (
       <View style={styles.container}>
         <Description />
-        <View style={styles.matrix}></View>
-        <View style={styles.record}></View>
+        <Matrix />
+        <Record />
       </View>
     );
   }
@@ -29,15 +31,6 @@ var styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     flexDirection: 'column',
-  },
-  matrix: {
-    marginBottom: 12,
-    backgroundColor: 'skyblue',
-    flex: 6,
-  },
-  record: {
-    backgroundColor: 'steelblue',
-    flex: 1,
   },
 });
 

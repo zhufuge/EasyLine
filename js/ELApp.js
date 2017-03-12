@@ -8,7 +8,7 @@ var {
 } = ReactNative;
 
 var Header = require('./Header');
-var MatrixView = require('./MatrixView/main.js');
+var MatrixView = require('./MatrixView/main');
 
 var ELApp = React.createClass({
   render() {
