@@ -9,6 +9,7 @@ var {
 
 var MatrixView = require('./MatrixView/main');
 var Settings = require('./actions/settings');
+var About = require('./actions/about');
 
 var ELNavigator = React.createClass({
   render: function() {
@@ -17,13 +18,16 @@ var ELNavigator = React.createClass({
         initialRoute={{}}
         renderScene={this.renderScene}
         configureScene={(route) => {
-            return Navigator.SceneConfigs.FloatFromBottomAndroid;
+            return Navigator.SceneConfigs.PushFromRight;
         }}/>
     );
   },
   renderScene: function(route, navigator) {
     if (route.settings) {
-      return <Settings />;
+      return <Settings navigator={navigator}/>;
+    }
+    if (route.about) {
+      return <About navigator={navigator}/>;
     }
     return <MatrixView navigator={navigator}/>;
   }

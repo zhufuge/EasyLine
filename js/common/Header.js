@@ -25,7 +25,8 @@ var Header = React.createClass({
             <Image style={styles.image}
                    source={require('./img/ic_settings_white_18dp.png')}/>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.onPressAbout}>
             <Image style={styles.image}
                    source={require('./img/ic_bubble_chart_white_18dp.png')}/>
           </TouchableOpacity>
@@ -35,6 +36,9 @@ var Header = React.createClass({
   },
   onPressSettiings: function() {
     this.props.navigator.push({settings: true});
+  },
+  onPressAbout: function() {
+    this.props.navigator.push({about: true});
   }
 });
 

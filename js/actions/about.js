@@ -10,7 +10,7 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
-var Settings = React.createClass({
+var About = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
@@ -19,7 +19,7 @@ var Settings = React.createClass({
             <Image style={styles.backIcon}
                    source={require('../common/img/ic_arrow_back_white_18dp.png')}/>
           </TouchableOpacity>
-          <Text style={styles.title}>Settings</Text>
+          <Text style={styles.title}>About</Text>
         </View>
         <View style={styles.body}>
         </View>
@@ -57,4 +57,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Settings;
+module.exports = About;

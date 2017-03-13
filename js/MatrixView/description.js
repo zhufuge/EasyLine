@@ -6,10 +6,18 @@ var {
   StyleSheet,
   View,
   Text,
+  TextInput,
+  TouchableOpacity,
 } = ReactNative;
 
-var Description = React.createClass({
+class Description extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {mode: 0};
+  }
+
   render() {
+    let mode = (this.state.mode === 0) ? 'A' : '|A|';
     return (
       <View style={styles.container}>
         <View style={[styles.name, styles.common]}>
@@ -24,26 +32,26 @@ var Description = React.createClass({
           <Text style={styles.sectionValue}>6</Text>
           <Text style={styles.sectionId}>列</Text>
         </View>
-        <View style={[styles.common, styles.mode]}>
-          <Text style={styles.sectionValue}>|A|</Text>
+        <TouchableOpacity
+          style={[styles.common, styles.mode]}
+          onPress={() => this.setState({mode: this.state.mode ^ 1})}>
+          <Text style={styles.sectionValue}>{mode}</Text>
           <Text style={styles.sectionId}>模式</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   container: {
     marginBottom: 12,
-    // backgroundColor: 'powderblue',
     flex: 1,
     flexDirection: 'row',
   },
   common: {
     marginRight: 1,
     backgroundColor: '#28b0bc',
-    // backgroundColor: 'skyblue',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -62,6 +70,7 @@ var styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+    textAlign: 'center',
   },
   sectionId: {
     fontSize: 11,

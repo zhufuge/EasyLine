@@ -6,20 +6,31 @@ var {
   StyleSheet,
   View,
   Text,
+  TouchableOpacity,
 } = ReactNative;
 
 
-var Record = React.createClass({
+class Record extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {det: 0};
+  }
+
   render() {
+    let det = (this.state.det === 0) ? '0' : '行列值';
     return (
       <View style={styles.container}>
-        <Text style={styles.det}>行列值</Text>
+        <TouchableOpacity
+          style={{flex: 3}}
+          onPress={() => this.setState({det: this.state.det ^ 1})}>
+          <Text style={styles.det}>{det}</Text>
+        </TouchableOpacity>
         <View style={styles.record}></View>
         <Text style={styles.undo}></Text>
       </View>
     );
   }
-});
+};
 
 var styles = StyleSheet.create({
   container: {
