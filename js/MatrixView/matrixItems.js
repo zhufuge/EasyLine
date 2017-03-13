@@ -25,12 +25,12 @@ var MatrixItems = React.createClass({
 
     return (
       <View style={styles.container}>
-        {colItems.map(function(item) {
+        {colItems.map(function(col) {
           return (
-            <View style={styles.row}>
+            <View key={'col' + (col + 1)}style={styles.col}>
               {rowItems.map(function(item) {
                 return (
-                  <Text style={styles.item}>0</Text>
+                  <Text key={col + ',' + item} style={styles.item}>0</Text>
                 );
               })}
             </View>
@@ -47,7 +47,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 6,
   },
-  row: {
+  col: {
     flexDirection: 'row',
     justifyContent: 'center',
     margin: 2,

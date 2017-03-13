@@ -14,15 +14,15 @@ var TabBar = React.createClass({
     return (
       <View style={styles.container}>
         <View style={styles.item}>
-          <Image source={require('./img/ic_mode_edit_white_24dp.png')} />
+          <Image source={require('./img/ic_mode_edit_white_18dp.png')} />
           <Text style={styles.text}>计算</Text>
         </View>
         <View style={styles.item}>
-          <Image source={require('./img/ic_extension_white_24dp.png')} />
+          <Image source={require('./img/ic_extension_white_18dp.png')} />
           <Text style={styles.text}>创建</Text>
         </View>
         <View style={styles.item}>
-          <Image source={require('./img/ic_add_box_white_24dp.png')} />
+          <Image source={require('./img/ic_add_box_white_18dp.png')} />
           <Text style={styles.text}>其他</Text>
         </View>
       </View>

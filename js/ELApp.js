@@ -7,17 +7,14 @@ var {
   View,
 } = ReactNative;
 
-var Header = require('./common/Header');
-var MatrixView = require('./MatrixView/main');
-var TabBar = require('./common/TabBar.js');
+
+var ELNavigator = require('./ELNavigator');
 
 var ELApp = React.createClass({
   render() {
     return (
       <View style={styles.container}>
-        <Header />
-        <MatrixView />
-        <TabBar />
+        <ELNavigator />
       </View>
     );
   }

@@ -65,7 +65,7 @@ var styles = StyleSheet.create({
   },
   sectionId: {
     fontSize: 11,
-    color: '#ccc',
+    color: '#ddd',
     marginBottom: 2,
   },
 });

@@ -10,14 +10,21 @@ var {
 var Description = require('./description');
 var Matrix = require('./matrix');
 var Record = require('./record');
+var Header = require('../common/Header');
+var TabBar = require('../common/TabBar');
+
 
 var MatrixView = React.createClass({
   render() {
     return (
       <View style={styles.container}>
-        <Description />
-        <Matrix />
-        <Record />
+        <Header navigator={this.props.navigator}/>
+        <View style={styles.main}>
+          <Description />
+          <Matrix />
+          <Record />
+        </View>
+        <TabBar />
       </View>
     );
   }
@@ -25,6 +32,9 @@ var MatrixView = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  main: {
     flex: 8.5,
     marginTop: 24,
     marginBottom: 24,

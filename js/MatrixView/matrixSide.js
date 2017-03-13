@@ -26,7 +26,10 @@ var MatrixColSide = React.createClass({
       <View style={[styles.container, container]}>
         {colItems.map(function(item) {
           return (
-            <Text style={styles.item}>{(item + 1).toString()}</Text>
+            <Text key={container.flexDirection + item}
+                  style={styles.item}>
+              {(item + 1).toString()}
+            </Text>
           );
         })}
       </View>
