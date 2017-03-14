@@ -10,23 +10,34 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
-var TabBar = React.createClass({
+class TabBar extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity
+          onPress={() => this.onPressCalculate()}
+          style={styles.item}>
           <Image
             style={styles.image}
             source={require('./img/ic_mode_edit_white_18dp.png')} />
           <Text style={styles.text}>计算</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity
+          onPress={() => this.onPressCreate()}
+          style={styles.item}>
           <Image
             style={styles.image}
             source={require('./img/ic_extension_white_18dp.png')} />
           <Text style={styles.text}>创建</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity
+          onPress={() => this.onPressOthers()}
+          style={styles.item}>
           <Image
             style={styles.image}
             source={require('./img/ic_add_box_white_18dp.png')} />
@@ -35,7 +46,15 @@ var TabBar = React.createClass({
       </View>
     );
   }
-});
+  onPressCalculate() {
+    this.props.navigator.push({calculate: true});
+  }
+  onPressCreate() {
+    this.props.showMenuCreate();
+  }
+  onPressOthers() {
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

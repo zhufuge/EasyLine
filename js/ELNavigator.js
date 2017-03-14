@@ -23,6 +23,10 @@ var ELNavigator = React.createClass({
     );
   },
   renderScene: function(route, navigator) {
+    //    return <Settings navigator={navigator}/>;
+    if (route.calculate) {
+      return <Settings navigator={navigator}/>;
+    }
     if (route.settings) {
       return <Settings navigator={navigator}/>;
     }

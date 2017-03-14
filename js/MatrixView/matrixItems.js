@@ -23,22 +23,27 @@ var MatrixItems = React.createClass({
       rowItems.push(i);
     }
 
+    const itemView = (col) => rowItems.map(function(item) {
+      let style = [styles.item];
+      if ((col + item) % 2 === 1) {
+        style.push(styles.itemOpacity);
+      }
+      return (<Text key={col + ',' + item} style={style}>0</Text>);
+    });
+
+    const colView = colItems.map(function(col) {
+      return (
+        <View key={'col' + (col + 1)}
+              style={styles.col}>
+          {itemView(col)}
+        </View>
+      );
+    });
+
+
     return (
       <View style={styles.container}>
-        {colItems.map(function(col) {
-          return (
-            <View key={'col' + (col + 1)}
-                  style={styles.col}>
-              {rowItems.map(function(item) {
-                let style = [styles.item];
-                if ((col + item) % 2 === 1) {
-                  style.push(styles.itemOpacity);
-                }
-                return <Text key={col + ',' + item} style={style}>0</Text>;
-              })}
-            </View>
-          );
-        })}
+        {colView}
       </View>
     );
   }
