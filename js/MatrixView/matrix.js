@@ -6,6 +6,7 @@ var {
   StyleSheet,
   View,
   Text,
+  TouchableOpacity,
 } = ReactNative;
 
 var MatrixItems = require('./matrixItems');
@@ -24,9 +25,9 @@ var Matrix = React.createClass({
         </View>
         <View style={[styles.bottom]}>
           <MatrixSide num={MatrixRow} direction='row' flex='6'/>
-          <View style={[styles.switch]}>
-            <Text style={styles.switchButton}>j\i</Text>
-          </View>
+          <TouchableOpacity style={[styles.switch]}>
+            <Text style={styles.switchButton}>T</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -56,7 +57,7 @@ var styles = StyleSheet.create({
     margin: 2,
     marginTop: 6,
 
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',

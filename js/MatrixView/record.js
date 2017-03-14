@@ -13,7 +13,7 @@ var {
 class Record extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {det: 0};
+    this.state = {det: 1};
   }
 
   render() {

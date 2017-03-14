@@ -19,7 +19,7 @@ var About = React.createClass({
             <Image style={styles.backIcon}
                    source={require('../common/img/ic_arrow_back_white_18dp.png')}/>
           </TouchableOpacity>
-          <Text style={styles.title}>About</Text>
+          <Text style={styles.title}>关于</Text>
         </View>
         <View style={styles.body}>
         </View>
@@ -33,7 +33,7 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flex: 1,
+    height: 54,
     flexDirection: 'row',
     paddingLeft: 12,
     backgroundColor: '#28b0bc',

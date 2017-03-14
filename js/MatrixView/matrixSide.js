@@ -25,9 +25,13 @@ var MatrixColSide = React.createClass({
     return (
       <View style={[styles.container, container]}>
         {colItems.map(function(item) {
+          let style = [styles.item];
+          if (item % 2 === 1) {
+            style.push(styles.itemOpacity);
+          }
           return (
             <Text key={container.flexDirection + item}
-                  style={styles.item}>
+                  style={style}>
               {(item + 1).toString()}
             </Text>
           );
@@ -56,6 +60,9 @@ var styles = StyleSheet.create({
     color: 'white',
     textAlignVertical: 'center',
   },
+  itemOpacity: {
+    backgroundColor: '#28b0bc99',
+  }
 });
 
 module.exports = MatrixColSide;

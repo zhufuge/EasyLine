@@ -35,7 +35,7 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    flex: 8.5,
+    flex: 1,
     marginTop: 24,
     marginBottom: 24,
     marginLeft: 20,

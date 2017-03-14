@@ -27,11 +27,14 @@ var MatrixItems = React.createClass({
       <View style={styles.container}>
         {colItems.map(function(col) {
           return (
-            <View key={'col' + (col + 1)}style={styles.col}>
+            <View key={'col' + (col + 1)}
+                  style={styles.col}>
               {rowItems.map(function(item) {
-                return (
-                  <Text key={col + ',' + item} style={styles.item}>0</Text>
-                );
+                let style = [styles.item];
+                if ((col + item) % 2 === 1) {
+                  style.push(styles.itemOpacity);
+                }
+                return <Text key={col + ',' + item} style={style}>0</Text>;
               })}
             </View>
           );
@@ -65,6 +68,9 @@ var styles = StyleSheet.create({
     color: 'white',
     textAlignVertical: 'center',
   },
+  itemOpacity: {
+    backgroundColor: '#ffbd4099',
+  }
 });
 
 module.exports = MatrixItems;

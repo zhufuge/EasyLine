@@ -44,9 +44,10 @@ var Header = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 54,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    zIndex: 100,
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: '#28b0bc',
