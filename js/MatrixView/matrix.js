@@ -14,8 +14,8 @@ var MatrixSide = require('./matrixSide');
 
 var Matrix = React.createClass({
   render() {
-    let MatrixCol = (6).toString(),
-        MatrixRow = (6).toString();
+    let MatrixCol = (this.props.col || 6).toString(),
+        MatrixRow = (this.props.row || 6).toString();
 
     return (
       <View style={styles.container}>
@@ -37,7 +37,7 @@ var Matrix = React.createClass({
 var styles = StyleSheet.create({
   container: {
     marginBottom: 12,
-    flex: 6,
+    height: 330,
   },
   top: {
     flexDirection: 'row',

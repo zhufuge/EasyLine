@@ -6,6 +6,7 @@ var {
   StyleSheet,
   View,
   Text,
+  TextInput,
 } = ReactNative;
 
 var MatrixItems = React.createClass({
@@ -18,19 +19,26 @@ var MatrixItems = React.createClass({
     for (i = 0; i < col; i++) {
       colItems.push(i);
     }
-
     for (i = 0; i < row; i++) {
       rowItems.push(i);
     }
-
     const itemView = (col) => rowItems.map(function(item) {
       let style = [styles.item];
       if ((col + item) % 2 === 1) {
         style.push(styles.itemOpacity);
       }
-      return (<Text key={col + ',' + item} style={style}>0</Text>);
+      return (<TextInput
+              caretHidden='true'
+              defaultValue='0'
+              maxLength={3}
+              selectTextOnFocus={true}
+              keyboardType='numeric'
+              underlineColorAndroid='transparent'
+              placeholder='0'
+              placeholderTextColor='white'
+              key={col + ',' + item}
+              style={style}/>);
     });
-
     const colView = colItems.map(function(col) {
       return (
         <View key={'col' + (col + 1)}
@@ -39,8 +47,6 @@ var MatrixItems = React.createClass({
         </View>
       );
     });
-
-
     return (
       <View style={styles.container}>
         {colView}

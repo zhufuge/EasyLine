@@ -22,6 +22,8 @@ class MatrixView extends React.Component {
     super(props);
     this.state = {
       showMenuCreate: false,
+      col: 6,
+      row: 6,
     };
   }
   render() {
@@ -29,8 +31,12 @@ class MatrixView extends React.Component {
       <View style={styles.container}>
         <Header navigator={this.props.navigator}/>
         <ScrollView style={styles.main}>
-          <Description />
-          <Matrix />
+          <Description
+            setCol={this.setCol(this)}
+            setRow={this.setRow(this)}/>
+          <Matrix
+            col={this.state.col}
+            row={this.state.row}/>
           <Record />
         </ScrollView>
         <View>
@@ -53,6 +59,16 @@ class MatrixView extends React.Component {
   showMenu(that, show) {
     return function() {
       that.setState(show);
+    };
+  }
+  setCol(that) {
+    return function(col) {
+      that.setState({col: col});
+    };
+  }
+  setRow(that) {
+    return function(row) {
+      that.setState({row: row});
     };
   }
 };

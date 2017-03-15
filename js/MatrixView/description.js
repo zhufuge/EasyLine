@@ -35,6 +35,7 @@ class Description extends React.Component {
           <Text style={styles.id}>名称</Text>
         </View>
         <NumberPicker
+          onNumberChange={(number) => this.props.setCol(number)}
           min={1}
           max={6}
           selectedNumber={6}
@@ -43,6 +44,7 @@ class Description extends React.Component {
           <Text style={styles.id}>行</Text>
         </NumberPicker>
         <NumberPicker
+          onNumberChange={(number) => this.props.setRow(number)}
           min={1}
           max={6}
           selectedNumber={6}

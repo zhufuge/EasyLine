@@ -43,7 +43,7 @@ class NumberPicker extends Component {
   }
   onMove(that, evt) {
     var number = that.state.change +
-        Math.floor((evt.nativeEvent.pageY - that.state.pageY) /
+        Math.floor((that.state.pageY - evt.nativeEvent.pageY) /
                    (that.props.velocity * 60));
     if (that.props.min !== void 0) {
       number = (number < that.props.min) ? that.props.min : number;
@@ -54,6 +54,7 @@ class NumberPicker extends Component {
     }
 
     that.setState({number: number});
+    that.props.onNumberChange(number);
   }
   onRelease(that, evt) {
     that.setState({change: this.state.number});
@@ -62,8 +63,6 @@ class NumberPicker extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    // height: 36,
-    // width: 54,
     justifyContent: 'center',
     alignItems: 'center',
   },

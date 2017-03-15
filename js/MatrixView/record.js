@@ -17,13 +17,21 @@ class Record extends React.Component {
   }
 
   render() {
-    let det = (this.state.det === 0) ? '0' : '行列值';
+    let det = '',
+        detStyles = [styles.det, {}];
+    if (this.state.det === 0) {
+      det = '0';
+      detStyles[1] = {backgroundColor: '#ffbd40cc'};
+    } else {
+      det = '行列值';
+      detStyles[1] = {};
+    }
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={{flex: 3}}
           onPress={() => this.setState({det: this.state.det ^ 1})}>
-          <Text style={styles.det}>{det}</Text>
+          <Text style={detStyles}>{det}</Text>
         </TouchableOpacity>
         <View style={styles.record}></View>
         <Text style={styles.undo}></Text>
