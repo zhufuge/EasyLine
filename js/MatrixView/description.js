@@ -10,6 +10,8 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+var NumberPicker = require('../common/NumberPicker');
+
 class Description extends React.Component {
   constructor(props) {
     super(props);
@@ -17,26 +19,42 @@ class Description extends React.Component {
   }
 
   render() {
-    let mode = (this.state.mode === 0) ? 'A' : '|A|';
+    const mode = (this.state.mode === 0) ? 'A' : '|A|';
     return (
       <View style={styles.container}>
         <View style={[styles.name, styles.common]}>
-          <Text style={styles.sectionValue}>A</Text>
-          <Text style={styles.sectionId}>名称</Text>
+          <TextInput
+            autoCapitalize='characters'
+            caretHidden='true'
+            defaultValue='A'
+            maxLength={6}
+            placeholder='A'
+            placeholderTextColor='#ddd'
+            underlineColorAndroid='transparent'
+            style={[styles.value, styles.textInput]}/>
+          <Text style={styles.id}>名称</Text>
         </View>
-        <View style={[styles.colAndRow, styles.common]}>
-          <Text style={styles.sectionValue}>6</Text>
-          <Text style={styles.sectionId}>行</Text>
-        </View>
-        <View style={[styles.colAndRow, styles.common]}>
-          <Text style={styles.sectionValue}>6</Text>
-          <Text style={styles.sectionId}>列</Text>
-        </View>
+        <NumberPicker
+          min={1}
+          max={6}
+          selectedNumber={6}
+          style={[styles.cR, styles.common]}
+          numberStyles={styles.value}>
+          <Text style={styles.id}>行</Text>
+        </NumberPicker>
+        <NumberPicker
+          min={1}
+          max={6}
+          selectedNumber={6}
+          style={[styles.cR, styles.common]}
+          numberStyles={styles.value}>
+          <Text style={styles.id}>列</Text>
+        </NumberPicker>
         <TouchableOpacity
           style={[styles.common, styles.mode]}
           onPress={() => this.setState({mode: this.state.mode ^ 1})}>
-          <Text style={styles.sectionValue}>{mode}</Text>
-          <Text style={styles.sectionId}>模式</Text>
+          <Text style={styles.value}>{mode}</Text>
+          <Text style={styles.id}>模式</Text>
         </TouchableOpacity>
       </View>
     );
@@ -46,7 +64,7 @@ class Description extends React.Component {
 var styles = StyleSheet.create({
   container: {
     marginBottom: 12,
-    flex: 1,
+    height: 54,
     flexDirection: 'row',
   },
   common: {
@@ -59,23 +77,27 @@ var styles = StyleSheet.create({
   name: {
     flex: 6,
   },
-  colAndRow: {
+  cR: {
     flex: 3,
   },
   mode: {
     marginRight: 0,
     flex: 2.4,
   },
-  sectionValue: {
+  value: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
   },
-  sectionId: {
+  id: {
     fontSize: 11,
     color: '#ddd',
     marginBottom: 2,
+  },
+  textInput: {
+    marginBottom: -10,
+    width: 120,
   },
 });
 

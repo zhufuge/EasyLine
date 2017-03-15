@@ -90,8 +90,8 @@ var styles = StyleSheet.create({
   menu: {
     flex: 3,
 
-    borderTopWidth: 1,
-    borderColor: '#ddd',
+    borderTopWidth: 0.4,
+    borderColor: '#ccc',
   },
   slideDown: {
     flex: 1,

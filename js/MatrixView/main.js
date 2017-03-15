@@ -5,6 +5,7 @@ var ReactNative = require('react-native');
 var {
   StyleSheet,
   View,
+  ScrollView,
 } = ReactNative;
 
 var Description = require('./description');
@@ -13,6 +14,7 @@ var Record = require('./record');
 var Header = require('../common/Header');
 var TabBar = require('../common/TabBar');
 var SlideUpMenu = require('../common/SlideUpMenu');
+var MenuItems = require('./menuItems');
 
 
 class MatrixView extends React.Component {
@@ -26,14 +28,15 @@ class MatrixView extends React.Component {
     return (
       <View style={styles.container}>
         <Header navigator={this.props.navigator}/>
-        <View style={styles.main}>
+        <ScrollView style={styles.main}>
           <Description />
           <Matrix />
           <Record />
-        </View>
+        </ScrollView>
         <View>
           <SlideUpMenu
             show={this.state.showMenuCreate}>
+            <MenuItems />
           </SlideUpMenu>
         </View>
         <TabBar showMenuCreate={this.toggleMenu(this)}
@@ -60,7 +63,6 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    flex: 1,
     flexDirection: 'column',
     marginTop: 24,
     marginBottom: 24,

@@ -35,7 +35,7 @@ class Record extends React.Component {
 var styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flex: 0.8,
+    height: 40,
   },
   det: {
     backgroundColor: '#28b0bc',
