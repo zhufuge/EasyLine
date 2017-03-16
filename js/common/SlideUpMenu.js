@@ -27,7 +27,7 @@ class SilidUpMenu extends React.Component {
         toValue: this.props.height,
         velocity: 1,  // Velocity makes it move
         friction: 3,  // Oscillate a lot
-      },
+      }
     ).start();
   }
   SlideDown() {
@@ -35,12 +35,12 @@ class SilidUpMenu extends React.Component {
       this.state.slideUp, {
         toValue: 0,
         duration: 300,
-      },
+      }
     ).start();
   }
 
-  componentDidUpdate() {
-    (this.props.show)
+  componentWillReceiveProps(nextProps) {
+    (nextProps.show)
       ? this.slideUp()
       : this.SlideDown();
   }
@@ -61,7 +61,7 @@ class SilidUpMenu extends React.Component {
 
 var styles = StyleSheet.create({
   container: {
-    width: 384,
+    width: '100%',
     position: 'absolute',
     bottom: 0,
     backgroundColor: 'white',

@@ -14,17 +14,20 @@ var MatrixSide = require('./matrixSide');
 
 var Matrix = React.createClass({
   render() {
-    let MatrixCol = (this.props.col || 6).toString(),
-        MatrixRow = (this.props.row || 6).toString();
+    let MatrixCol = (+this.props.col || 6),
+        MatrixRow = (+this.props.row || 6);
 
     return (
       <View style={styles.container}>
         <View style={[styles.top]}>
-          <MatrixItems col={MatrixCol} row={MatrixRow} />
-          <MatrixSide num={MatrixCol} direction='column' flex='1' />
+          <MatrixItems
+            col={MatrixCol}
+            row={MatrixRow}
+            type={this.props.type}/>
+          <MatrixSide num={MatrixCol} direction='column' flex={1} />
         </View>
         <View style={[styles.bottom]}>
-          <MatrixSide num={MatrixRow} direction='row' flex='6'/>
+          <MatrixSide num={MatrixRow} direction='row' flex={6}/>
           <TouchableOpacity style={[styles.switch]}>
             <Text style={styles.switchButton}>T</Text>
           </TouchableOpacity>

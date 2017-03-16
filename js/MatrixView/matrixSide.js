@@ -9,14 +9,18 @@ var {
 } = ReactNative;
 
 class MatrixColSide extends React.Component{
+  // constructor(props) {
+  //   super(props);
+  // }
+
   render() {
     const container = {
       flexDirection: this.props.direction,
-      flex: +(this.props.flex),
+      flex: this.props.flex,
     };
 
     var i,
-        col = +(this.props.num),
+        col = this.props.num,
         colItems = [];
     for (i = 0; i < col; i++) {
       colItems.push(i);

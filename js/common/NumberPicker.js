@@ -14,41 +14,28 @@ class NumberPicker extends Component {
     super(props);
     this.state = {
       pageY: 0,
-      change: props.selectedNumber || props.min || 0,
       number: props.selectedNumber || props.min || 0,
     };
   }
   static defaultProps = {
-    velocity: 1,
-  }
-
-  render() {
-    return (
-      <View
-        onStartShouldSetResponder={(evt) => true}
-        onResponderGrant={(evt) => this.onStart(evt)}
-        onResponderMove={(evt) => this.onMove(evt)}
-        onResponderRelease={(evt) => this.onRelease(evt)}
-        style={[styles.container, this.props.style]}>
-        <Text
-          style={[styles.number, this.props.numberStyles]}>
-          {this.state.number}
-        </Text>
-        {this.props.children}
-      </View>
-    );
+    velocity: 40,
   }
 
   onStart(evt) {
     this.setState({pageY: evt.nativeEvent.pageY});
   }
+
   onMove(evt) {
-    const state = this.state;
-    var max = this.props.max,
-        min = this.props.min;
-    var number = state.change +
-        floor((state.pageY - evt.nativeEvent.pageY) /
-                   (this.props.velocity * 60));
+    const state = this.state,
+          props = this.props,
+          pageY = evt.nativeEvent.pageY,
+          move = state.pageY - pageY;
+
+    if (Math.abs(move) < props.velocity) return ;
+
+    var max = props.max,
+        min = props.min,
+        number = (move > 0) ? state.number + 1 : state.number - 1;
     if (min !== void 0) {
       number = (number < min) ? min : number;
     }
@@ -58,12 +45,32 @@ class NumberPicker extends Component {
     }
 
     if (number !== state.number) {
-      this.props.onNumberChange(number);
+      this.setState({number: number, pageY: pageY});
+      props.onNumberChange(number);
     }
-    this.setState({number: number});
   }
-  onRelease(evt) {
-    this.setState({change: this.state.number});
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.number === nextState.number) {
+      return false;
+    }
+    return true;
+  }
+
+  render() {
+    return (
+      <View
+        onStartShouldSetResponder={(evt) => true}
+        onResponderGrant={(evt) => this.onStart(evt)}
+        onResponderMove={(evt) => this.onMove(evt)}
+        style={[styles.container, this.props.style]}>
+        <Text
+          style={[styles.number, this.props.numberStyles]}>
+          {this.state.number}
+        </Text>
+        {this.props.children}
+      </View>
+    );
   }
 }
 

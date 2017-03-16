@@ -22,6 +22,7 @@ class MenuItems extends React.Component {
     const items = ((that) => defaultDate.map(function(val) {
       return (
         <TouchableOpacity
+          onPress={() => that.props.setType(+val[2])}
           key={val[0]}
           style={styles.item}>
           <Text style={styles.icon}>{val[0]}</Text>

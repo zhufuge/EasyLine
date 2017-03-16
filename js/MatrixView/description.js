@@ -12,12 +12,15 @@ var {
 
 var NumberPicker = require('../common/NumberPicker');
 
+
+
 class Description extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {mode: 0};
+    this.state = {
+      mode: 0
+    };
   }
-
   render() {
     const mode = (this.state.mode === 0) ? 'A' : '|A|';
     return (

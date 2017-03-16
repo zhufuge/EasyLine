@@ -33,6 +33,7 @@ class MatrixView extends React.Component {
     this.setRow = this.setRow.bind(this);
     this.setType = this.setType.bind(this);
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -51,13 +52,13 @@ class MatrixView extends React.Component {
           <SlideUpMenu
             show={this.state.showMenu}>
             <MenuItems
-              />
+              setType={(type) => this.setType(type)}/>
           </SlideUpMenu>
         </View>
         <TabBar
           showMenu={() => this.showMenu()}
           hideMenu={() => this.hideMenu()}
-                navigator={this.props.navigator}/>
+          navigator={this.props.navigator}/>
       </View>
     );
   }
@@ -75,7 +76,6 @@ class MatrixView extends React.Component {
   }
   setType(type) {
     this.setState({type: type});
-    this.hideMenu();
   }
 };
 

@@ -10,25 +10,34 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+const
+ic_logo = require('./img/ic_dashboard_white_18dp.png'),
+ic_settings = require('./img/ic_settings_white_18dp.png'),
+ic_about = require('./img/ic_bubble_chart_white_18dp.png'),
+defaultData = {
+  title: 'EasyLinear'
+};
+
 var Header = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
         <View style={styles.left}>
-          <Image style={styles.logo}
-                 source={require('./img/ic_dashboard_white_18dp.png')} />
-          <Text style={styles.title}>EasyLinear</Text>
+          <Image
+            style={styles.logo}
+            source={ic_logo} />
+          <Text style={styles.title}>{defaultData.title}</Text>
         </View>
         <View style={styles.right}>
           <TouchableOpacity
             onPress={this.onPressSettiings}>
             <Image style={styles.image}
-                   source={require('./img/ic_settings_white_18dp.png')}/>
+                   source={ic_settings}/>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.onPressAbout}>
             <Image style={styles.image}
-                   source={require('./img/ic_bubble_chart_white_18dp.png')}/>
+                   source={ic_about}/>
           </TouchableOpacity>
         </View>
       </View>
