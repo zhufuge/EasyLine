@@ -9,18 +9,17 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+const defaultDate = [
+  ['(0)', '全零', 0],
+  ['(1)', '全壹', 1],
+  ['(E)', '单位', 2],
+  ['(R)', '随机', 3],
+  ['(\\)', '对称', 4]
+];
+
 class MenuItems extends React.Component {
-  static defaultProps = {
-    items: [
-      ['(0)', '全零'],
-      ['(1)', '全壹'],
-      ['(E)', '单位'],
-      ['(R)', '随机'],
-      ['(\\)', '对称']
-    ],
-  }
   render() {
-    const items = this.props.items.map(function(val) {
+    const items = ((that) => defaultDate.map(function(val) {
       return (
         <TouchableOpacity
           key={val[0]}
@@ -29,7 +28,7 @@ class MenuItems extends React.Component {
           <Text style={styles.text}>{val[1]}</Text>
         </TouchableOpacity>
       );
-    });
+    }))(this);
     return (
       <View style={styles.container}>
         {items}

@@ -5,55 +5,62 @@ var ReactNative = require('react-native');
 var {
   StyleSheet,
   View,
-  Text,
   TextInput,
 } = ReactNative;
 
-var MatrixItems = React.createClass({
+class MatrixItems extends React.Component{
+  constructor(props) {
+    super(props);
+    const col = +(props.col) || 6,
+          row = +(props.row) || 6;
+    this.state = {
+      matrix: new Array(col).fill(new Array(row).fill(0)),
+    };
+  }
   render() {
-    let i,
-        col = +(this.props.col),
-        row = +(this.props.row),
-        colItems = [],
-        rowItems = [];
+    var i,
+          col = +(this.props.col),
+          row = +(this.props.row),
+          colItems = [],
+          rowItems = [];
     for (i = 0; i < col; i++) {
       colItems.push(i);
     }
     for (i = 0; i < row; i++) {
       rowItems.push(i);
     }
-    const itemView = (col) => rowItems.map(function(item) {
+    const itemView = (that, col) => rowItems.map(function(row) {
       let style = [styles.item];
-      if ((col + item) % 2 === 1) {
+      if ((col + row) % 2 === 1) {
         style.push(styles.itemOpacity);
       }
-      return (<TextInput
-              caretHidden='true'
-              defaultValue='0'
-              maxLength={3}
-              selectTextOnFocus={true}
-              keyboardType='numeric'
-              underlineColorAndroid='transparent'
-              placeholder='0'
-              placeholderTextColor='white'
-              key={col + ',' + item}
-              style={style}/>);
+      return (
+        <TextInput
+          caretHidden='true'
+          defaultValue={'' + that.state.matrix[col][row]}
+          maxLength={3}
+          selectTextOnFocus={true}
+          keyboardType='numeric'
+          underlineColorAndroid='transparent'
+          placeholder='0'
+          placeholderTextColor='white'
+          key={col + ',' + row}
+          style={style}/>);
     });
-    const colView = colItems.map(function(col) {
+    const colView = ((that) => colItems.map(function(col){
       return (
         <View key={'col' + (col + 1)}
               style={styles.col}>
-          {itemView(col)}
-        </View>
-      );
-    });
+          {itemView(that, col)}
+        </View>);
+    }))(this);
     return (
       <View style={styles.container}>
         {colView}
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   container: {

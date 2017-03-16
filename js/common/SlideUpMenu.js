@@ -7,7 +7,6 @@ var {
   StyleSheet,
   Animated,
   TouchableOpacity,
-  Image,
 } = ReactNative;
 
 class SilidUpMenu extends React.Component {
@@ -19,43 +18,31 @@ class SilidUpMenu extends React.Component {
   }
 
   static defaultProps = {
-    height: 100,
+    height: 80,
   }
-
-  componentDidMount() {
-    this.SlideDown(this);
-  }
-
-  slideUp(that) {
+  slideUp() {
     Animated.spring(
-      that.state.slideUp,
+      this.state.slideUp,
       {
-        toValue: that.props.height,
+        toValue: this.props.height,
         velocity: 1,  // Velocity makes it move
         friction: 3,  // Oscillate a lot
       },
     ).start();
   }
-
-  SlideDown(that) {
+  SlideDown() {
     Animated.timing(
-      that.state.slideUp, {
+      this.state.slideUp, {
         toValue: 0,
         duration: 300,
       },
     ).start();
   }
 
-  shouldComponentUpdate() {
-    (function(that) {
-      if (that.props.show) {
-        that.slideUp(that);
-      } else {
-        that.SlideDown(that);
-      }
-    })(this);
-
-    return true;
+  componentDidUpdate() {
+    (this.props.show)
+      ? this.slideUp()
+      : this.SlideDown();
   }
 
   render() {
@@ -67,12 +54,6 @@ class SilidUpMenu extends React.Component {
         <View style={styles.menu}>
           {this.props.children}
         </View>
-        <TouchableOpacity
-          style={styles.slideDown}
-          onPress={() => this.SlideDown(this)}>
-          <Image style={styles.image}
-                 source={require('./img/ic_expand_more_white_18dp.png')}/>
-        </TouchableOpacity>
       </Animated.View>
     );
   }
@@ -84,24 +65,12 @@ var styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     backgroundColor: 'white',
-
     flexDirection: 'column',
   },
   menu: {
-    flex: 3,
-
+    flex: 1,
     borderTopWidth: 0.4,
     borderColor: '#ccc',
-  },
-  slideDown: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  image: {
-    width: 54,
-    height: 20,
-    tintColor: '#28b0bc',
   },
 });
 

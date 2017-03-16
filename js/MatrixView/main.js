@@ -21,10 +21,17 @@ class MatrixView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMenuCreate: false,
+      showMenu: false,
       col: 6,
       row: 6,
+      type: 0,
     };
+
+    this.showMenu = this.showMenu.bind(this);
+    this.hideMenu = this.hideMenu.bind(this);
+    this.setCol = this.setCol.bind(this);
+    this.setRow = this.setRow.bind(this);
+    this.setType = this.setType.bind(this);
   }
   render() {
     return (
@@ -32,44 +39,43 @@ class MatrixView extends React.Component {
         <Header navigator={this.props.navigator}/>
         <ScrollView style={styles.main}>
           <Description
-            setCol={this.setCol(this)}
-            setRow={this.setRow(this)}/>
+            setCol={(col) => this.setCol(col)}
+            setRow={(row) => this.setRow(row)}/>
           <Matrix
+            type={this.state.type}
             col={this.state.col}
             row={this.state.row}/>
           <Record />
         </ScrollView>
         <View>
           <SlideUpMenu
-            show={this.state.showMenuCreate}>
-            <MenuItems />
+            show={this.state.showMenu}>
+            <MenuItems
+              />
           </SlideUpMenu>
         </View>
-        <TabBar showMenuCreate={this.toggleMenu(this)}
+        <TabBar
+          showMenu={() => this.showMenu()}
+          hideMenu={() => this.hideMenu()}
                 navigator={this.props.navigator}/>
       </View>
     );
   }
-  toggleMenu(that) {
-    return that.showMenu(
-      that,
-      {showMenuCreate: !that.state.showMenuCreate}
-    );
+  showMenu() {
+    this.setState({showMenu: true});
   }
-  showMenu(that, show) {
-    return function() {
-      that.setState(show);
-    };
+  hideMenu() {
+    this.setState({showMenu: false});
   }
-  setCol(that) {
-    return function(col) {
-      that.setState({col: col});
-    };
+  setCol(col) {
+    this.setState({col: col});
   }
-  setRow(that) {
-    return function(row) {
-      that.setState({row: row});
-    };
+  setRow(row) {
+    this.setState({row: row});
+  }
+  setType(type) {
+    this.setState({type: type});
+    this.hideMenu();
   }
 };
 

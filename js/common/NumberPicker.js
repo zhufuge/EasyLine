@@ -7,6 +7,7 @@ import {
   Text,
 } from 'react-native';
 
+const floor = Math.floor;
 
 class NumberPicker extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ class NumberPicker extends Component {
     return (
       <View
         onStartShouldSetResponder={(evt) => true}
-        onResponderGrant={(evt) => this.onStart(this, evt)}
-        onResponderMove={(evt) => this.onMove(this, evt)}
-        onResponderRelease={(evt) => this.onRelease(this, evt)}
+        onResponderGrant={(evt) => this.onStart(evt)}
+        onResponderMove={(evt) => this.onMove(evt)}
+        onResponderRelease={(evt) => this.onRelease(evt)}
         style={[styles.container, this.props.style]}>
         <Text
           style={[styles.number, this.props.numberStyles]}>
@@ -38,26 +39,31 @@ class NumberPicker extends Component {
     );
   }
 
-  onStart(that, evt) {
-    that.setState({pageY: evt.nativeEvent.pageY});
+  onStart(evt) {
+    this.setState({pageY: evt.nativeEvent.pageY});
   }
-  onMove(that, evt) {
-    var number = that.state.change +
-        Math.floor((that.state.pageY - evt.nativeEvent.pageY) /
-                   (that.props.velocity * 60));
-    if (that.props.min !== void 0) {
-      number = (number < that.props.min) ? that.props.min : number;
+  onMove(evt) {
+    const state = this.state;
+    var max = this.props.max,
+        min = this.props.min;
+    var number = state.change +
+        floor((state.pageY - evt.nativeEvent.pageY) /
+                   (this.props.velocity * 60));
+    if (min !== void 0) {
+      number = (number < min) ? min : number;
     }
 
-    if (that.props.max !== void 0) {
-      number = (number > that.props.max) ? that.props.max : number;
+    if (max !== void 0) {
+      number = (number > max) ? max : number;
     }
 
-    that.setState({number: number});
-    that.props.onNumberChange(number);
+    if (number !== state.number) {
+      this.props.onNumberChange(number);
+    }
+    this.setState({number: number});
   }
-  onRelease(that, evt) {
-    that.setState({change: this.state.number});
+  onRelease(evt) {
+    this.setState({change: this.state.number});
   }
 }
 
