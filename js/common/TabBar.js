@@ -8,7 +8,6 @@ var {
   View,
   Image,
   TouchableOpacity,
-  ListView,
 } = ReactNative;
 
 var calcIcon = require('./img/ic_mode_edit_white_18dp.png');

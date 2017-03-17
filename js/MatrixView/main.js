@@ -16,7 +16,6 @@ var TabBar = require('../common/TabBar');
 var SlideUpMenu = require('../common/SlideUpMenu');
 var MenuItems = require('./menuItems');
 
-
 class MatrixView extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +24,7 @@ class MatrixView extends React.Component {
       col: 6,
       row: 6,
       type: 0,
+      det: 0,
     };
 
     this.showMenu = this.showMenu.bind(this);
@@ -32,6 +32,7 @@ class MatrixView extends React.Component {
     this.setCol = this.setCol.bind(this);
     this.setRow = this.setRow.bind(this);
     this.setType = this.setType.bind(this);
+    this.setDet = this.setDet.bind(this);
   }
 
   render() {
@@ -45,8 +46,10 @@ class MatrixView extends React.Component {
           <Matrix
             type={this.state.type}
             col={this.state.col}
-            row={this.state.row}/>
-          <Record />
+            row={this.state.row}
+            setDet={(det) => this.setDet(det)}/>
+          <Record
+            det={this.state.det}/>
         </ScrollView>
         <View>
           <SlideUpMenu
@@ -76,6 +79,9 @@ class MatrixView extends React.Component {
   }
   setType(type) {
     this.setState({type: type});
+  }
+  setDet(det) {
+    this.setState({det: det});
   }
 };
 

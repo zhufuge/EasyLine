@@ -20,7 +20,7 @@ class Record extends React.Component {
     let det = '',
         detStyles = [styles.det, {}];
     if (this.state.det === 0) {
-      det = '0';
+      det = this.props.det;
       detStyles[1] = {backgroundColor: '#ffbd40cc'};
     } else {
       det = '行列值';

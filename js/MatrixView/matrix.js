@@ -23,7 +23,8 @@ var Matrix = React.createClass({
           <MatrixItems
             col={MatrixCol}
             row={MatrixRow}
-            type={this.props.type}/>
+            type={this.props.type}
+            setDet={(det) => this.props.setDet(det)}/>
           <MatrixSide num={MatrixCol} direction='column' flex={1} />
         </View>
         <View style={[styles.bottom]}>

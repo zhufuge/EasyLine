@@ -11,69 +11,51 @@ var {
 const floor = Math.floor,
       random = Math.random;
 
+var Alg = require('../common/Algebra');
+
 class MatrixItems extends React.Component{
   constructor(props) {
     super(props);
-    const col = +(props.col) || 6,
-          row = +(props.row) || 6;
     this.state = {
-      matrix: this._createMatrix(col, row, 0),
+      matrix: Alg.create((+props.col || 6), (+props.row || 6), 0),
     };
-  }
 
-  _createMatrix(col, row, num) {
-    var matrix = [];
-    for (let i = 0; i < col; i++) {
-      matrix.push([]);
-      for (let j = 0; j < row; j++) {
-        matrix[i].push(num);
-      }
-    }
-    return matrix;
+    this._changeMatrix = this._changeMatrix.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     var col = (nextProps.col !== void 0) ? nextProps.col : this.props.col,
         row = (nextProps.row !== void 0) ? nextProps.row : this.props.row,
         type = (nextProps.type !== void 0) ? nextProps.type : this.props.type;
+
     switch(type) {
-    case 0:
-    case 1: {
-      this.setState({matrix: this._createMatrix(col, row, type)});
-      break;
+    case 2: type = 'E'; break;
+    case 3: type = void 0; break;
+    case 4: break;
     }
-    case 2: {
-      var matrix = this._createMatrix(col, row, 0),
-          length = (col >= row) ? row : col;
-      for (let i = 0; i < length; i++) {
-        matrix[i][i] = 1;
-      }
-      this.setState({matrix: matrix});
-      break;
+
+    this.setState({matrix: Alg.create(col, row, type)});
+  }
+
+  _changeMatrix(col, row, num) {
+    if (num === '-') {
+      num = -0;
+    } else if (typeof +num !== 'number' || +num !== +num) {
+      num = 0;
     }
-    case 3: {
-      let matrix = this._createMatrix(col, row, 0);
-      for (let i = 0; i < col; i++) {
-        for (let j = 0; j < row; j++) {
-          matrix[i][j] = floor(random() * 10);
-        }
-      }
-      this.setState({matrix: matrix});
-      break;
+
+    var matrix = this.state.matrix,
+        prev = matrix[col][row];
+    alert(matrix);
+    matrix[col][row] = (+prev === 0 && 1 / +prev === 1 / -0) ? -num : num;
+    this.setState({matrix: matrix});
+
+    var det = 'NaN';
+    if (this.props.col === this.props.row) {
+      det = Alg.calculateDet(matrix);
     }
-    case 4: {
-      if (col === row) {
-        let matrix = this._createMatrix(col, row, 0);
-        for (let i = 0; i < col; i++) {
-          for (let j = i; j < row; j++){
-            matrix[i][j] = matrix[j][i] = floor(random() * 10);
-          }
-        }
-        this.setState({matrix: matrix});
-      }
-      break;
-    }
-    }
+    alert(matrix);
+    this.props.setDet(det);
   }
 
   render() {
@@ -95,6 +77,7 @@ class MatrixItems extends React.Component{
       }
       return (
         <TextInput
+          onChangeText={(text) => that._changeMatrix(col, row, text)}
           caretHidden='true'
           defaultValue={'' + that.state.matrix[col][row]}
           maxLength={3}
