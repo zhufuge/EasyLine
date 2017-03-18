@@ -9,29 +9,33 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
-
 class Record extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {det: 1};
+    this.state = {
+      det: false,
+    };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.det === false && nextState.det === this.state.det) {
+      return false;
+    }
+    return true;
   }
 
   render() {
-    let det = '',
-        detStyles = [styles.det, {}];
-    if (this.state.det === 0) {
-      det = this.props.det;
-      detStyles[1] = {backgroundColor: '#ffbd40cc'};
-    } else {
-      det = '行列值';
-      detStyles[1] = {};
-    }
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={{flex: 3}}
-          onPress={() => this.setState({det: this.state.det ^ 1})}>
-          <Text style={detStyles}>{det}</Text>
+          onPress={() => this.setState({det: !this.state.det})}>
+          <Text style={[
+                  styles.det,
+                  this.state.det ? {backgroundColor: '#ffbd40cc'} : {}
+                ]}>
+            {this.state.det ? this.props.det : '行列值'}
+          </Text>
         </TouchableOpacity>
         <View style={styles.record}></View>
         <Text style={styles.undo}></Text>

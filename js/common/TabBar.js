@@ -10,6 +10,8 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+var SlideUpMenu = require('./SlideUpMenu');
+
 var calcIcon = require('./img/ic_mode_edit_white_18dp.png');
 var createIcon = require('./img/ic_extension_white_18dp.png');
 var othersIcon = require('./img/ic_add_box_white_18dp.png');
@@ -25,15 +27,19 @@ class TabBar extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      onShowMenu: false,
+      showMenu: false,
     };
   }
 
-  render() {
-    const TouchableItem = (that, rowData) => (
+  componentWillReceiveProps(nextProps) {
+    this.setState({showMenu: nextProps.show});
+  }
+
+  _createTouchableItem(rowData) {
+    return (
       <TouchableOpacity
         key={rowData[0]}
-        onPress={() => that[rowData[2]]()}
+        onPress={() => this[rowData[2]]()}
         style={styles.item}>
         <Image
           style={styles.image}
@@ -41,38 +47,48 @@ class TabBar extends React.Component{
         <Text style={styles.text}>{rowData[0]}</Text>
       </TouchableOpacity>
     );
+  }
 
-    const renderRow = ((that) => defaultData.map(function(rowData) {
-      return TouchableItem(that, rowData);
-    }))(this);
+  _renderRow() {
+    return defaultData.map(function(rowData) {
+      return this._createTouchableItem(rowData);
+    }.bind(this));
 
-    const renderHideMenu = TouchableItem(this, ['', backIcon, 'onPressBack']);
+  }
 
+  _renderHideMenu() {
+    return this._createTouchableItem(['', backIcon, 'onPressBack']);
+  }
+
+  render() {
     return (
       <View style={styles.container}>
-        {this.state.onShowMenu ? renderHideMenu : renderRow}
+        <View>
+          <SlideUpMenu
+            show={this.state.showMenu}>
+            {this.props.children}
+          </SlideUpMenu>
+        </View>
+        <View style={styles.tabBar}>
+          {this.state.showMenu
+            ? this._renderHideMenu()
+          : this._renderRow()}
+        </View>
       </View>
     );
   }
-  onPressCalculate() {
-    if (this.props.navigator) {
-      this.props.navigator.push({calculate: true});
-    }
-  }
-  onPressCreate() {
-    this.props.showMenu();
-    this.setState({onShowMenu: true});
-  }
-  onPressOthers() {
-  }
-  onPressBack() {
-    this.props.hideMenu();
-    this.setState({onShowMenu: false});
-  }
+
+  onPressCreate() {this.setState({showMenu: true});}
+  onPressBack() {this.setState({showMenu: false});}
+  onPressCalculate() {}
+  onPressOthers() {}
 }
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'flex-end',
+  },
+  tabBar: {
     height: 65,
     flexDirection: 'row',
     justifyContent: 'space-around',

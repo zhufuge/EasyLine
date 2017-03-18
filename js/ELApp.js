@@ -10,7 +10,7 @@ var {
 
 var ELNavigator = require('./ELNavigator');
 
-var ELApp = React.createClass({
+class ELApp extends React.Component{
   render() {
     return (
       <View style={styles.container}>
@@ -18,7 +18,7 @@ var ELApp = React.createClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   container: {

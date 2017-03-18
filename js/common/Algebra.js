@@ -19,8 +19,9 @@
     root.Alg = Alg;
   }
 
-  var floor = Math.floor,
-      random = Math.random;
+  const abs = Math.abs,
+        floor = Math.floor,
+        random = Math.random;
 
   Alg.create = function(col, row, num) {
     var matrix = [];
@@ -44,11 +45,99 @@
     return matrix;
   };
 
+  Alg.copy = function(A) {
+    if (!A.length) return [A];
+    var result = [];
+    for (let i = 0, col = A.length; i < col; i++) {
+      result.push([]);
+      for (let j = 0, row = A[i].length; j < row; j++) {
+        result[i].push(A[i][j]);
+      }
+    }
+    return result;
+  };
+
+  Alg.addCol = function(A, col, num) {
+    col = col !== void 0 ? col : 1;
+    num = num || 0;
+
+    var last = A.length - 1;
+    for (let i = 0; i < col; i++) {
+      A.push([]);
+      last++;
+      for (let j = 0, length = A[0].length; j < length; j++) {
+        A[last].push(num);
+      }
+    }
+    return col;
+  };
+
+  Alg.removeCol = function(A, col) {
+    col = col !== void 0 ? col : 1;
+
+    for (let i = 0; i < col; i++) {
+      A.pop();
+    }
+    return col;
+  };
+
+  Alg.changeCol = function(A, col, num) {
+    return col > 0
+      ? Alg.addCol(A, col, num)
+      : Alg.removeCol(A, abs(col));
+  };
+
+  Alg.addRow = function(A, row, num) {
+    row = row !== void 0 ? row : 1;
+    num = num || 0;
+
+    for (let i = 0, length = A.length; i < length; i++) {
+      for (let j = 0; j < row; j++) {
+        A[i].push(num);
+      }
+    }
+    return row;
+  };
+
+  Alg.removeRow = function(A, row) {
+    row = row !== void 0 ? row : 1;
+
+    for (let i = 0, length = A.length; i < length; i++) {
+      for (let j = 0; j < row; j++) {
+        A[i].pop();
+      }
+    }
+    return row;
+  };
+
+  Alg.changeRow = function(A, row, num) {
+    return row > 0
+      ? Alg.addRow(A, row, num)
+      : Alg.removeRow(A, abs(row));
+  };
+
+  Alg.range = function(start, stop, step) {
+    if (stop == null) {
+      stop = start || 0;
+      start = 0;
+    }
+    step = step || 1;
+
+    var length = Math.max(Math.ceil((stop - start) / step), 0);
+    var range = Array(length);
+
+    for (var idx = 0; idx < length; idx++, start += step) {
+      range[idx] = start;
+    }
+
+    return range;
+  };
+
   Alg.calculateDet = function(A) {
     var det = 0,
         col = A.length;
-
     if (col === 1) return A[0];
+    if (col !== A[0].length) return 0/0;
 
     for (let i = 0; i < col; i++) {
       det += A[0][i] *

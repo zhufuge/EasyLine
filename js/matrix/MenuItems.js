@@ -18,21 +18,29 @@ const defaultDate = [
 ];
 
 class MenuItems extends React.Component {
-  render() {
-    const items = ((that) => defaultDate.map(function(val) {
+  onPressItems(item) {
+    this.props.setType(item);
+    this.props.hideMenu();
+  }
+
+  createItems() {
+    return defaultDate.map(function(val) {
       return (
         <TouchableOpacity
-          onPress={() => that.props.setType(+val[2])}
+          onPress={() => this.onPressItems(val[2])}
           key={val[0]}
           style={styles.item}>
           <Text style={styles.icon}>{val[0]}</Text>
           <Text style={styles.text}>{val[1]}</Text>
         </TouchableOpacity>
       );
-    }))(this);
+    }.bind(this));
+  }
+
+  render() {
     return (
       <View style={styles.container}>
-        {items}
+        {this.createItems()}
       </View>
     );
   }

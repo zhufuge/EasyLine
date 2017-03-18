@@ -9,26 +9,23 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
-var MatrixItems = require('./matrixItems');
-var MatrixSide = require('./matrixSide');
+var MatrixBody = require('./MatrixBody');
+var MatrixSide = require('./MatrixSide');
 
-var Matrix = React.createClass({
+var MatrixPanel = React.createClass({
   render() {
-    let MatrixCol = (+this.props.col || 6),
-        MatrixRow = (+this.props.row || 6);
-
     return (
       <View style={styles.container}>
         <View style={[styles.top]}>
-          <MatrixItems
-            col={MatrixCol}
-            row={MatrixRow}
+          <MatrixBody
+            col={this.props.col}
+            row={this.props.row}
             type={this.props.type}
             setDet={(det) => this.props.setDet(det)}/>
-          <MatrixSide num={MatrixCol} direction='column' flex={1} />
+            <MatrixSide num={this.props.col} direction='column' flex={1} />
         </View>
         <View style={[styles.bottom]}>
-          <MatrixSide num={MatrixRow} direction='row' flex={6}/>
+          <MatrixSide num={this.props.row} direction='row' flex={6}/>
           <TouchableOpacity style={[styles.switch]}>
             <Text style={styles.switchButton}>T</Text>
           </TouchableOpacity>
@@ -69,4 +66,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Matrix;
+module.exports = MatrixPanel;

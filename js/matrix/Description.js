@@ -12,8 +12,6 @@ var {
 
 var NumberPicker = require('../common/NumberPicker');
 
-
-
 class Description extends React.Component {
   constructor(props) {
     super(props);
@@ -39,18 +37,12 @@ class Description extends React.Component {
         </View>
         <NumberPicker
           onNumberChange={(number) => this.props.setCol(number)}
-          min={1}
-          max={6}
-          selectedNumber={6}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>行</Text>
         </NumberPicker>
         <NumberPicker
           onNumberChange={(number) => this.props.setRow(number)}
-          min={1}
-          max={6}
-          selectedNumber={6}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>列</Text>
@@ -84,6 +76,7 @@ var styles = StyleSheet.create({
   },
   cR: {
     flex: 3,
+    height: '100%',
   },
   mode: {
     marginRight: 0,

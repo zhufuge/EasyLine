@@ -10,13 +10,12 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
-const
-ic_logo = require('./img/ic_dashboard_white_18dp.png'),
-ic_settings = require('./img/ic_settings_white_18dp.png'),
-ic_about = require('./img/ic_bubble_chart_white_18dp.png'),
-defaultData = {
-  title: 'EasyLinear'
-};
+const ic_logo = require('./img/ic_dashboard_white_18dp.png'),
+      ic_settings = require('./img/ic_settings_white_18dp.png'),
+      ic_about = require('./img/ic_bubble_chart_white_18dp.png'),
+      defaultData = {
+        title: 'EasyLinear'
+      };
 
 var Header = React.createClass({
   render: function() {
@@ -53,7 +52,10 @@ var Header = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    top: 0,
     height: 54,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     zIndex: 100,

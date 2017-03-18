@@ -11,6 +11,7 @@ var {
 } = ReactNative;
 
 var Header = require('../common/BackHeader');
+var NumberPicker = require('../common/NumberPicker');
 
 class MView extends React.Component{
   constructor(props) {
@@ -33,7 +34,7 @@ class MView extends React.Component{
                 alignItems: 'center',
               }}>
 
-
+          <NumberPicker/>
 
         </View>
       </View>
@@ -47,7 +48,6 @@ class Settings extends React.Component{
       <View style={styles.container}>
         <Header navigator={this.props.navigator} title='设置'/>
         <View style={styles.body}>
-          <MView />
         </View>
         <View style={styles.footer}>
         </View>

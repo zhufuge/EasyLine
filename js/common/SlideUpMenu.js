@@ -25,8 +25,8 @@ class SilidUpMenu extends React.Component {
       this.state.slideUp,
       {
         toValue: this.props.height,
-        velocity: 1,  // Velocity makes it move
-        friction: 3,  // Oscillate a lot
+        velocity: 1,
+        friction: 3,
       }
     ).start();
   }
@@ -34,7 +34,7 @@ class SilidUpMenu extends React.Component {
     Animated.timing(
       this.state.slideUp, {
         toValue: 0,
-        duration: 300,
+        duration: 500,
       }
     ).start();
   }
@@ -48,8 +48,9 @@ class SilidUpMenu extends React.Component {
   render() {
     return (
       <Animated.View
-        style={[styles.container,
-                {height: this.state.slideUp}
+        style={[
+          styles.container,
+          {height: this.state.slideUp}
         ]}>
         <View style={styles.menu}>
           {this.props.children}

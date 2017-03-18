@@ -19,6 +19,9 @@ class NumberPicker extends Component {
   }
   static defaultProps = {
     velocity: 40,
+    min: 1,
+    max: 6,
+    selectedNumber: 3,
   }
 
   onStart(evt) {
@@ -46,7 +49,9 @@ class NumberPicker extends Component {
 
     if (number !== state.number) {
       this.setState({number: number, pageY: pageY});
-      props.onNumberChange(number);
+      if (props.onNumberChange) {
+        props.onNumberChange(number);
+      }
     }
   }
 
@@ -78,10 +83,15 @@ var styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
+    width: 48,
+    height: 30,
   },
   number: {
-    fontSize: 16,
-    color: '#333',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#666',
   }
 });
 
