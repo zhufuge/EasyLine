@@ -7,39 +7,40 @@ var {
   BackAndroid,
   ToastAndroid,
 } = ReactNative;
+import { connect } from 'react-redux';
 
-
-var MatrixPage = require('./matrix/container');
-var Settings = require('./actions/settings');
-var About = require('./actions/about');
+var MatrixPage = require('./matrix');
+var Settings = require('./views/settings');
+var About = require('./views/about');
 
 class ELNavigator extends React.Component{
-  componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
-  }
+  // TODO: this.refs.navigator is undefined ?
+  // componentDidMount() {
+  //   BackAndroid.addEventListener('hardwareBackPress', this.handleBackButton);
+  // }
 
-  componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
-  }
+  // componentWillUnmount() {
+  //   BackAndroid.removeEventListener('hardwareBackPress', this.handleBackButton);
+  // }
 
-  onBackAndroid() {
-    const nav = this.navigator;
-    if (nav && nav.getCurrentRoutes().length > 1) {
-      nav.pop();
-      return true;
-    }
-    // if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-    //   return false;
-    // }
-    // this.lastBackPressed = Date.now();
-    // ToastAndroid.show('再按一次退出应用');
-    // return true;
-    return false;
-  }
+  // handleBackButton() {
+  //   const { navigator } = this.refs;
+  //   if (navigator && navigator.getCurrentRoutes().length > 1) {
+  //     navigator.pop();
+  //     return true;
+  //   }
+  //   if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+  //     return false;
+  //   }
+  //   this.lastBackPressed = Date.now();
+  //   ToastAndroid.show('再按一次退出应用');
+  //   return true;
+  // }
 
   render() {
     return (
       <Navigator
+        ref="navigator"
         initialRoute={{}}
         renderScene={this.renderScene}
         configureScene={(route) => {
@@ -49,10 +50,6 @@ class ELNavigator extends React.Component{
   }
 
   renderScene(route, navigator) {
-//    return <Settings navigator={navigator}/>;
-    if (route.calculate) {
-      return <Settings navigator={navigator}/>;
-    }
     if (route.settings) {
       return <Settings navigator={navigator}/>;
     }
@@ -63,4 +60,4 @@ class ELNavigator extends React.Component{
   }
 }
 
-module.exports = ELNavigator;
+module.exports = connect()(ELNavigator);

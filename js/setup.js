@@ -1,17 +1,24 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
 
-var ELApp = require('./ELApp');
+import ELApp from './ELApp';
+
+let store = createStore(reducers);
 
 function setup() {
-  var Root = React.createClass({
+  class Root extends React.Component{
     render() {
       return (
-        <ELApp />
+        <Provider store={store}>
+          <ELApp />
+        </Provider>
       );
     }
-  });
+  }
   return Root;
 }
 

@@ -1,14 +1,13 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+import React from 'react';
+import { connect } from 'react-redux';
+import {
   StyleSheet,
   View,
-} = ReactNative;
+} from 'react-native';
 
-
-var ELNavigator = require('./ELNavigator');
+import ELNavigator from './ELNavigator';
 
 class ELApp extends React.Component{
   render() {
@@ -27,4 +26,4 @@ const styles = StyleSheet.create({
 });
 
 
-module.exports = ELApp;
+module.exports = connect()(ELApp);

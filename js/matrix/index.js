@@ -8,6 +8,8 @@ var {
   ScrollView,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+
 var Header = require('../common/Header');
 var Main = require('./Main');
 var Footer = require('./Footer');
@@ -23,7 +25,8 @@ class MatrixView extends React.Component {
   setType(type) {this.setState({type: type});}
   render() {
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}>
         <Header navigator={this.props.navigator}/>
         <Main type={this.state.type}/>
         <Footer setType={(type) => this.setType(type)}
@@ -41,4 +44,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = MatrixView;
+module.exports = connect()(MatrixView);

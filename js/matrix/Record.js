@@ -9,6 +9,8 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+
 class Record extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,7 @@ class Record extends React.Component {
                   styles.det,
                   this.state.det ? {backgroundColor: '#ffbd40cc'} : {}
                 ]}>
-            {this.state.det ? this.props.det : '行列值'}
+            {this.state.det ? this.props.det + '' : '行列值'}
           </Text>
         </TouchableOpacity>
         <View style={styles.record}></View>
@@ -42,6 +44,12 @@ class Record extends React.Component {
       </View>
     );
   }
+};
+
+const mapStateToProps = (state) => {
+  return {
+    det: state.det
+  };
 };
 
 var styles = StyleSheet.create({
@@ -70,4 +78,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Record;
+module.exports = connect(mapStateToProps)(Record);

@@ -9,6 +9,9 @@ var {
   ToastAndroid,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+import { setDet } from '../actions';
+
 const floor = Math.floor,
       random = Math.random;
 
@@ -30,9 +33,6 @@ class MatrixItems extends React.Component{
     const col = nextProps.col,
           row = nextProps.row,
           type = nextProps.type;
-    // ToastAndroid.show(col  + ', ' + row + ', ' + type,
-    //                   ToastAndroid.SHORT);
-
     var matrix = this.state.matrix;
     if (this.state.type !== type) {
       let t = type;
@@ -51,6 +51,12 @@ class MatrixItems extends React.Component{
       Alg.changeCol(matrix, (col - this.state.col));
       Alg.changeRow(matrix, (row - this.state.row));
     }
+
+    this.props.dispatch(setDet(
+      this.state.col === this.state.row
+        ? Alg.calculateDet(matrix)
+        : 'NaN'
+    ));
 
     this.setState({
       col: col,
@@ -99,13 +105,12 @@ class MatrixItems extends React.Component{
     } else {
       this.setState({matrix: matrix});
     }
-  }
-  _setDet(matrix) {
-    this.props.setDet(
+
+    this.props.dispatch(setDet(
       this.state.col === this.state.row
         ? Alg.calculateDet(matrix)
         : 'NaN'
-    );
+    ));
   }
 }
 
@@ -126,4 +131,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = MatrixItems;
+module.exports = connect()(MatrixItems);

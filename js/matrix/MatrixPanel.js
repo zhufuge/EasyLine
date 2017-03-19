@@ -9,6 +9,8 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+
 var MatrixBody = require('./MatrixBody');
 var MatrixSide = require('./MatrixSide');
 
@@ -20,8 +22,7 @@ var MatrixPanel = React.createClass({
           <MatrixBody
             col={this.props.col}
             row={this.props.row}
-            type={this.props.type}
-            setDet={(det) => this.props.setDet(det)}/>
+            type={this.props.type} />
             <MatrixSide num={this.props.col} direction='column' flex={1} />
         </View>
         <View style={[styles.bottom]}>
@@ -66,4 +67,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = MatrixPanel;
+module.exports = connect()(MatrixPanel);

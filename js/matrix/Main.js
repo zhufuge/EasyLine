@@ -6,6 +6,8 @@ import {
   ScrollView
 } from 'react-native';
 
+import { connect } from 'react-redux';
+
 var Description = require('./Description');
 var MatrixPanel = require('./MatrixPanel');
 var Record = require('./Record');
@@ -16,16 +18,13 @@ class MatrixMain extends Component {
     this.state = {
       col: 3,
       row: 3,
-      det: 0,
     };
 
     this.setCol = this.setCol.bind(this);
     this.setRow = this.setRow.bind(this);
-    this.setDet = this.setDet.bind(this);
   }
   setCol(col) {this.setState({col: col});}
   setRow(row) {this.setState({row: row});}
-  setDet(det) {this.setState({det: det});}
 
   render() {
     return (
@@ -37,12 +36,9 @@ class MatrixMain extends Component {
         <MatrixPanel
           type={this.props.type}
           col={this.state.col}
-          row={this.state.row}
-          setDet={(det) => this.setDet(det)}>
+          row={this.state.row}>
         </MatrixPanel>
-        <Record
-          det={this.state.det}>
-        </Record>
+        <Record />
       </ScrollView>
     );
   }
@@ -57,4 +53,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = MatrixMain;
+module.exports = connect()(MatrixMain);
