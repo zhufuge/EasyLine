@@ -15,29 +15,12 @@ var Record = require('./Record');
 class MatrixMain extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      col: 3,
-      row: 3,
-    };
-
-    this.setCol = this.setCol.bind(this);
-    this.setRow = this.setRow.bind(this);
   }
-  setCol(col) {this.setState({col: col});}
-  setRow(row) {this.setState({row: row});}
-
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Description
-          setCol={(col) => this.setCol(col)}
-          setRow={(row) => this.setRow(row)}>
-        </Description>
-        <MatrixPanel
-          type={this.props.type}
-          col={this.state.col}
-          row={this.state.row}>
-        </MatrixPanel>
+        <Description />
+        <MatrixPanel />
         <Record />
       </ScrollView>
     );

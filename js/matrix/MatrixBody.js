@@ -10,7 +10,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setDet } from '../actions';
+import { setDet, setCol, setRow } from '../actions';
 
 const floor = Math.floor,
       random = Math.random;
@@ -22,46 +22,42 @@ class MatrixItems extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      col: +props.col,
-      row: +props.row,
-      type: props.type,
-      matrix: Alg.create((+props.col || 6), (+props.row || 6), props.type),
+      col: props.col,
+      row: props.row,
+      matrix: Alg.create(props.col, props.row, props.type),
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const col = nextProps.col,
-          row = nextProps.row,
-          type = nextProps.type;
-    var matrix = this.state.matrix;
-    if (this.state.type !== type) {
-      let t = type;
-      switch(type) {
-      case 2: t = 'E'; break;
-      case 3: t = void 0; break;
-      case 4: break;
-      default: break;
-      }
-      matrix = Alg.create(col, row, t);
-    }
+    var col = nextProps.col,
+        row = nextProps.row,
+        matrix = this.state.matrix;
 
     if (this.props.col !== col ||
         this.props.row !== row) {
       matrix = Alg.copy(this.state.matrix);
       Alg.changeCol(matrix, (col - this.state.col));
       Alg.changeRow(matrix, (row - this.state.row));
+    } else if (this.props.transpose !== nextProps.transpose) {
+      matrix = Alg.transpose(matrix);
+      col = [row, row = col][0];
+      this.props.dispatch(setCol(col));
+      this.props.dispatch(setRow(row));
+    } else {
+      let type = nextProps.type;
+      switch(type) {
+      case 2: type = 'E'; break;
+      case 3: type = void 0; break;
+      case 4: type = 0; break;
+      default: break;
+      }
+      matrix = Alg.create(col, row, type);
     }
 
-    this.props.dispatch(setDet(
-      this.state.col === this.state.row
-        ? Alg.calculateDet(matrix)
-        : 'NaN'
-    ));
-
+    this._returnDet(col, row, matrix);
     this.setState({
       col: col,
       row: row,
-      type: type,
       matrix: matrix
     });
   }
@@ -97,22 +93,26 @@ class MatrixItems extends React.Component{
   _setNumber(col, row, num) {
     var matrix = Alg.copy(this.state.matrix);
     matrix[col][row] = +num;
-    if (this.state.type !== -1) {
-      this.setState({
-        matrix: matrix,
-        type: -1
-      });
-    } else {
-      this.setState({matrix: matrix});
-    }
-
+    this.setState({matrix: matrix});
+    this._returnDet(this.state.col, this.state.row, matrix);
+  }
+  _returnDet(col, row, matrix) {
     this.props.dispatch(setDet(
-      this.state.col === this.state.row
-        ? Alg.calculateDet(matrix)
+      col === row
+        ? Alg.det(matrix)
         : 'NaN'
     ));
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    type: state.mType,
+    col: state.col,
+    row: state.row,
+    transpose: state.transpose
+  };
+};
 
 var styles = StyleSheet.create({
   container: {
@@ -131,4 +131,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = connect()(MatrixItems);
+module.exports = connect(mapStateToProps)(MatrixItems);

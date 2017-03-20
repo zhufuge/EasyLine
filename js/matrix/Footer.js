@@ -6,6 +6,7 @@ import {
   Modal,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 var TabBar = require('../common/TabBar');
 var MenuItems = require('./MenuItems');
@@ -24,8 +25,7 @@ class Footer extends Component {
         show={this.props.showMenu}
         navigator={this.props.navigator}>
         <MenuItems
-          hideMenu={() => this.hideMenu()}
-          setType={(type) => this.props.setType(type)}/>
+          hideMenu={() => this.hideMenu()}/>
       </TabBar>
     );
   }
@@ -43,4 +43,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Footer;
+module.exports = connect()(Footer);

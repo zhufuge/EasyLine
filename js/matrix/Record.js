@@ -36,7 +36,11 @@ class Record extends React.Component {
                   styles.det,
                   this.state.det ? {backgroundColor: '#ffbd40cc'} : {}
                 ]}>
-            {this.state.det ? this.props.det + '' : '行列值'}
+        {
+          this.state.det
+            ? (this.props.det === 'NaN'? '行≠列' : this.props.det + '')
+          : '行列值'
+        }
           </Text>
         </TouchableOpacity>
         <View style={styles.record}></View>

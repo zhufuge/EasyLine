@@ -10,33 +10,63 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-
+import { setTranspose } from '../actions';
 var MatrixBody = require('./MatrixBody');
 var MatrixSide = require('./MatrixSide');
 
-var MatrixPanel = React.createClass({
+class MatrixPanel extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      col: props.col,
+      row: props.row,
+      transpose: false
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      col: nextProps.col,
+      row: nextProps.row
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={[styles.top]}>
-          <MatrixBody
-            col={this.props.col}
-            row={this.props.row}
-            type={this.props.type} />
-            <MatrixSide num={this.props.col} direction='column' flex={1} />
+          <MatrixBody />
+          <MatrixSide num={this.state.col} direction='column' flex={1} />
         </View>
         <View style={[styles.bottom]}>
-          <MatrixSide num={this.props.row} direction='row' flex={6}/>
-          <TouchableOpacity style={[styles.switch]}>
-            <Text style={styles.switchButton}>T</Text>
+          <MatrixSide num={this.state.row} direction='row' flex={6}/>
+          <TouchableOpacity
+            onPress={() => this.onPressSwitch()}
+            style={[styles.switch]}>
+            <Text style={[
+                    styles.switchButton,
+                    this.state.transpose ? styles.transpose : {}
+                  ]}>T</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
-});
+  onPressSwitch() {
+    const transpose = this.state.transpose;
+    this.setState({transpose: !transpose});
+    this.props.dispatch(setTranspose(!transpose));
+  }
+}
 
-var styles = StyleSheet.create({
+const mapStateToProps = (state) => {
+  return {
+    col: state.col,
+    row: state.row
+  };
+};
+
+const styles = StyleSheet.create({
   container: {
     marginBottom: 12,
     height: 330,
@@ -65,6 +95,9 @@ var styles = StyleSheet.create({
     color: 'white',
     textAlignVertical: 'center',
   },
+  transpose: {
+    backgroundColor: '#ffbd4099'
+  }
 });
 
-module.exports = connect()(MatrixPanel);
+module.exports = connect(mapStateToProps)(MatrixPanel);

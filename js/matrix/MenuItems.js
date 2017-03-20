@@ -9,6 +9,9 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+import { setMType } from '../actions';
+
 const defaultDate = [
   ['(0)', '全零', 0],
   ['(1)', '全壹', 1],
@@ -18,16 +21,19 @@ const defaultDate = [
 ];
 
 class MenuItems extends React.Component {
-  onPressItems(item) {
-    this.props.setType(item);
-    this.props.hideMenu();
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.renderItems()}
+      </View>
+    );
   }
 
-  createItems() {
+  renderItems() {
     return defaultDate.map(function(val) {
       return (
         <TouchableOpacity
-          onPress={() => this.onPressItems(val[2])}
+          onPress={() => this._onPressItems(val[2])}
           key={val[0]}
           style={styles.item}>
           <Text style={styles.icon}>{val[0]}</Text>
@@ -36,13 +42,9 @@ class MenuItems extends React.Component {
       );
     }.bind(this));
   }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.createItems()}
-      </View>
-    );
+  _onPressItems(item) {
+    this.props.dispatch(setMType(item));
+    this.props.hideMenu();
   }
 }
 
@@ -73,4 +75,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = MenuItems;
+module.exports = connect()(MenuItems);

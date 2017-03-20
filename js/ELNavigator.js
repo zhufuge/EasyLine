@@ -9,7 +9,7 @@ var {
 } = ReactNative;
 import { connect } from 'react-redux';
 
-var MatrixPage = require('./matrix');
+var MatrixView = require('./matrix');
 var Settings = require('./views/settings');
 var About = require('./views/about');
 
@@ -56,7 +56,7 @@ class ELNavigator extends React.Component{
     if (route.about) {
       return <About navigator={navigator}/>;
     }
-    return <MatrixPage navigator={navigator}/>;
+    return <MatrixView navigator={navigator}/>;
   }
 }
 

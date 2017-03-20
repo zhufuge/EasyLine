@@ -133,22 +133,24 @@
     return range;
   };
 
-  Alg.calculateDet = function(A) {
+  Alg.det = function(A) {
+    if (A === void 0) return NaN;
     var det = 0,
         col = A.length;
     if (col === 1) return A[0];
-    if (col !== A[0].length) return 0/0;
+    if (col !== A[0].length) return NaN;
 
     for (let i = 0; i < col; i++) {
+      if (A[0][i] === 0) continue;
       det += A[0][i] *
         ((i % 2 === 0)
-         ? +(Alg.calculateCof(A, 0, i))
-         : -(Alg.calculateCof(A, 0, i)));
+         ? +(Alg.cof(A, 0, i))
+         : -(Alg.cof(A, 0, i)));
     }
     return det;
   };
 
-  Alg.calculateCof = function(A, i, j) {
+  Alg.cof = function(A, i, j) {
     var Cof = [],
         count = 0,
         length = A.length;
@@ -164,7 +166,21 @@
       }
     }
 
-    return Alg.calculateDet(Cof);
+    return Alg.det(Cof);
+  };
+
+  Alg.transpose = function(A) {
+    if (!Array.isArray(A)) return NaN;
+    const col = A.length,
+          row = A[0].length;
+    var transpose = Array(row);
+    for (let i = 0; i < row; i++) {
+      transpose[i] = Array(col);
+      for (let j = 0; j < col; j++) {
+        transpose[i][j] = A[j][i];
+      }
+    }
+    return transpose;
   };
 
 }).call(this);

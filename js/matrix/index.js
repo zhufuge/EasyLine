@@ -17,10 +17,6 @@ var Footer = require('./Footer');
 class MatrixView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      type: 0,
-    };
-    this.setType = this.setType.bind(this);
   }
   setType(type) {this.setState({type: type});}
   render() {
@@ -28,8 +24,8 @@ class MatrixView extends React.Component {
       <View
         style={styles.container}>
         <Header navigator={this.props.navigator}/>
-        <Main type={this.state.type}/>
-        <Footer setType={(type) => this.setType(type)}
+        <Main />
+        <Footer
           navigator={this.props.navigator}/>
       </View>
     );

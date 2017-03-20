@@ -19,46 +19,17 @@ class NumberPicker extends Component {
   }
   static defaultProps = {
     velocity: 40,
-    min: 1,
+    min: 0,
     max: 6,
-    selectedNumber: 3,
+    selectedNumber: 0,
   }
 
-  onStart(evt) {
-    this.setState({pageY: evt.nativeEvent.pageY});
-  }
-
-  onMove(evt) {
-    const state = this.state,
-          props = this.props,
-          pageY = evt.nativeEvent.pageY,
-          move = state.pageY - pageY;
-
-    if (Math.abs(move) < props.velocity) return ;
-
-    var max = props.max,
-        min = props.min,
-        number = (move > 0) ? state.number + 1 : state.number - 1;
-    if (min !== void 0) {
-      number = (number < min) ? min : number;
-    }
-
-    if (max !== void 0) {
-      number = (number > max) ? max : number;
-    }
-
-    if (number !== state.number) {
-      this.setState({number: number, pageY: pageY});
-      if (props.onNumberChange) {
-        props.onNumberChange(number);
-      }
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({number: nextProps.selectedNumber});
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.number === nextState.number) {
-      return false;
-    }
+    if (this.state.number === nextState.number) return false;
     return true;
   }
 
@@ -76,6 +47,25 @@ class NumberPicker extends Component {
         {this.props.children}
       </View>
     );
+  }
+  onStart(evt) {this.setState({pageY: evt.nativeEvent.pageY});}
+  onMove(evt) {
+    const state = this.state,
+          props = this.props,
+          pageY = evt.nativeEvent.pageY,
+          move = state.pageY - pageY;
+
+    if (Math.abs(move) < props.velocity) return ;
+
+    var max = props.max,
+        min = props.min,
+        number = (move > 0) ? state.number + 1 : state.number - 1;
+    if (min !== void 0) number = (number < min) ? min : number;
+    if (max !== void 0) number = (number > max) ? max : number;
+    if (number !== state.number) {
+      this.setState({number: number, pageY: pageY});
+      if (props.onNumberChange) props.onNumberChange(number);
+    }
   }
 }
 

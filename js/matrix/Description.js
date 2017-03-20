@@ -10,6 +10,9 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+import { setCol, setRow } from '../actions';
+
 var NumberPicker = require('../common/NumberPicker');
 
 class Description extends React.Component {
@@ -36,13 +39,17 @@ class Description extends React.Component {
           <Text style={styles.id}>名称</Text>
         </View>
         <NumberPicker
-          onNumberChange={(number) => this.props.setCol(number)}
+          selectedNumber={this.props.col}
+          min={1}
+          onNumberChange={(number) => this.props.dispatch(setCol(number))}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>行</Text>
         </NumberPicker>
         <NumberPicker
-          onNumberChange={(number) => this.props.setRow(number)}
+          selectedNumber={this.props.row}
+          min={1}
+          onNumberChange={(number) => this.props.dispatch(setRow(number))}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>列</Text>
@@ -57,6 +64,13 @@ class Description extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    col: state.col,
+    row: state.row
+  };
+};
 
 var styles = StyleSheet.create({
   container: {
@@ -99,4 +113,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Description;
+module.exports = connect(mapStateToProps)(Description);
