@@ -45,7 +45,7 @@ var styles = StyleSheet.create({
     color: 'white',
     textAlignVertical: 'center',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 22,
   },
 });
 

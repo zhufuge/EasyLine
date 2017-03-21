@@ -34,7 +34,7 @@ class SilidUpMenu extends React.Component {
     Animated.timing(
       this.state.slideUp, {
         toValue: 0,
-        duration: 400,
+        duration: 450,
       }
     ).start();
   }

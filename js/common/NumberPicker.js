@@ -40,6 +40,7 @@ class NumberPicker extends Component {
         onResponderGrant={(evt) => this.onStart(evt)}
         onResponderMove={(evt) => this.onMove(evt)}
         style={[styles.container, this.props.style]}>
+        {this.props.prevChildren}
         <Text
           style={[styles.number, this.props.numberStyles]}>
           {this.state.number}

@@ -25,13 +25,9 @@ class Footer extends Component {
         show={this.props.showMenu}
         navigator={this.props.navigator}>
         <MenuItems
-          hideMenu={() => this.hideMenu()}/>
+          hideMenu={() => this.setState({showMenu: false})}/>
       </TabBar>
     );
-  }
-
-  hideMenu() {
-    this.setState({showMenu: false});
   }
 }
 

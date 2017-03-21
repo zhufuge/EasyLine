@@ -22,6 +22,9 @@ const defaultDate = [
 ];
 
 class MenuItems extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -32,11 +35,13 @@ class MenuItems extends React.Component {
 
   renderItems() {
     return defaultDate.map(function(val) {
+      const disabled = this.props.mType === val[2];
       return (
         <View key={val[0]}>
           <TouchableOpacity
+            disabled={disabled}
             onPress={() => this._onPressItems(val[2])}
-            style={styles.item}>
+            style={[styles.item, disabled ? styles.disabled : {}]}>
             <Text style={styles.icon}>{val[0]}</Text>
           </TouchableOpacity>
           <Text style={styles.text}>{val[1]}</Text>
@@ -45,10 +50,16 @@ class MenuItems extends React.Component {
     }.bind(this));
   }
   _onPressItems(item) {
-    this.props.dispatch(setMType(item));
     this.props.hideMenu();
+    this.props.dispatch(setMType(item));
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    mType: state.mType
+  };
+};
 
 var styles = StyleSheet.create({
   container: {
@@ -67,6 +78,9 @@ var styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: C_INVERT + 'cc' || '#ffbd40cc',
   },
+  disabled: {
+    backgroundColor: '#ccc',
+  },
   icon: {
     fontSize: 26,
     fontWeight: '900',
@@ -81,4 +95,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = connect()(MenuItems);
+module.exports = connect(mapStateToProps)(MenuItems);
