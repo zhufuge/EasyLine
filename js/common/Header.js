@@ -10,12 +10,12 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
-const ic_logo = require('./img/ic_dashboard_white_18dp.png'),
+const ic_logo = require('./img/ELLOGO_72.png'),
       ic_settings = require('./img/ic_settings_white_18dp.png'),
       ic_about = require('./img/ic_bubble_chart_white_18dp.png'),
       { C_BASE } = require('./ELColors'),
       defaultData = {
-        title: 'EasyLinear'
+        title: '简线'
       };
 
 var Header = React.createClass({
@@ -77,7 +77,7 @@ var styles = StyleSheet.create({
     tintColor: 'white',
   },
   title: {
-    paddingTop: 5,
+    paddingTop: 0,
     color: 'white',
     textAlignVertical: 'center',
     fontSize: 20,
