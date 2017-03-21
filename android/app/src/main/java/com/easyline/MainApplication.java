@@ -1,4 +1,4 @@
-package com.easylinear;
+package com.easyline;
 
 import android.app.Application;
 
