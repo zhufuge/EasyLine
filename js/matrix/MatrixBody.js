@@ -11,6 +11,7 @@ var {
 
 import { connect } from 'react-redux';
 import { setDet, setCol, setRow } from '../actions';
+import { C_INVERT } from '../common/ELColors';
 
 const floor = Math.floor,
       random = Math.random;
@@ -40,7 +41,7 @@ class MatrixItems extends React.Component{
       Alg.changeRow(matrix, (row - this.state.row));
     } else if (this.props.transpose !== nextProps.transpose) {
       matrix = Alg.transpose(matrix);
-      col = [row, row = col][0];
+      [col, row] = [row, col];
       this.props.dispatch(setCol(col));
       this.props.dispatch(setRow(row));
     } else {
@@ -127,7 +128,7 @@ var styles = StyleSheet.create({
     height: 41,
   },
   itemOpacity: {
-    backgroundColor: '#ffbd4099',
+    backgroundColor: C_INVERT + '99' || '#ffbd4099',
   }
 });
 

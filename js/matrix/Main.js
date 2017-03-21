@@ -3,7 +3,8 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -30,9 +31,10 @@ class MatrixMain extends Component {
 var styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    marginTop: 78,
-    marginLeft: 20,
-    marginRight: 20,
+    height: Dimensions.get('window').height - 90,
+    paddingTop: 78,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 });
 

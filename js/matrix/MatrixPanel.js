@@ -11,6 +11,8 @@ var {
 
 import { connect } from 'react-redux';
 import { setTranspose } from '../actions';
+import { C_BASE, C_INVERT } from '../common/ELColors';
+
 var MatrixBody = require('./MatrixBody');
 var MatrixSide = require('./MatrixSide');
 
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
   switchButton: {
     width: 41,
     height: 41,
-    backgroundColor: '#28b0bc',
+    backgroundColor: C_BASE || '#28b0bc',
     margin: 2,
     marginTop: 6,
 
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   transpose: {
-    backgroundColor: '#ffbd4099'
+    backgroundColor: C_INVERT + '99' || '#ffbd4099'
   }
 });
 

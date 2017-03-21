@@ -12,10 +12,11 @@ var {
 
 var SlideUpMenu = require('./SlideUpMenu');
 
-var calcIcon = require('./img/ic_mode_edit_white_18dp.png');
-var createIcon = require('./img/ic_extension_white_18dp.png');
-var othersIcon = require('./img/ic_add_box_white_18dp.png');
-var backIcon = require('./img/ic_expand_more_white_18dp.png');
+const calcIcon = require('./img/ic_mode_edit_white_18dp.png'),
+      createIcon = require('./img/ic_extension_white_18dp.png'),
+      othersIcon = require('./img/ic_add_box_white_18dp.png'),
+      backIcon = require('./img/ic_expand_more_white_18dp.png'),
+      { C_BASE } = require('./ELColors');
 
 var defaultData = [
   ['计算', calcIcon, 'onPressCalculate'],
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     zIndex: 100,
-    backgroundColor: '#28b0bc',
+    backgroundColor: C_BASE || '#28b0bc',
   },
   item: {
     marginTop: 10,

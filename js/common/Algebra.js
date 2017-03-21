@@ -137,15 +137,15 @@
     if (A === void 0) return NaN;
     var det = 0,
         col = A.length;
-    if (col === 1) return A[0];
+    if (col === 1) return A[0][0];
     if (col !== A[0].length) return NaN;
 
     for (let i = 0; i < col; i++) {
       if (A[0][i] === 0) continue;
       det += A[0][i] *
         ((i % 2 === 0)
-         ? +(Alg.cof(A, 0, i))
-         : -(Alg.cof(A, 0, i)));
+         ? +(Alg.det(Alg.cof(A, 0, i)))
+         : -(Alg.det(Alg.cof(A, 0, i))));
     }
     return det;
   };
@@ -158,15 +158,12 @@
       if (col !== i) {
         Cof.push([]);
         for (let row = 0; row < length; row++) {
-          if (row !== j) {
-            Cof[count].push(A[col][row]);
-          }
+          if (row !== j) Cof[count].push(A[col][row]);
         }
         count++;
       }
     }
-
-    return Alg.det(Cof);
+    return Cof;
   };
 
   Alg.transpose = function(A) {

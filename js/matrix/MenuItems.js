@@ -11,13 +11,14 @@ var {
 
 import { connect } from 'react-redux';
 import { setMType } from '../actions';
+import { C_APP, C_INVERT } from '../common/ELColors';
 
 const defaultDate = [
-  ['(0)', '全零', 0],
-  ['(1)', '全壹', 1],
-  ['(E)', '单位', 2],
-  ['(R)', '随机', 3],
-  ['(\\)', '对称', 4]
+  ['0', '全零阵', 0],
+  ['1', '全壹阵', 1],
+  ['E', '单位阵', 2],
+  ['R', '随机阵', 3],
+  ['\\', '对称阵', 4]
 ];
 
 class MenuItems extends React.Component {
@@ -32,13 +33,14 @@ class MenuItems extends React.Component {
   renderItems() {
     return defaultDate.map(function(val) {
       return (
-        <TouchableOpacity
-          onPress={() => this._onPressItems(val[2])}
-          key={val[0]}
-          style={styles.item}>
-          <Text style={styles.icon}>{val[0]}</Text>
+        <View key={val[0]}>
+          <TouchableOpacity
+            onPress={() => this._onPressItems(val[2])}
+            style={styles.item}>
+            <Text style={styles.icon}>{val[0]}</Text>
+          </TouchableOpacity>
           <Text style={styles.text}>{val[1]}</Text>
-        </TouchableOpacity>
+        </View>
       );
     }.bind(this));
   }
@@ -53,24 +55,28 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    backgroundColor: C_APP,
   },
   item: {
     marginTop: 10,
+    marginBottom: 5,
     flexDirection: 'column',
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#ffbd40cc',
+    justifyContent: 'center',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: C_INVERT + 'cc' || '#ffbd40cc',
   },
   icon: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: '900',
     color: 'white',
     textAlign: 'center',
+    marginBottom: 4,
   },
   text: {
     fontSize: 10,
-    color: 'white',
+    color: '#666',
     textAlign: 'center',
   }
 });

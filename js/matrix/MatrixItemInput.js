@@ -6,6 +6,8 @@ import {
   TextInput,
 } from 'react-native';
 
+import { C_INVERT } from '../common/ELColors';
+
 class ItemInput extends Component{
   constructor(props) {
     super(props);
@@ -61,7 +63,7 @@ var styles = StyleSheet.create({
     height: 41,
     margin: 2,
     padding: 0,
-    backgroundColor: '#ffbd40',
+    backgroundColor: C_INVERT || '#ffbd40',
 
     fontSize: 18,
     fontWeight: 'bold',

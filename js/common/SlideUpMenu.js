@@ -18,7 +18,7 @@ class SilidUpMenu extends React.Component {
   }
 
   static defaultProps = {
-    height: 80,
+    height: 85,
   }
   slideUp() {
     Animated.spring(
@@ -34,7 +34,7 @@ class SilidUpMenu extends React.Component {
     Animated.timing(
       this.state.slideUp, {
         toValue: 0,
-        duration: 500,
+        duration: 400,
       }
     ).start();
   }

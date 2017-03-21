@@ -6,8 +6,9 @@ import {
   TextInput,
 } from 'react-native';
 
-export default class BlockInput extends Component {
 
+// TODO: no one use it.
+export default class BlockInput extends Component {
   onChangeText(text) {
     if (this.props.onChangeText)
       this.props.onChangeText(text);

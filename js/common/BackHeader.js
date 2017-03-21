@@ -10,6 +10,8 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+const { C_BASE } = require('./ELColors');
+
 class BackHeader extends React.Component {
   render() {
     return (
@@ -29,7 +31,7 @@ var styles = StyleSheet.create({
     height: 54,
     flexDirection: 'row',
     paddingLeft: 12,
-    backgroundColor: '#28b0bc',
+    backgroundColor: C_BASE || '#28b0bc',
   },
   backIcon: {
     width: 36,

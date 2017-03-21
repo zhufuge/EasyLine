@@ -8,6 +8,8 @@ var {
   Text,
 } = ReactNative;
 
+import { C_BASE, C_INVERT } from '../common/ELColors';
+
 class MatrixColSide extends React.Component{
   // constructor(props) {
   //   super(props);
@@ -58,7 +60,7 @@ var styles = StyleSheet.create({
     width: 41,
     height: 41,
     margin: 2,
-    backgroundColor: '#28b0bc',
+    backgroundColor: C_BASE || '#28b0bc',
 
     fontSize: 18,
     fontWeight: 'bold',
@@ -67,7 +69,7 @@ var styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   itemOpacity: {
-    backgroundColor: '#28b0bc99',
+    backgroundColor: C_BASE + '99' || '#28b0bc99',
   }
 });
 

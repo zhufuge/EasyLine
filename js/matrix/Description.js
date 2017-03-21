@@ -12,6 +12,7 @@ var {
 
 import { connect } from 'react-redux';
 import { setCol, setRow } from '../actions';
+import { C_BASE } from '../common/ELColors';
 
 var NumberPicker = require('../common/NumberPicker');
 
@@ -80,7 +81,7 @@ var styles = StyleSheet.create({
   },
   common: {
     marginRight: 1,
-    backgroundColor: '#28b0bc',
+    backgroundColor: C_BASE || '#28b0bc',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',

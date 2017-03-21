@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import ELNavigator from './ELNavigator';
+import { C_APP } from './common/ELColors';
 
 class ELApp extends React.Component{
   render() {
@@ -22,6 +23,7 @@ class ELApp extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: C_APP,
   },
 });
 

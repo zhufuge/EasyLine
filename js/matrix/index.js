@@ -6,6 +6,7 @@ var {
   StyleSheet,
   View,
   ScrollView,
+  Dimensions,
 } = ReactNative;
 
 import { connect } from 'react-redux';
@@ -24,9 +25,11 @@ class MatrixView extends React.Component {
       <View
         style={styles.container}>
         <Header navigator={this.props.navigator}/>
-        <Main />
-        <Footer
-          navigator={this.props.navigator}/>
+        <ScrollView>
+          <Main />
+          <Footer
+            navigator={this.props.navigator}/>
+        </ScrollView>
       </View>
     );
   }

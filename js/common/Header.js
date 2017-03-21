@@ -13,6 +13,7 @@ var {
 const ic_logo = require('./img/ic_dashboard_white_18dp.png'),
       ic_settings = require('./img/ic_settings_white_18dp.png'),
       ic_about = require('./img/ic_bubble_chart_white_18dp.png'),
+      { C_BASE } = require('./ELColors'),
       defaultData = {
         title: 'EasyLinear'
       };
@@ -20,7 +21,7 @@ const ic_logo = require('./img/ic_dashboard_white_18dp.png'),
 var Header = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <View style={styles.left}>
           <Image
             style={styles.logo}
@@ -61,7 +62,7 @@ var styles = StyleSheet.create({
     zIndex: 100,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: '#28b0bc',
+    backgroundColor: C_BASE || '#28b0bc',
   },
   left: {
     flexDirection: 'row',
@@ -73,6 +74,7 @@ var styles = StyleSheet.create({
     width: 48,
     height: 48,
     marginTop: 2,
+    tintColor: 'white',
   },
   title: {
     paddingTop: 5,
