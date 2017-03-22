@@ -70,8 +70,9 @@ const mapStateToProps = (state) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 12,
+    marginVertical: 18,
     height: 330,
+    width: 330,
   },
   top: {
     flexDirection: 'row',
@@ -85,11 +86,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   switchButton: {
-    width: 41,
-    height: 41,
+    width: 44,
+    height: 44,
     backgroundColor: C_BASE || '#28b0bc',
-    margin: 2,
-    marginTop: 6,
+    margin: 1,
+    marginTop: 5,
 
     fontSize: 20,
     fontWeight: 'bold',

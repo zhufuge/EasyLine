@@ -19,7 +19,9 @@ class MatrixMain extends Component {
   }
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        style={styles.container}>
         <Description />
         <MatrixPanel />
         <Record />
@@ -32,10 +34,12 @@ var styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     height: Dimensions.get('window').height - 90,
-    paddingTop: 78,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingTop: 72,
+    paddingHorizontal: 16,
   },
+  content: {
+    alignItems: 'center',
+  }
 });
 
 module.exports = connect()(MatrixMain);

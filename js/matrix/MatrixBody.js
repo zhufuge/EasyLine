@@ -124,8 +124,8 @@ var styles = StyleSheet.create({
   col: {
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: 2,
-    height: 41,
+    margin: 1,
+    height: 44,
   },
   itemOpacity: {
     backgroundColor: C_INVERT + '99' || '#ffbd4099',

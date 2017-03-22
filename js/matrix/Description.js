@@ -75,7 +75,6 @@ const mapStateToProps = (state) => {
 
 var styles = StyleSheet.create({
   container: {
-    marginBottom: 12,
     height: 54,
     flexDirection: 'row',
   },

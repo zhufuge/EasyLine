@@ -50,7 +50,6 @@ class ELNavigator extends React.Component{
   }
 
   renderScene(route, navigator) {
-//    return <Settings navigator={navigator}/>;
     if (route.settings) {
       return <Settings navigator={navigator}/>;
     }

@@ -41,7 +41,7 @@ class Record extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={{flex: 3}}
+          style={styles.detContainer}
           onPress={() => this.setState({showDet: !this.state.showDet})}>
           <Text
             style={[
@@ -49,8 +49,14 @@ class Record extends React.Component {
               this.state.showDet ? {backgroundColor: C_INVERT + 'cc'} : {}
             ]}>{displayDet()}</Text>
         </TouchableOpacity>
-        <View style={styles.record}></View>
-        <Text style={styles.undo}></Text>
+        <TouchableOpacity
+          style={styles.recordContainer}>
+          <Text style={styles.rank}>操作记录</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.rankContainer}>
+          <Text style={styles.rank}>秩</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -67,24 +73,37 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40,
   },
-  det: {
-    backgroundColor: C_BASE || '#28b0bc',
+  detContainer: {
     flex: 3,
     marginRight: 4,
+  },
+  det: {
+    backgroundColor: C_BASE || '#28b0bc',
+    flex: 1,
 
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  record: {
-    backgroundColor: C_BASE || '#28b0bc',
-    flex: 9.6,
+  recordContainer: {
+    flex: 9,
     marginRight: 4,
   },
-  undo: {
+  record: {
     backgroundColor: C_BASE || '#28b0bc',
-    flex: 2,
+  },
+  rankContainer: {
+    flex: 3,
+  },
+  rank: {
+    backgroundColor: C_BASE || '#28b0bc',
+    flex: 1,
+
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 });
 

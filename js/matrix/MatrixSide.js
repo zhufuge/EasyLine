@@ -57,9 +57,9 @@ var styles = StyleSheet.create({
     marginTop: 4,
   },
   item: {
-    width: 41,
-    height: 41,
-    margin: 2,
+    width: 44,
+    height: 44,
+    margin: 1,
     backgroundColor: C_BASE || '#28b0bc',
 
     fontSize: 18,

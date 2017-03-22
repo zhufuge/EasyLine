@@ -59,9 +59,9 @@ class ItemInput extends Component{
 
 var styles = StyleSheet.create({
   container: {
-    width: 41,
-    height: 41,
-    margin: 2,
+    width: 44,
+    height: 44,
+    margin: 1,
     padding: 0,
     backgroundColor: C_INVERT || '#ffbd40',
 
