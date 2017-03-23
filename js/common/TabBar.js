@@ -10,6 +10,9 @@ var {
   TouchableOpacity,
 } = ReactNative;
 
+import { connect } from 'react-redux';
+import { setShowMenu } from '../actions';
+
 var SlideUpMenu = require('./SlideUpMenu');
 
 const calcIcon = require('./img/ic_mode_edit_white_18dp.png'),
@@ -25,15 +28,22 @@ var defaultData = [
 ];
 
 class TabBar extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      showMenu: false,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({showMenu: nextProps.show});
+  render() {
+    return (
+      <View style={styles.container}>
+        <View>
+          <SlideUpMenu
+            show={this.props.showMenu}>
+            {this.props.children}
+          </SlideUpMenu>
+        </View>
+        <View style={styles.tabBar}>
+          {this.props.showMenu
+            ? this._renderHideMenu()
+          : this._renderRow()}
+        </View>
+      </View>
+    );
   }
 
   _createTouchableItem(rowData) {
@@ -49,41 +59,25 @@ class TabBar extends React.Component{
       </TouchableOpacity>
     );
   }
-
   _renderRow() {
     return defaultData.map(function(rowData) {
       return this._createTouchableItem(rowData);
     }.bind(this));
-
   }
-
   _renderHideMenu() {
     return this._createTouchableItem(['', backIcon, 'onPressBack']);
   }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View>
-          <SlideUpMenu
-            show={this.state.showMenu}>
-            {this.props.children}
-          </SlideUpMenu>
-        </View>
-        <View style={styles.tabBar}>
-          {this.state.showMenu
-            ? this._renderHideMenu()
-          : this._renderRow()}
-        </View>
-      </View>
-    );
-  }
-
-  onPressCreate() {this.setState({showMenu: true});}
-  onPressBack() {this.setState({showMenu: false});}
+  onPressCreate() {this.props.dispatch(setShowMenu(true));}
+  onPressBack() {this.props.dispatch(setShowMenu(false));}
   onPressCalculate() {}
   onPressOthers() {}
 }
+
+const mapStateToProps = (state) => {
+  return {
+    showMenu: state.showMenu
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -111,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = TabBar;
+module.exports = connect(mapStateToProps)(TabBar);

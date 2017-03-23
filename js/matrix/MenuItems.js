@@ -10,7 +10,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setMType } from '../actions';
+import { setMType, setShowMenu } from '../actions';
 import { C_APP, C_INVERT } from '../common/ELColors';
 
 const defaultDate = [
@@ -22,9 +22,6 @@ const defaultDate = [
 ];
 
 class MenuItems extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <View style={styles.container}>
@@ -50,7 +47,7 @@ class MenuItems extends React.Component {
     }.bind(this));
   }
   _onPressItems(item) {
-    this.props.hideMenu();
+    this.props.dispatch(setShowMenu(false));
     this.props.dispatch(setMType(item));
   }
 }

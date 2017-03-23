@@ -34,3 +34,17 @@ export const setTranspose = (transpose) => {
     transpose: transpose
   };
 };
+
+export const setShowMenu = (showMenu) => {
+  return {
+    type: 'SHOW_MENU',
+    showMenu: showMenu
+  };
+};
+
+export const setRank = (rank) => {
+  return {
+    type: 'RANK',
+    rank: rank
+  };
+};

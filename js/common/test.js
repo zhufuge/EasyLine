@@ -2,7 +2,6 @@ var Alg = require('./Algebra');
 
 var a = Alg.create(2, 3);
 
-
 //console.log(Alg.calculateDet(a));
 // console.log(Alg.range(6));
 
@@ -15,9 +14,9 @@ var c = Alg.transpose(a);
 
 c = [b, b = c][0];
 
-console.log(a);
-console.log(b);
-console.log(c);
+// console.log(a);
+// console.log(b);
+// console.log(c);
 
 // Alg.removeCol(a);
 // console.log(a);
@@ -28,3 +27,10 @@ console.log(c);
 // Alg.changeRow(b, -1);
 // console.log(a);
 // console.log(b);
+
+
+function f(x) {
+  x[0] = 0;
+  return x;
+}
+

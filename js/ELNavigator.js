@@ -14,28 +14,27 @@ var Settings = require('./views/settings');
 var About = require('./views/about');
 
 class ELNavigator extends React.Component{
-  // TODO: this.refs.navigator is undefined ?
-  // componentDidMount() {
-  //   BackAndroid.addEventListener('hardwareBackPress', this.handleBackButton);
-  // }
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
 
-  // componentWillUnmount() {
-  //   BackAndroid.removeEventListener('hardwareBackPress', this.handleBackButton);
-  // }
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
 
-  // handleBackButton() {
-  //   const { navigator } = this.refs;
-  //   if (navigator && navigator.getCurrentRoutes().length > 1) {
-  //     navigator.pop();
-  //     return true;
-  //   }
-  //   if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-  //     return false;
-  //   }
-  //   this.lastBackPressed = Date.now();
-  //   ToastAndroid.show('再按一次退出应用');
-  //   return true;
-  // }
+  handleBackButton = () => {
+    const { navigator } = this.refs;
+    if (navigator && navigator.getCurrentRoutes().length > 1) {
+      navigator.pop();
+      return true;
+    }
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+    return true;
+  }
 
   render() {
     return (

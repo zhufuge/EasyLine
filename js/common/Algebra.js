@@ -45,6 +45,18 @@
     return matrix;
   };
 
+  Alg.createEye = function(len) {
+    var matrix = Array(len);
+    for (let i = 0; i < len; i++) {
+      matrix[i] = Array(len);
+      for (let j = 0; j < len; j++) {
+        if (i === j) matrix[i][j] = 1;
+        else matrix[i][j] = 0;
+      }
+    }
+    return matrix;
+  };
+
   Alg.copy = function(A) {
     if (!A.length) return [A];
     var result = [];
@@ -61,10 +73,8 @@
     col = col !== void 0 ? col : 1;
     num = num || 0;
 
-    var last = A.length - 1;
-    for (let i = 0; i < col; i++) {
+    for (let i = 0, last = A.length; i < col; i++, last++) {
       A.push([]);
-      last++;
       for (let j = 0, length = A[0].length; j < length; j++) {
         A[last].push(num);
       }
@@ -74,10 +84,7 @@
 
   Alg.removeCol = function(A, col) {
     col = col !== void 0 ? col : 1;
-
-    for (let i = 0; i < col; i++) {
-      A.pop();
-    }
+    for (let i = 0; i < col; i++) A.pop();
     return col;
   };
 
@@ -91,22 +98,17 @@
     row = row !== void 0 ? row : 1;
     num = num || 0;
 
-    for (let i = 0, length = A.length; i < length; i++) {
-      for (let j = 0; j < row; j++) {
+    for (let i = 0, length = A.length; i < length; i++)
+      for (let j = 0; j < row; j++)
         A[i].push(num);
-      }
-    }
     return row;
   };
 
   Alg.removeRow = function(A, row) {
     row = row !== void 0 ? row : 1;
-
-    for (let i = 0, length = A.length; i < length; i++) {
-      for (let j = 0; j < row; j++) {
+    for (let i = 0, length = A.length; i < length; i++)
+      for (let j = 0; j < row; j++)
         A[i].pop();
-      }
-    }
     return row;
   };
 
@@ -139,6 +141,14 @@
         col = A.length;
     if (col === 1) return A[0][0];
     if (col !== A[0].length) return NaN;
+
+    const transpose = Alg.transpose(A);
+    for (let i = 0; i < col; i++) {
+      if (A[i].every((num) => num === 0) ||
+          transpose[i].every((num => num === 0))) {
+        return 0;
+      }
+    }
 
     for (let i = 0; i < col; i++) {
       if (A[0][i] === 0) continue;
@@ -180,4 +190,7 @@
     return transpose;
   };
 
+  Alg.rank = function(A) {
+    
+  };
 }).call(this);

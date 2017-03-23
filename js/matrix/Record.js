@@ -17,16 +17,9 @@ class Record extends React.Component {
     super(props);
     this.state = {
       showDet: false,
+      showRank: false,
     };
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.showDet === false && nextState.det === this.state.showDet) {
-      return false;
-    }
-    return true;
-  }
-
   render() {
     const displayDet = () => {
       if (this.state.showDet) {
@@ -38,6 +31,10 @@ class Record extends React.Component {
       return '行列值';
     };
 
+    const displayRank = () => {
+      return this.state.showRank ? this.props.rank : '秩';
+    };
+
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -46,7 +43,7 @@ class Record extends React.Component {
           <Text
             style={[
               styles.det,
-              this.state.showDet ? {backgroundColor: C_INVERT + 'cc'} : {}
+              this.state.showDet ? styles.onShow : {}
             ]}>{displayDet()}</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -54,8 +51,13 @@ class Record extends React.Component {
           <Text style={styles.rank}>操作记录</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => this.setState({showRank: !this.state.showRank})}
           style={styles.rankContainer}>
-          <Text style={styles.rank}>秩</Text>
+          <Text
+            style={[
+              styles.rank,
+              this.state.showRank ? styles.onShow : {}
+            ]}>{displayRank()}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -64,7 +66,8 @@ class Record extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    det: state.det
+    det: state.det,
+    rank: state.rank
   };
 };
 
@@ -105,6 +108,9 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
+  onShow: {
+    backgroundColor: C_INVERT + 'cc'
+  }
 });
 
 module.exports = connect(mapStateToProps)(Record);

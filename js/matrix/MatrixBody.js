@@ -10,7 +10,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setDet, setCol, setRow } from '../actions';
+import { setDet, setCol, setRow, setRank } from '../actions';
 import { C_INVERT } from '../common/ELColors';
 
 const floor = Math.floor,
@@ -55,7 +55,7 @@ class MatrixItems extends React.Component{
       matrix = Alg.create(col, row, type);
     }
 
-    this._returnDet(col, row, matrix);
+    this._returnData(col, row, matrix);
     this.setState({
       col: col,
       row: row,
@@ -95,9 +95,10 @@ class MatrixItems extends React.Component{
     var matrix = Alg.copy(this.state.matrix);
     matrix[col][row] = +num;
     this.setState({matrix: matrix});
-    this._returnDet(this.state.col, this.state.row, matrix);
+    this._returnData(this.state.col, this.state.row, matrix);
   }
-  _returnDet(col, row, matrix) {
+  _returnData(col, row, matrix) {
+    this.props.dispatch(setRank(col));
     this.props.dispatch(setDet(
       col === row
         ? Alg.det(matrix)

@@ -47,10 +47,30 @@ function transpose(state = false, action) {
   }
 }
 
+function showMenu(state = false, action) {
+  switch(action.type) {
+  case 'SHOW_MENU':
+    return action.showMenu;
+  default:
+    return state;
+  }
+}
+
+function rank(state = 0, action) {
+  switch(action.type) {
+  case 'RANK':
+    return action.rank;
+  default:
+    return state;
+  }
+}
+
 export default combineReducers({
   det,
   mType,
   col,
   row,
-  transpose
+  transpose,
+  showMenu,
+  rank
 });
