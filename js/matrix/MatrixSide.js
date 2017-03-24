@@ -9,57 +9,42 @@ var {
 } = ReactNative;
 
 import { C_BASE, C_INVERT } from '../common/ELColors';
+const Alg = require('../common/Algebra');
 
 class MatrixColSide extends React.Component{
-  // constructor(props) {
-  //   super(props);
-  // }
-
   render() {
-    const container = {
-      flexDirection: this.props.direction,
-      flex: this.props.flex,
-    };
-
-    var i,
-        col = this.props.num,
-        colItems = [];
-    for (i = 0; i < col; i++) {
-      colItems.push(i);
-    }
-
-   var items = colItems.map(function(item) {
-      const style = [styles.item];
-      if (item % 2 === 1) {
-        style.push(styles.itemOpacity);
-      }
+    return (
+      <View style={[styles.container, {
+              flexDirection: this.props.direction,
+              width: this.props.direction === 'row' ? 277.5 : 45,
+              height: this.props.direction === 'column' ? 277.5 : 45,
+            }]}>
+        {this._createItems()}
+      </View>
+    );
+  }
+  _createItems() {
+    return Alg.range(this.props.num).map(function(item) {
       return (
-        <Text key={container.flexDirection + item}
-              style={style}>
+        <Text
+          key={this.props.direction + item}
+          style={[styles.item, item % 2 === 0 ? {} : styles.itemOpacity]}>
           {(item + 1).toString()}
         </Text>
       );
-    });
-
-    return (
-      <View style={[styles.container, container]}>
-        {items}
-      </View>
-    );
+    }.bind(this));
   }
 }
 
 var styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     justifyContent: 'center',
-    flex: 1,
-    marginTop: 4,
   },
   item: {
-    width: 44,
-    height: 44,
-    margin: 1,
+    width: 45,
+    height: 45,
+    marginBottom: 1.5,
+    marginRight: 1.5,
     backgroundColor: C_BASE || '#28b0bc',
 
     fontSize: 18,

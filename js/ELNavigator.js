@@ -9,9 +9,10 @@ var {
 } = ReactNative;
 import { connect } from 'react-redux';
 
-var MatrixView = require('./matrix');
-var Settings = require('./views/settings');
-var About = require('./views/about');
+import MatrixView from './matrix';
+import CalcView from './calculation';
+import Settings from './views/settings';
+import About from './views/about';
 
 class ELNavigator extends React.Component{
   componentDidMount() {
@@ -49,11 +50,15 @@ class ELNavigator extends React.Component{
   }
 
   renderScene(route, navigator) {
+//    return <CalcView navigator={navigator}/>;
     if (route.settings) {
       return <Settings navigator={navigator}/>;
     }
     if (route.about) {
       return <About navigator={navigator}/>;
+    }
+    if (route.calc) {
+      return <CalcView navigator={navigator}/>;
     }
     return <MatrixView navigator={navigator}/>;
   }

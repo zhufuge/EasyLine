@@ -33,7 +33,6 @@ class MatrixView extends React.Component {
       </View>
     );
   }
-
 };
 
 

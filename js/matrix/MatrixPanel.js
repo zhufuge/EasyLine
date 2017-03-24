@@ -38,13 +38,12 @@ class MatrixPanel extends React.Component{
       <View style={styles.container}>
         <View style={[styles.top]}>
           <MatrixBody />
-          <MatrixSide num={this.state.col} direction='column' flex={1} />
+          <MatrixSide num={this.state.col} direction='column'/>
         </View>
         <View style={[styles.bottom]}>
-          <MatrixSide num={this.state.row} direction='row' flex={6}/>
+          <MatrixSide num={this.state.row} direction='row'/>
           <TouchableOpacity
-            onPress={() => this.onPressSwitch()}
-            style={[styles.switch]}>
+            onPress={() => this.onPressSwitch()} >
             <Text style={[
                     styles.switchButton,
                     this.state.transpose ? styles.transpose : {}
@@ -71,35 +70,33 @@ const mapStateToProps = (state) => {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 18,
-    height: 330,
-    width: 330,
+    height: 328,
+    width: 328,
   },
   top: {
     flexDirection: 'row',
-    flex: 6,
+    height: 283,
   },
   bottom: {
     flexDirection: 'row',
-    flex: 1.1,
-  },
-  switch: {
-    flex: 1,
+    height: 45,
   },
   switchButton: {
-    width: 44,
-    height: 44,
-    backgroundColor: C_BASE || '#28b0bc',
-    margin: 1,
-    marginTop: 5,
+    width: 45,
+    height: 45,
+    marginLeft: 5.5,
+    borderWidth: 1,
+    borderColor: C_BASE || '#28b0bc',
 
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'white',
+    color: C_BASE || '#28b0bc',
     textAlignVertical: 'center',
   },
   transpose: {
-    backgroundColor: C_INVERT + '99' || '#ffbd4099'
+    borderColor: C_INVERT || '#ffbd40',
+    color: C_INVERT || '#ffbd40',
   }
 });
 

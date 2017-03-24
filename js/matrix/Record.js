@@ -78,7 +78,7 @@ var styles = StyleSheet.create({
   },
   detContainer: {
     flex: 3,
-    marginRight: 4,
+    marginRight: 1,
   },
   det: {
     backgroundColor: C_BASE || '#28b0bc',
@@ -91,7 +91,7 @@ var styles = StyleSheet.create({
   },
   recordContainer: {
     flex: 9,
-    marginRight: 4,
+    marginRight: 1,
   },
   record: {
     backgroundColor: C_BASE || '#28b0bc',
@@ -109,7 +109,7 @@ var styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   onShow: {
-    backgroundColor: C_INVERT + 'cc'
+    backgroundColor: C_INVERT + 'cc',
   }
 });
 

@@ -98,7 +98,7 @@ class MatrixItems extends React.Component{
     this._returnData(this.state.col, this.state.row, matrix);
   }
   _returnData(col, row, matrix) {
-    this.props.dispatch(setRank(col));
+    this.props.dispatch(setRank(Alg.rank(matrix)));
     this.props.dispatch(setDet(
       col === row
         ? Alg.det(matrix)
@@ -120,13 +120,15 @@ var styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'center',
-    flex: 6,
+    width: 277.5,
+    height: 277.5,
+    marginRight: 5.5,
   },
   col: {
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: 1,
-    height: 44,
+    marginBottom: 1.5,
+    height: 45,
   },
   itemOpacity: {
     backgroundColor: C_INVERT + '99' || '#ffbd4099',

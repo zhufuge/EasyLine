@@ -69,7 +69,7 @@ class TabBar extends React.Component{
   }
   onPressCreate() {this.props.dispatch(setShowMenu(true));}
   onPressBack() {this.props.dispatch(setShowMenu(false));}
-  onPressCalculate() {}
+  onPressCalculate() {this.props.navigator.push({calc: true});}
   onPressOthers() {}
 }
 

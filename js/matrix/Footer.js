@@ -14,7 +14,7 @@ var MenuItems = require('./MenuItems');
 class Footer extends Component {
   render() {
     return (
-      <TabBar>
+      <TabBar navigator={this.props.navigator}>
         <MenuItems/>
       </TabBar>
     );

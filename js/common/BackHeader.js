@@ -15,12 +15,13 @@ const { C_BASE } = require('./ELColors');
 class BackHeader extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,this.props.style]}>
         <TouchableOpacity onPress={() => this.props.navigator.pop()}>
-          <Image style={styles.backIcon}
+          <Image style={[styles.backIcon, this.props.iconStyle]}
                  source={require('./img/ic_arrow_back_white_18dp.png')}/>
         </TouchableOpacity>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={[styles.title, this.props.textStyle]}>
+          {this.props.title}</Text>
       </View>
     );
   }
