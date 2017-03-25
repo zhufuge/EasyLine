@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  View,
   TextInput,
 } from 'react-native';
 
@@ -15,15 +16,11 @@ class ItemInput extends Component{
       text: props.value,
     };
   }
-
   componentWillReceiveProps(nextProps) {
     this.setState({text: nextProps.value});
   }
-
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.text === this.state.text) {
-      return false;
-    }
+    if (nextState.text === this.state.text) return false;
     return true;
   }
 
@@ -39,20 +36,22 @@ class ItemInput extends Component{
 
   render() {
     return (
-      <TextInput
-        onChangeText={(text) => this.onChangeText(text)}
-        onEndEditing={(text) => this.onEndEditing(text)}
-        value={this.state.text}
-        maxLength={3}
-        keyboardType='numeric'
-        placeholder='0'
-        placeholderTextColor='#ddd'
-        caretHidden='true'
-        returnKeyType='next'
-        selectTextOnFocus={true}
-        underlineColorAndroid='transparent'
-        style={[styles.container, this.props.style]}
-        />
+      <View
+        style={[styles.container, this.props.style]}>
+        <TextInput
+          onChangeText={(text) => this.onChangeText(text)}
+          onEndEditing={(text) => this.onEndEditing(text)}
+          value={this.state.text}
+          maxLength={3}
+          keyboardType='numeric'
+          placeholder='0'
+          placeholderTextColor='#ddd'
+          caretHidden='true'
+          returnKeyType='next'
+          selectTextOnFocus={true}
+          underlineColorAndroid='transparent'
+          style={[styles.input]} />
+      </View>
     );
   }
 }
@@ -65,12 +64,17 @@ var styles = StyleSheet.create({
     marginBottom: 1.5,
     backgroundColor: C_INVERT || '#ffbd40',
 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: 64,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',
     textAlignVertical: 'center',
-  },
+  }
 });
 
 module.exports = ItemInput;

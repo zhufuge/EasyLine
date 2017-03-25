@@ -4,19 +4,30 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { C_BASE } from '../common/ELColors';
+import { C_BASE, C_INVERT } from '../common/ELColors';
 import MatrixGroup from './MatrixGroup';
+
+const Screen = require('./Screen');
+const Operators = require('./Operators');
 
 class CalcMain extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.screen}></View>
-        <View style={styles.operator}></View>
-        <View style={styles.calculate}></View>
+        <Screen />
+        <Operators />
+        <View style={styles.calculate}>
+          <TouchableOpacity
+            style={styles.calculateTouchable}>
+            <Text style={styles.calculateText}>计算</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.segment}></View>
         <MatrixGroup />
       </View>
     );
@@ -28,25 +39,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  screen: {
-    height: 54,
-    backgroundColor: C_BASE,
-  },
-  operator: {
-    height: 54,
-    marginHorizontal: 12,
-    marginVertical: 12,
-    backgroundColor: C_BASE,
-  },
   calculate: {
     height: 48,
-    marginBottom: 16,
-    marginHorizontal: 30,
-    backgroundColor: 'white' || C_BASE,
-
+    marginHorizontal: 90,
+    backgroundColor: C_BASE,
     borderRadius: 24,
-    borderColor: C_BASE,
-    borderWidth: 1,
+    padding: 1,
+  },
+  calculateTouchable: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 24,
+    backgroundColor: 'white',
+  },
+  calculateText: {
+    fontSize: 19,
+    fontWeight: '100',
+    color: C_BASE,
+  },
+  segment: {
+    height: 1,
+    backgroundColor: C_BASE,
+    top: -24,
+    marginBottom: 16,
+    zIndex: -1,
   },
 });
 

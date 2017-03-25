@@ -47,6 +47,7 @@ class Record extends React.Component {
             ]}>{displayDet()}</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={true}
           style={styles.recordContainer}>
           <Text style={styles.rank}>操作记录</Text>
         </TouchableOpacity>

@@ -24,7 +24,7 @@ const calcIcon = require('./img/ic_mode_edit_white_18dp.png'),
 var defaultData = [
   ['计算', calcIcon, 'onPressCalculate'],
   ['创建', createIcon, 'onPressCreate'],
-  ['其他', othersIcon, 'onPressOthers']
+  ['保存', othersIcon, 'onPressOthers']
 ];
 
 class TabBar extends React.Component{
