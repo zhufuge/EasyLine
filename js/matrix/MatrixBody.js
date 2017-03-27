@@ -36,7 +36,7 @@ class MatrixItems extends React.Component{
 
     if (this.props.col !== col ||
         this.props.row !== row) {
-      matrix = Alg.copy(this.state.matrix);
+      matrix = Alg.clone(this.state.matrix);
       Alg.changeCol(matrix, (col - this.state.col));
       Alg.changeRow(matrix, (row - this.state.row));
     } else if (this.props.transpose !== nextProps.transpose) {
@@ -92,7 +92,7 @@ class MatrixItems extends React.Component{
     }.bind(this));
   }
   _setNumber(col, row, num) {
-    var matrix = Alg.copy(this.state.matrix);
+    var matrix = Alg.clone(this.state.matrix);
     matrix[col][row] = +num;
     this.setState({matrix: matrix});
     this._returnData(this.state.col, this.state.row, matrix);

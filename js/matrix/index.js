@@ -6,31 +6,36 @@ var {
   StyleSheet,
   View,
   ScrollView,
-  Dimensions,
+  DrawerLayoutAndroid
 } = ReactNative;
 
 import { connect } from 'react-redux';
 
-var Header = require('../common/Header');
-var Main = require('./Main');
-var Footer = require('./Footer');
+const Header = require('../common/Header');
+const Main = require('./Main');
+const Footer = require('./Footer');
+const Drawer = require('./Drawer');
 
 class MatrixView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  setType(type) {this.setState({type: type});}
+  setType = (type) => this.setState({type: type})
   render() {
+    const drawer = <Drawer navigator={this.props.navigator}/>;
     return (
-      <View
-        style={styles.container}>
-        <Header navigator={this.props.navigator}/>
-        <ScrollView>
-          <Main />
-          <Footer
-            navigator={this.props.navigator}/>
-        </ScrollView>
-      </View>
+      <DrawerLayoutAndroid
+        drawerWidth={224}
+        drawerPosition={DrawerLayoutAndroid.positions.Right}
+        keyboardDismissMode='on-drag'
+        renderNavigationView={() => drawer} >
+        <View
+          style={styles.container}>
+          <Header navigator={this.props.navigator}/>
+          <ScrollView>
+            <Main />
+            <Footer
+              navigator={this.props.navigator}/>
+          </ScrollView>
+        </View>
+      </DrawerLayoutAndroid>
     );
   }
 };

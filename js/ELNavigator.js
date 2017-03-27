@@ -29,7 +29,7 @@ class ELNavigator extends React.Component{
       navigator.pop();
       return true;
     }
-    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+    if (this.lastBackPressed && this.lastBackPressed + 3000 >= Date.now()) {
       return false;
     }
     this.lastBackPressed = Date.now();

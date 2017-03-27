@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     backgroundColor: C_BASE,
   },
   backspace: {
-    height: 42,
-    width: 42,
+    height: 36,
+    width: 36,
   },
 });
 
