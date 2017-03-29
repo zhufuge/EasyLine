@@ -67,8 +67,8 @@ class Record extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    det: state.det,
-    rank: state.rank
+    det: state.matrix.det,
+    rank: state.matrix.rank
   };
 };
 

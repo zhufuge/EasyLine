@@ -5,22 +5,27 @@ import {
   StyleSheet,
   View,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 
+import { connect } from 'react-redux';
+import { setMatrixItem } from '../actions';
 import { C_INVERT } from '../common/ELColors';
 
 class ItemInput extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      text: props.value,
+      text: props.item
     };
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState({text: nextProps.value});
+
+  ComponentWillReceiveProps(nextProps) {
+    ToastAndroid.show(this.props.matrix.matrix + '', ToastAndroid.SHORT);
+    this.setState({text: nextProps.item});
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.text === this.state.text) return false;
+
+  shouldComponentUpdate() {
     return true;
   }
 
@@ -31,7 +36,10 @@ class ItemInput extends Component{
   }
 
   onEndEditing(event) {
-    this.props.setNumber(event.nativeEvent.text);
+    this.props.dispatch(
+      setMatrixItem(this.props.col, this.props.row, +event.nativeEvent.text)
+    );
+    ToastAndroid.show(this.state.text + '', ToastAndroid.SHORT);
   }
 
   render() {
@@ -41,7 +49,7 @@ class ItemInput extends Component{
         <TextInput
           onChangeText={(text) => this.onChangeText(text)}
           onEndEditing={(text) => this.onEndEditing(text)}
-          value={this.state.text}
+          value={'' + this.state.text}
           maxLength={3}
           keyboardType='numeric'
           caretHidden='true'
@@ -53,6 +61,13 @@ class ItemInput extends Component{
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    item: state.matrix.matrix[ownProps.col][ownProps.row],
+    matrix: state.matrix
+  };
+};
 
 var styles = StyleSheet.create({
   container: {
@@ -75,4 +90,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = ItemInput;
+module.exports = connect(mapStateToProps)(ItemInput);

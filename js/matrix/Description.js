@@ -11,7 +11,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setCol, setRow } from '../actions';
+import { setMatrixCol, setMatrixRow } from '../actions';
 import { C_BASE } from '../common/ELColors';
 
 var NumberPicker = require('../common/NumberPicker');
@@ -58,7 +58,7 @@ class Description extends React.Component {
         <NumberPicker
           selectedNumber={this.props.col}
           min={1}
-          onNumberChange={(number) => this.props.dispatch(setCol(number))}
+          onNumberChange={(number) => this.props.dispatch(setMatrixCol(number))}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>行</Text>
@@ -66,7 +66,7 @@ class Description extends React.Component {
         <NumberPicker
           selectedNumber={this.props.row}
           min={1}
-          onNumberChange={(number) => this.props.dispatch(setRow(number))}
+          onNumberChange={(number) => this.props.dispatch(setMatrixRow(number))}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>列</Text>
@@ -84,8 +84,8 @@ class Description extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    col: state.col,
-    row: state.row
+    col: state.matrix.col,
+    row: state.matrix.row
   };
 };
 

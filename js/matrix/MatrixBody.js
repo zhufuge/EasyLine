@@ -6,63 +6,15 @@ var {
   StyleSheet,
   View,
   TextInput,
-  ToastAndroid,
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setDet, setCol, setRow, setRank } from '../actions';
 import { C_INVERT } from '../common/ELColors';
 
-const floor = Math.floor,
-      random = Math.random;
-
-var ItemInput = require('./MatrixItemInput');
-var Alg = require('../common/Algebra');
+const ItemInput = require('./MatrixItemInput');
+const Algm = require('../common/Algebra');
 
 class MatrixItems extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      col: props.col,
-      row: props.row,
-      matrix: Alg.create(props.col, props.row, props.type),
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    var col = nextProps.col,
-        row = nextProps.row,
-        matrix = this.state.matrix;
-
-    if (this.props.col !== col ||
-        this.props.row !== row) {
-      matrix = Alg.clone(this.state.matrix);
-      Alg.changeCol(matrix, (col - this.state.col));
-      Alg.changeRow(matrix, (row - this.state.row));
-    } else if (this.props.transpose !== nextProps.transpose) {
-      matrix = Alg.transpose(matrix);
-      [col, row] = [row, col];
-      this.props.dispatch(setCol(col));
-      this.props.dispatch(setRow(row));
-    } else {
-      let type = nextProps.type;
-      switch(type) {
-      case 2: type = 'E'; break;
-      case 3: type = void 0; break;
-      case 4: type = 0; break;
-      default: break;
-      }
-      matrix = Alg.create(col, row, type);
-    }
-
-    this._returnData(col, row, matrix);
-    this.setState({
-      col: col,
-      row: row,
-      matrix: matrix
-    });
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -71,7 +23,7 @@ class MatrixItems extends React.Component{
     );
   }
   _createCol() {
-    return Alg.range(this.state.col).map(function(col){
+    return Algm.range(this.props.col).map(function(col){
       return (
         <View key={'col' + col}
               style={styles.col}>
@@ -80,39 +32,23 @@ class MatrixItems extends React.Component{
     }.bind(this));
   }
   _createItem(col) {
-    return Alg.range(this.state.row).map(function(row) {
+    return Algm.range(this.props.row).map(function(row) {
       return (
         <ItemInput
           key={col + ',' + row}
-          setNumber={(text) => this._setNumber(col, row, text)}
-          value={this.state.matrix[col][row] + ''}
+          col={col}
+          row={row}
           style={(col + row) % 2 === 0 ? {} : styles.itemOpacity}
           />
       );
     }.bind(this));
   }
-  _setNumber(col, row, num) {
-    var matrix = Alg.clone(this.state.matrix);
-    matrix[col][row] = +num;
-    this.setState({matrix: matrix});
-    this._returnData(this.state.col, this.state.row, matrix);
-  }
-  _returnData(col, row, matrix) {
-    this.props.dispatch(setRank(Alg.rank(matrix)));
-    this.props.dispatch(setDet(
-      col === row
-        ? Alg.det(matrix)
-        : 'NaN'
-    ));
-  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    type: state.mType,
-    col: state.col,
-    row: state.row,
-    transpose: state.transpose
+    col: state.matrix.col,
+    row: state.matrix.row,
   };
 };
 

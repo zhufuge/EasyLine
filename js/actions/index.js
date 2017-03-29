@@ -1,40 +1,5 @@
 'use strict';
 
-export const setDet = (det) => {
-  return {
-    type: 'DET',
-    det: det
-  };
-};
-
-export const setMType = (mType) => {
-  return {
-    type: 'M_TYPE',
-    mType: mType
-  };
-};
-
-export const setCol = (col) => {
-  return {
-    type: 'COL',
-    col: col
-  };
-};
-
-export const setRow = (row) => {
-  return {
-    type: 'ROW',
-    row: row
-  };
-};
-
-export const setTranspose = (transpose) => {
-  return {
-    type: 'TRANSPOSE',
-    transpose: transpose
-  };
-};
-
 export const setShowMenu = (showMenu) => {
   return {
     type: 'SHOW_MENU',
@@ -42,9 +7,47 @@ export const setShowMenu = (showMenu) => {
   };
 };
 
-export const setRank = (rank) => {
+export const setMatrix = (col, row, mType) => {
   return {
-    type: 'RANK',
-    rank: rank
+    type: 'MATRIX',
+    col: col,
+    row: row,
+    mType: mType
+  };
+};
+
+export const setMatrixType = (mType) => {
+  return {
+    type: 'MATRIX_TYPE',
+    mType: mType
+  };
+};
+
+export const setMatrixCol = (col) => {
+  return {
+    type: 'MATRIX_COL',
+    col: col
+  };
+};
+
+export const setMatrixRow = (row) => {
+  return {
+    type: 'MATRIX_ROW',
+    row: row
+  };
+};
+
+export const setMatrixItem = (i, j, val) => {
+  return {
+    type: 'MATRIX_ITEM',
+    i: i,
+    j: j,
+    val: val
+  };
+};
+
+export const setMatrixTranspose = () => {
+  return {
+    type: 'MATRIX_TRANSPOSE'
   };
 };

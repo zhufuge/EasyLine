@@ -17,7 +17,6 @@ const Footer = require('./Footer');
 const Drawer = require('./Drawer');
 
 class MatrixView extends React.Component {
-  setType = (type) => this.setState({type: type})
   render() {
     const drawer = <Drawer navigator={this.props.navigator}/>;
     return (

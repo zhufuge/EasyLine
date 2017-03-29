@@ -10,7 +10,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setTranspose } from '../actions';
+import { setMatrixTranspose } from '../actions';
 import { C_BASE, C_INVERT } from '../common/ELColors';
 
 var MatrixBody = require('./MatrixBody');
@@ -20,17 +20,8 @@ class MatrixPanel extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      col: props.col,
-      row: props.row,
       transpose: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      col: nextProps.col,
-      row: nextProps.row
-    });
   }
 
   render() {
@@ -38,12 +29,12 @@ class MatrixPanel extends React.Component{
       <View style={styles.container}>
         <View style={[styles.top]}>
           <MatrixBody />
-          <MatrixSide num={this.state.col} direction='column'/>
+          <MatrixSide num={this.props.col} direction='column'/>
         </View>
         <View style={[styles.bottom]}>
-          <MatrixSide num={this.state.row} direction='row'/>
+          <MatrixSide num={this.props.row} direction='row'/>
           <TouchableOpacity
-            onPress={() => this.onPressSwitch()} >
+            onPress={() => this._onPressTranspose()} >
             <Text style={[
                     styles.switchButton,
                     this.state.transpose ? styles.transpose : {}
@@ -53,17 +44,17 @@ class MatrixPanel extends React.Component{
       </View>
     );
   }
-  onPressSwitch() {
-    const transpose = this.state.transpose;
-    this.setState({transpose: !transpose});
-    this.props.dispatch(setTranspose(!transpose));
+
+  _onPressTranspose() {
+    this.setState({transpose: !this.state.transpose});
+    this.props.dispatch(setMatrixTranspose());
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    col: state.col,
-    row: state.row
+    col: state.matrix.col,
+    row: state.matrix.row
   };
 };
 

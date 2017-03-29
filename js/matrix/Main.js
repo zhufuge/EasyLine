@@ -14,9 +14,6 @@ var MatrixPanel = require('./MatrixPanel');
 var Record = require('./Record');
 
 class MatrixMain extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <ScrollView

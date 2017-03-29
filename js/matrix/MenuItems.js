@@ -10,14 +10,14 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setMType, setShowMenu } from '../actions';
+import { setMatrixType, setShowMenu } from '../actions';
 import { C_APP, C_INVERT } from '../common/ELColors';
 
 const defaultDate = [
   ['0', '全零阵', 0],
   ['1', '全壹阵', 1],
-  ['E', '单位阵', 2],
-  ['R', '随机阵', 3],
+  ['E', '单位阵', 'E'],
+  ['R', '随机阵', void 0],
   ['\\', '对称阵', 4]
 ];
 
@@ -47,14 +47,14 @@ class MenuItems extends React.Component {
     }.bind(this));
   }
   _onPressItems(item) {
+    this.props.dispatch(setMatrixType(item));
     this.props.dispatch(setShowMenu(false));
-    this.props.dispatch(setMType(item));
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    mType: state.mType
+    mType: state.matrix.mType
   };
 };
 
