@@ -44,8 +44,6 @@ class ItemInput extends Component{
           value={this.state.text}
           maxLength={3}
           keyboardType='numeric'
-          placeholder='0'
-          placeholderTextColor='#ddd'
           caretHidden='true'
           returnKeyType='next'
           selectTextOnFocus={true}

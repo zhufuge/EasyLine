@@ -20,21 +20,37 @@ class Description extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: 0
+      mode: 0,
+      name: 'A'
     };
   }
+
+  _onChangeText(text) {
+    if (text === '' || /^[A-Z]$/.test(text)) {
+      this.setState({name: text});
+    } else if (/^[a-z]$/.test(text)) {
+      this.setState({name: text.toUpperCase()});
+    }
+  }
+
+  _onEndEditing(event) {
+    const name = event.nativeEvent.text;
+    this.setState({name: (name === '') ? 'A' : name});
+  }
+
   render() {
     const mode = (this.state.mode === 0) ? 'A' : '|A|';
     return (
       <View style={styles.container}>
         <View style={[styles.name, styles.common]}>
           <TextInput
+            onChangeText={(text) => this._onChangeText(text)}
+            onEndEditing={(event) => this._onEndEditing(event)}
+            value={this.state.name}
             autoCapitalize='characters'
             caretHidden='true'
-            defaultValue='A'
-            maxLength={6}
-            placeholder='A'
-            placeholderTextColor='#ddd'
+            maxLength={1}
+            selectTextOnFocus={true}
             underlineColorAndroid='transparent'
             style={[styles.value, styles.textInput]}/>
           <Text style={styles.id}>名称</Text>

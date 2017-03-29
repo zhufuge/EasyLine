@@ -39,16 +39,16 @@ var rowEchelon = function(matrix) {
     for (let i = 1, len = A.length; i < len; i++) {
       if (A[i][rowStep] === 0) continue;
 
-      lcm = alg.lcm(abs(A[0][rowStep]), abs(A[i][rowStep]));
+      lcm = alg.lcm(Math.abs(A[0][rowStep]), Math.abs(A[i][rowStep]));
 
-      A[0] = A[0].map((val, index) => {
-        if (index < rowStep) return val;
-        return val * lcm / A[0][rowStep];
+      A[0].forEach((val, index) => {
+        if (index >= rowStep)
+          val = val * lcm / A[0][rowStep];
       });
 
-      A[i] = A[i].map((val, index) => {
-        if (index < rowStep) return val;
-        return val * lcm / A[i][rowStep] - A[0][index];
+      A[i].forEach((val, index) => {
+        if (index >= rowStep)
+        val = val * lcm / A[i][rowStep] - A[0][index];
       });
     }
     B.push(A.shift());
@@ -57,3 +57,6 @@ var rowEchelon = function(matrix) {
 
   return B;
 };
+
+console.log(rowEchelon(a));
+console.log(alg.rowEchelon(a));
