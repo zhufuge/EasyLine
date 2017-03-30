@@ -18,7 +18,7 @@ const defaultDate = [
   ['1', '全壹阵', 1],
   ['E', '单位阵', 'E'],
   ['R', '随机阵', void 0],
-  ['\\', '对称阵', 4]
+  ['\\', '对称阵', '\\']
 ];
 
 class MenuItems extends React.Component {
@@ -47,8 +47,8 @@ class MenuItems extends React.Component {
     }.bind(this));
   }
   _onPressItems(item) {
-    this.props.dispatch(setMatrixType(item));
     this.props.dispatch(setShowMenu(false));
+    this.props.dispatch(setMatrixType(item));
   }
 }
 

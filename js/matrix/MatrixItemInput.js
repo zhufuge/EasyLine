@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   TextInput,
-  ToastAndroid,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -20,13 +19,12 @@ class ItemInput extends Component{
     };
   }
 
-  ComponentWillReceiveProps(nextProps) {
-    ToastAndroid.show(this.props.matrix.matrix + '', ToastAndroid.SHORT);
+  componentWillReceiveProps(nextProps) {
     this.setState({text: nextProps.item});
   }
 
-  shouldComponentUpdate() {
-    return true;
+  shouldComponentUpdate(nextProps, nextState) {
+    return (nextState.text === this.state.text) ? false : true;
   }
 
   onChangeText(text) {
@@ -36,10 +34,17 @@ class ItemInput extends Component{
   }
 
   onEndEditing(event) {
-    this.props.dispatch(
-      setMatrixItem(this.props.col, this.props.row, +event.nativeEvent.text)
-    );
-    ToastAndroid.show(this.state.text + '', ToastAndroid.SHORT);
+    const dispatch = this.props.dispatch,
+          col = this.props.col,
+          row = this.props.row,
+          val = +event.nativeEvent.text;
+    if (this.props.type === '\\' &&
+        col !== row) {
+      dispatch(setMatrixItem(col, row, val));
+      dispatch(setMatrixItem(row, col, val));
+    } else {
+      dispatch(setMatrixItem(col, row, val));
+    }
   }
 
   render() {
@@ -65,7 +70,7 @@ class ItemInput extends Component{
 const mapStateToProps = (state, ownProps) => {
   return {
     item: state.matrix.matrix[ownProps.col][ownProps.row],
-    matrix: state.matrix
+    type: state.matrix.mType
   };
 };
 

@@ -11,6 +11,10 @@ var {
 
 import { connect } from 'react-redux';
 import { C_BASE, C_INVERT } from '../common/ELColors';
+const Algm = require('../common/Algebra.js');
+
+const Det = (matrix) => (matrix.length === matrix[0].length)
+      ? Algm.det(matrix) : 'NaN';
 
 class Record extends React.Component {
   constructor(props) {
@@ -18,12 +22,25 @@ class Record extends React.Component {
     this.state = {
       showDet: false,
       showRank: false,
+      det: 0,
+      rank: 0,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.showDet) {
+      this.setState({det: Det(nextProps.matrix)});
+    }
+
+    if (this.state.showRank) {
+      this.setState({rank: Algm.rank(nextProps.matrix)});
+    }
+  }
+
   render() {
     const displayDet = () => {
       if (this.state.showDet) {
-        const det = this.props.det;
+        const det = this.state.det;
         if (det === 'NaN') return '行≠列';
         if (Math.round(det) === det) return det + '';
         return det.toPrecision(4) + '';
@@ -31,15 +48,13 @@ class Record extends React.Component {
       return '行列值';
     };
 
-    const displayRank = () => {
-      return this.state.showRank ? this.props.rank : '秩';
-    };
+    const displayRank = () => this.state.showRank ? this.state.rank : '秩';
 
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.detContainer}
-          onPress={() => this.setState({showDet: !this.state.showDet})}>
+          onPress={() => this._onPressDet()}>
           <Text
             style={[
               styles.det,
@@ -52,7 +67,7 @@ class Record extends React.Component {
           <Text style={styles.rank}>操作记录</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => this.setState({showRank: !this.state.showRank})}
+          onPress={() => this._onPressRank()}
           style={styles.rankContainer}>
           <Text
             style={[
@@ -63,12 +78,25 @@ class Record extends React.Component {
       </View>
     );
   }
+  _onPressDet() {
+    var det,
+        show = !this.state.showDet;
+    if (show) det = Det(this.props.matrix);
+    det = (det === void 0) ? this.state.det : det;
+    this.setState({showDet: show, det: det});
+  }
+  _onPressRank() {
+    var rank,
+        show = !this.state.showRank;
+    if (show) rank = Algm.rank(this.props.matrix);
+    rank = (rank === void 0) ? this.state.rank : rank;
+    this.setState({showRank: show, rank: rank});
+  }
 };
 
 const mapStateToProps = (state) => {
   return {
-    det: state.matrix.det,
-    rank: state.matrix.rank
+    matrix: state.matrix.matrix,
   };
 };
 

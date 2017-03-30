@@ -1,5 +1,6 @@
 'use strict';
 
+
 export const setShowMenu = (showMenu) => {
   return {
     type: 'SHOW_MENU',
@@ -13,6 +14,13 @@ export const setMatrix = (col, row, mType) => {
     col: col,
     row: row,
     mType: mType
+  };
+};
+
+export const setMatrixName = (name) => {
+  return {
+    type: 'MATRIX_NAME',
+    name: name
   };
 };
 

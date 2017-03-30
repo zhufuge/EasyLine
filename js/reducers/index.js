@@ -12,29 +12,23 @@ function showMenu(state = false, action) {
   }
 }
 
-const initialCol = 3,
+const initialName = 'A',
+      initialCol = 3,
       initialRow = 3,
       initialMType = 0,
       initialMatrix = Algm.create(initialCol, initialRow, initialMType);
 
-initialMatrix = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8]
-];
-
 const initialMatrixObject = {
   matrix: initialMatrix,
+  name: initialName,
   col: initialCol,
   row: initialRow,
   mType: initialMType
 };
 
-const Det = (matrix) => (matrix.length === matrix[0].length)
-      ? Algm.det(matrix) : 'NaN';
-
 function matrix(state = initialMatrixObject, action) {
   var matrix = Algm.clone(state.matrix),
+      name = state.name,
       col = state.col,
       row = state.row,
       mType = state.mType;
@@ -46,9 +40,13 @@ function matrix(state = initialMatrixObject, action) {
     matrix = Algm.create(col, row, mType);
     break;
   }
+  case 'MATRIX_NAME': {
+    name = action.name;
+    break;
+  }
   case 'MATRIX_TYPE': {
     mType = action.mType;
-    matrix = Algm.create(col, row, mType);
+    matrix = Algm.create(col, row, (mType === '\\') ? 0 : mType);
     break;
   }
   case 'MATRIX_COL': {
@@ -75,11 +73,10 @@ function matrix(state = initialMatrixObject, action) {
   }
   return {
     matrix: matrix,
+    name: name,
     col: col,
     row: row,
     mType: mType,
-    det: Det(matrix),
-    rank: Algm.rank(matrix)
   };
 }
 

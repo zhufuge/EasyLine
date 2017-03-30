@@ -11,7 +11,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setMatrixCol, setMatrixRow } from '../actions';
+import { setMatrixCol, setMatrixRow, setMatrixName } from '../actions';
 import { C_BASE } from '../common/ELColors';
 
 var NumberPicker = require('../common/NumberPicker');
@@ -21,7 +21,7 @@ class Description extends React.Component {
     super(props);
     this.state = {
       mode: 0,
-      name: 'A'
+      name: props.name
     };
   }
 
@@ -34,8 +34,10 @@ class Description extends React.Component {
   }
 
   _onEndEditing(event) {
-    const name = event.nativeEvent.text;
-    this.setState({name: (name === '') ? 'A' : name});
+    var name = event.nativeEvent.text;
+    name = (name === '') ? this.props.name : name;
+    this.setState({name: name});
+    this.props.dispatch(setMatrixName(name));
   }
 
   render() {
@@ -85,7 +87,8 @@ class Description extends React.Component {
 const mapStateToProps = (state) => {
   return {
     col: state.matrix.col,
-    row: state.matrix.row
+    row: state.matrix.row,
+    name: state.matrix.name
   };
 };
 
