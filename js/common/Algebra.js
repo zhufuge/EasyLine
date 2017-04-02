@@ -22,17 +22,15 @@
   const ArrayProto = Array.prototype;
   const NativeIsArray = Array.isArray;
 
-  const abs = Math.abs,
-        floor = Math.floor,
-        random = Math.random;
+  const {abs, floor, random} = Math;
 
-  Algm.create = function(col, row, num) {
+  Algm.create = function(col=1, row=1, num='R') {
     return  Array(col).fill(0).map(
-      (c, cIndex) => Array(row).fill(num).map(
+      (c, cIndex) => Array(row).fill(0).map(
         (r, rIndex) => {
-          if (r === void 0) return floor(random() * 10);
-          if (r === 'E') return (cIndex === rIndex) ? 1 : 0;
-          return r;
+          if (num === 'R') return floor(random() * 10);
+          if (num === 'E') return (cIndex === rIndex) ? 1 : 0;
+          return num;
         }));
   };
 
@@ -40,35 +38,38 @@
     return ArrayProto.slice.call(matrix);
   };
 
-  Algm.changeCol = function(matrix, col, num) {
-    col = (col !== void 0) ? col : 0;
-    Algm.range(abs(col)).forEach(
-      () => (col > 0)
-        ? matrix.push(Array(matrix[0].length).fill(num || 0))
-        : matrix.pop()
-    );
+  Algm.changeCol = function(matrix, col=0, num=0) {
+    const length = matrix[0].length;
+    for (let i = 0; i < abs(col); i++) {
+      if (col > 0) {
+        matrix.push(Array(length).fill(num));
+      } else {
+        matrix.pop();
+      }
+    }
   };
 
-  Algm.changeRow = function(matrix, row, num) {
-    row = (row !== void 0) ? row : 0;
-    matrix.forEach(
-      (c) => {
-        Algm.range(abs(row)).forEach(
-          () => (row > 0) ? c.push(num || 0) : c.pop());
-      });
+  Algm.changeRow = function(matrix, row=0, num=0) {
+    for (let col of matrix) {
+      for (let i = 0; i < abs(row); i++) {
+        if (row > 0) {
+          col.push(num);
+        } else {
+          col.pop();
+        }
+      }
+    }
   };
 
-  Algm.range = function(start, stop, step) {
+  Algm.range = function(start, stop, step=1) {
     if (stop == null) {
       stop = start || 0;
       start = 0;
     }
-    step = step || 1;
-
     var length = Math.max(Math.ceil((stop - start) / step), 0);
     var range = Array(length);
 
-    for (var idx = 0; idx < length; idx++, start += step) {
+    for (let idx = 0; idx < length; idx++, start += step) {
       range[idx] = start;
     }
 
