@@ -24,13 +24,23 @@ function matrix(state = initialMatrixObject, action) {
         matrix = Algm.create(col, row, mType);
     return {...state, matrix, col, row, mType};
   }
+  case 'FROM_LIST': {
+    let matrix = Algm.clone(action.matrix);
+    return {
+      matrix,
+      name: action.name,
+      col: action.col,
+      row: action.row,
+      mType: action.mType,
+    };
+  }
   case 'MATRIX_NAME': {
     let name = action.name;
     return {...state, name};
   }
   case 'MATRIX_TYPE': {
     let mType = action.mType,
-        matrix = Algm.create(col, row, (mType === '\\') ? 0 : mType);
+        matrix = Algm.create(state.col, state.row, (mType === '\\') ? 0 : mType);
     return {...state, matrix, mType};
   }
   case 'MATRIX_COL': {

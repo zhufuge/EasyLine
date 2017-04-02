@@ -8,15 +8,12 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-var TabBar = require('../common/TabBar');
-var MenuItems = require('./MenuItems');
+var TabBar = require('./TabBar');
 
 class Footer extends Component {
   render() {
     return (
-      <TabBar navigator={this.props.navigator}>
-        <MenuItems/>
-      </TabBar>
+      <TabBar navigator={this.props.navigator}/>
     );
   }
 }

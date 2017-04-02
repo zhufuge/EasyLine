@@ -1,40 +1,41 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
-} = ReactNative;
+  ToastAndroid,
+} from 'react-native';
 
 import { connect } from 'react-redux';
-import { setShowMenu } from '../actions';
+import { setShowMenu, addMatrix } from '../actions';
 
-var SlideUpMenu = require('./SlideUpMenu');
+var SlideUpMenu = require('../common/SlideUpMenu');
+var MenuItems = require('./MenuItems');
 
 const calcIcon = require('./img/ic_mode_edit_white_18dp.png'),
       createIcon = require('./img/ic_extension_white_18dp.png'),
-      othersIcon = require('./img/ic_add_box_white_18dp.png'),
+      saveIcon = require('./img/ic_add_box_white_18dp.png'),
       backIcon = require('./img/ic_expand_more_white_18dp.png'),
-      { C_BASE } = require('./ELColors');
+      { C_BASE } = require('../common/ELColors');
 
 var defaultData = [
   ['计算', calcIcon, 'onPressCalculate'],
   ['创建', createIcon, 'onPressCreate'],
-  ['保存', othersIcon, 'onPressOthers']
+  ['保存', saveIcon, 'onPressSave']
 ];
 
-class TabBar extends React.Component{
+class TabBar extends Component{
   render() {
     return (
       <View style={styles.container}>
         <View>
           <SlideUpMenu
             show={this.props.showMenu}>
-            {this.props.children}
+            <MenuItems/>
           </SlideUpMenu>
         </View>
         <View style={styles.tabBar}>
@@ -70,12 +71,17 @@ class TabBar extends React.Component{
   onPressCreate() {this.props.dispatch(setShowMenu(true));}
   onPressBack() {this.props.dispatch(setShowMenu(false));}
   onPressCalculate() {this.props.navigator.push({calc: true});}
-  onPressOthers() {}
+  onPressSave() {
+    this.props.dispatch(addMatrix(this.props.matrix));
+    ToastAndroid.show('保存矩阵 ' + this.props.matrix.name + ' .',
+                      ToastAndroid.SHORT);
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    showMenu: state.showMenu
+    showMenu: state.showMenu,
+    matrix: state.matrix,
   };
 };
 

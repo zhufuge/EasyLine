@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  ListView,
+  ScrollView,
   Text,
 } from 'react-native';
 
@@ -12,31 +12,31 @@ import { connect } from 'react-redux';
 import { C_BASE } from '../common/ELColors';
 
 class MatrixGroup extends Component {
-  constructor(props) {
-    super(props);
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows([0, 1, 2, 3, 4])
-    };
-  }
   render() {
     return (
-      <ListView
-        style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={this._matrixItem}
-        />
+      <ScrollView
+        style={styles.container}>
+        {this.props.matrixList.map((matrix) => this._matrixItem(matrix))}
+      </ScrollView>
     );
   }
-  _matrixItem = () => {
+  _matrixItem(matrix) {
     return (
-      <View style={styles.matrixGroup}>
-
+      <View
+        key={matrix.name}
+        style={styles.matrixGroup}>
+        <Text>{matrix.name}</Text>
       </View>);
   }
 }
 
-const styles = StyleSheet.create({
+const mapStateToProps = (state) => {
+  return {
+    matrixList: state.matrixList
+  };
+};
+
+var styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = connect()(MatrixGroup);
+module.exports = connect(mapStateToProps)(MatrixGroup);

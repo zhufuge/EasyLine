@@ -1,28 +1,32 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   View,
   Text,
   TextInput,
   TouchableOpacity,
-} = ReactNative;
+} from 'react-native';
 
 import { connect } from 'react-redux';
 import { setMatrixCol, setMatrixRow, setMatrixName } from '../actions';
+
 import { C_BASE } from '../common/ELColors';
 
 var NumberPicker = require('../common/NumberPicker');
 
-class Description extends React.Component {
+class Description extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mode: 0,
       name: props.name
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({name: nextProps.name});
   }
 
   _onChangeText(text) {

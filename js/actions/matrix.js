@@ -1,4 +1,4 @@
-export const setMatrix = (col, row, mType) => {
+const setMatrix = (col, row, mType) => {
   return {
     type: 'MATRIX',
     col,
@@ -7,35 +7,46 @@ export const setMatrix = (col, row, mType) => {
   };
 };
 
-export const setMatrixName = (name) => {
+const setMatrixFromList = (matrixObj) => {
+  return {
+    type: 'FROM_LIST',
+    matrix: matrixObj.matrix,
+    name: matrixObj.name,
+    col: matrixObj.col,
+    row: matrixObj.row,
+    mType: matrixObj.mType,
+  };
+};
+
+const setMatrixName = (name) => {
   return {
     type: 'MATRIX_NAME',
     name,
   };
 };
 
-export const setMatrixType = (mType) => {
+const setMatrixType = (mType) => {
   return {
     type: 'MATRIX_TYPE',
     mType,
   };
 };
 
-export const setMatrixCol = (col) => {
+const setMatrixCol = (col) => {
   return {
     type: 'MATRIX_COL',
     col,
   };
 };
 
-export const setMatrixRow = (row) => {
+const setMatrixRow = (row) => {
   return {
     type: 'MATRIX_ROW',
     row,
   };
 };
 
-export const setMatrixItem = (i, j, val) => {
+const setMatrixItem = (i, j, val) => {
   return {
     type: 'MATRIX_ITEM',
     i,
@@ -44,8 +55,19 @@ export const setMatrixItem = (i, j, val) => {
   };
 };
 
-export const setMatrixTranspose = () => {
+const setMatrixTranspose = () => {
   return {
     type: 'MATRIX_TRANSPOSE'
   };
 };
+
+module.exports = {
+  setMatrix,
+  setMatrixFromList,
+  setMatrixName,
+  setMatrixType,
+  setMatrixCol,
+  setMatrixRow,
+  setMatrixItem,
+  setMatrixTranspose,
+}

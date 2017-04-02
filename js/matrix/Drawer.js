@@ -8,33 +8,17 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
-  ListView,
+  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
+import { setMatrixFromList } from '../actions';
 import { C_BASE } from '../common/ELColors';
 
 const logo = require('./img/ELLOGO_144.png');
 const quit = require('./img/ic_power_settings_new_white_18dp.png');
 
 class Drawer extends Component {
-  constructor(props) {
-    super(props);
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows(['A', 'B', 'C', 'D']),
-    };
-  }
-
-  _renderRow(data) {
-    return (
-      <TouchableOpacity
-        style={styles.itemTouchable}>
-        <Text style={styles.itemName}>{data}</Text>
-        <Text style={styles.itemCR}>3, 2</Text>
-      </TouchableOpacity>);
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -42,11 +26,13 @@ class Drawer extends Component {
           <Image source={logo} />
         </View>
         <View style={styles.listContainer}>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={(data) => this._renderRow(data)}
-            centerContent={true}
-            style={styles.list}/>
+          <Text style={styles.listTitle}>矩阵列表</Text>
+          <ScrollView
+            style={styles.list}
+            showsVerticalScrollIndicator={false}
+            pagingEnabled={true}>
+            {this.props.matrixList.map((matrix) => this._renderRow(matrix))}
+          </ScrollView>
         </View>
         <View style={styles.quitContainer}>
           <TouchableOpacity
@@ -59,9 +45,25 @@ class Drawer extends Component {
       </View>
     );
   }
+  _renderRow(matrix) {
+    return (
+      <TouchableOpacity
+        key={matrix.name}
+        onPress={() => this.props.dispatch(setMatrixFromList(matrix))}
+        style={styles.itemTouchable}>
+        <Text style={styles.itemName}>{matrix.name}</Text>
+        <Text style={styles.itemCR}>{`(${matrix.col}, ${matrix.row})`}</Text>
+      </TouchableOpacity>);
+  }
 }
 
-const styles = StyleSheet.create({
+const mapStateToProps = (state) => {
+  return {
+    matrixList: state.matrixList
+  };
+};
+
+var styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -76,12 +78,22 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: C_BASE,
   },
+  listTitle: {
+    height: 48,
+    fontSize: 19,
+    fontWeight: '100',
+    color: C_BASE,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: C_BASE,
+  },
   list: {
-    marginVertical: 18,
+    marginVertical: 16,
   },
   itemTouchable: {
     height: 48,
-    marginVertical: 6,
+    marginVertical: 2,
     marginHorizontal: 16,
     backgroundColor: C_BASE,
     flexDirection: 'row',
@@ -93,13 +105,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 19,
     textAlign: 'center',
-    marginHorizontal: 20,
   },
   itemCR: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
-    marginHorizontal: 20,
+    paddingTop: 2,
+    marginHorizontal: 10,
   },
   quitContainer: {
     position: 'absolute',
@@ -127,4 +139,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = connect()(Drawer);
+module.exports = connect(mapStateToProps)(Drawer);

@@ -15,5 +15,6 @@ function showMenu(state = false, action) {
 export default combineReducers({
   showMenu,
   matrix: require('./matrix'),
+  matrixList: require('./matrixList'),
   default: require('./default'),
 });
