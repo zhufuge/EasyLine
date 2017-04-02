@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   StyleSheet,
@@ -10,7 +10,7 @@ import {
 import ELNavigator from './ELNavigator';
 import { C_APP } from './common/ELColors';
 
-class ELApp extends React.Component{
+class ELApp extends Component{
   render() {
     return (
       <View style={styles.container}>

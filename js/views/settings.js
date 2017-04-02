@@ -1,8 +1,7 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   View,
   StyleSheet,
   Text,
@@ -10,9 +9,10 @@ var {
   TouchableOpacity,
   Switch,
   Picker,
-} = ReactNative;
-
-var Header = require('../common/BackHeader');
+} from 'react-native';
+import { connect } from 'react-redux';
+import { setDefaultCol } from '../actions';
+const Header = require('../common/BackHeader');
 import NumberPicker from '../common/NumberPicker';
 import { C_BASE } from '../common/ELColors';
 
@@ -20,9 +20,6 @@ class Settings extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      defaultCol: 3,
-      defaultRow: 3,
-      storageSize: 6,
       nightMode: false,
     };
   }
@@ -71,6 +68,14 @@ class Settings extends React.Component{
   }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    col: state.default.col,
+    row: state.default.row,
+    storage: state.default.storage
+  };
+};
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -101,4 +106,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Settings;
+module.exports = connect(mapStateToProps)(Settings);

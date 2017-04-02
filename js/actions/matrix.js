@@ -1,13 +1,3 @@
-'use strict';
-
-
-export const setShowMenu = (showMenu) => {
-  return {
-    type: 'SHOW_MENU',
-    showMenu: showMenu
-  };
-};
-
 export const setMatrix = (col, row, mType) => {
   return {
     type: 'MATRIX',
@@ -57,12 +47,5 @@ export const setMatrixItem = (i, j, val) => {
 export const setMatrixTranspose = () => {
   return {
     type: 'MATRIX_TRANSPOSE'
-  };
-};
-
-export const setDefaultCol = (col) => {
-  return {
-    type: 'DEFAULT_COL',
-    col
   };
 };

@@ -2,18 +2,15 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
 
+const configureStore = require('./store/configureStore');
 import ELApp from './ELApp';
-
-let store = createStore(reducers);
 
 function setup() {
   class Root extends React.Component{
     render() {
       return (
-        <Provider store={store}>
+        <Provider store={configureStore()}>
           <ELApp />
         </Provider>
       );
