@@ -8,7 +8,8 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
-  ScrollView
+  ScrollView,
+  BackAndroid,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -28,14 +29,14 @@ class Drawer extends Component {
         <View style={styles.listContainer}>
           <Text style={styles.listTitle}>矩阵列表</Text>
           <ScrollView
-            style={styles.list}
             showsVerticalScrollIndicator={false}
             pagingEnabled={true}>
-            {this.props.matrixList.map((matrix) => this._renderRow(matrix))}
+            {this.props.matrixList.map((matrix, i) => this._renderRow(matrix, i))}
           </ScrollView>
         </View>
         <View style={styles.quitContainer}>
           <TouchableOpacity
+            onPress={() => BackAndroid.exitApp()}
             style={styles.quitTouchable}>
           <Image source={quit}
                  style={styles.quit}/>
@@ -45,15 +46,21 @@ class Drawer extends Component {
       </View>
     );
   }
-  _renderRow(matrix) {
+  _renderRow(matrix, i) {
     return (
-      <TouchableOpacity
-        key={matrix.name}
-        onPress={() => this.props.dispatch(setMatrixFromList(matrix))}
-        style={styles.itemTouchable}>
-        <Text style={styles.itemName}>{matrix.name}</Text>
-        <Text style={styles.itemCR}>{`(${matrix.col}, ${matrix.row})`}</Text>
-      </TouchableOpacity>);
+      <View
+        key={i + matrix.name}
+        style={styles.item}>
+        <TouchableOpacity
+          delayPressIn={100}
+          delayPressOut={100}
+          onPress={() => this.props.dispatch(setMatrixFromList(matrix))}
+          style={styles.itemTouchable}>
+          <Text style={styles.itemName}>{matrix.name}</Text>
+          <Text style={styles.itemCR}>{`(${matrix.col}, ${matrix.row})`}</Text>
+          <Text style={styles.itemData}>{matrix.matrix[0].join(' ')}</Text>
+        </TouchableOpacity>
+      </View>);
   }
 }
 
@@ -73,8 +80,6 @@ var styles = StyleSheet.create({
   },
   listContainer: {
     height: Dimensions.get('window').height - 245,
-    borderTopWidth: 1,
-    borderTopColor: C_BASE,
     borderBottomWidth: 1,
     borderBottomColor: C_BASE,
   },
@@ -82,36 +87,38 @@ var styles = StyleSheet.create({
     height: 48,
     fontSize: 19,
     fontWeight: '100',
-    color: C_BASE,
+    color: 'white',
+    backgroundColor: C_BASE,
     textAlignVertical: 'center',
     textAlign: 'center',
+  },
+  item: {
     borderBottomWidth: 1,
     borderBottomColor: C_BASE,
   },
-  list: {
-    marginVertical: 16,
-  },
   itemTouchable: {
-    height: 48,
-    marginVertical: 2,
-    marginHorizontal: 16,
-    backgroundColor: C_BASE,
+    height: 54,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   itemName: {
-    color: 'white',
+    width: 54,
+    color: C_BASE,
     fontWeight: 'bold',
-    fontSize: 19,
+    fontSize: 26,
     textAlign: 'center',
   },
   itemCR: {
-    color: 'white',
+    width: 42,
+    color: C_BASE,
     fontSize: 14,
     textAlign: 'center',
-    paddingTop: 2,
-    marginHorizontal: 10,
+    paddingTop: 4,
+  },
+  itemData: {
+    marginLeft: 16,
+    color: '#999',
+    paddingTop: 4,
   },
   quitContainer: {
     position: 'absolute',

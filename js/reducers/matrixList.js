@@ -13,11 +13,23 @@ function matrix(matrixObject) {
   };
 }
 
+function compareMatrixName(a, b) {
+  const aName = a.name,
+        bName = b.name;
+  if (aName < bName) {
+    return -1;
+  } else if (aName > bName) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 function matrixList(state = [], action) {
   switch(action.type) {
   case 'ADD_MATRIX': {
     let list = [...state],
-        index = list.findIndex((matrix) => matrix.name == action.matrix.name);
+        index = list.findIndex((matrix) => matrix.name === action.matrix.name);
     if (index >= 0) {
       list[index] = matrix(action.matrix);
       return list;
@@ -25,8 +37,16 @@ function matrixList(state = [], action) {
       return [
         ...state,
         matrix(action.matrix),
-      ];
+      ].sort(compareMatrixName);
     }
+  }
+  case 'REMOVE_MATRIX': {
+    let list = [...state],
+        index = list.findIndex((matrix) => matrix.name === action.matrix.name);
+    if (index >= 0) {
+      list.splice(index, 1);
+    }
+    return list;
   }
   default:
     return state;
