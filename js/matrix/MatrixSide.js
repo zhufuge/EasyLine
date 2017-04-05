@@ -9,7 +9,7 @@ var {
 } = ReactNative;
 
 import { C_BASE, C_INVERT } from '../common/ELColors';
-const Alg = require('../common/Algebra');
+const Algm = require('../common/Algebra');
 
 class MatrixColSide extends React.Component{
   render() {
@@ -24,7 +24,7 @@ class MatrixColSide extends React.Component{
     );
   }
   _createItems() {
-    return Alg.range(this.props.num).map(function(item) {
+    return Algm.range(this.props.num).map(function(item) {
       return (
         <Text
           key={this.props.direction + item}

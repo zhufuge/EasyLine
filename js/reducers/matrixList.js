@@ -7,8 +7,8 @@ function matrix(matrixObject) {
   return {
     matrix,
     name: matrixObject.name,
-    col: matrixObject.col,
     row: matrixObject.row,
+    col: matrixObject.col,
     mType: matrixObject.mType
   };
 }

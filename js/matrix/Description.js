@@ -62,17 +62,17 @@ class Description extends Component {
           <Text style={styles.id}>名称</Text>
         </View>
         <NumberPicker
-          selectedNumber={this.props.col}
+          selectedNumber={this.props.row}
           min={1}
-          onNumberChange={(number) => this.props.dispatch(setMatrixCol(number))}
+          onNumberChange={(number) => this.props.dispatch(setMatrixRow(number))}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>行</Text>
         </NumberPicker>
         <NumberPicker
-          selectedNumber={this.props.row}
+          selectedNumber={this.props.col}
           min={1}
-          onNumberChange={(number) => this.props.dispatch(setMatrixRow(number))}
+          onNumberChange={(number) => this.props.dispatch(setMatrixCol(number))}
           style={[styles.cR, styles.common]}
           numberStyles={styles.value}>
           <Text style={styles.id}>列</Text>
@@ -90,8 +90,8 @@ class Description extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    col: state.matrix.col,
     row: state.matrix.row,
+    col: state.matrix.col,
     name: state.matrix.name
   };
 };

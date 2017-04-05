@@ -50,7 +50,7 @@ class ELNavigator extends React.Component{
   }
 
   renderScene(route, navigator) {
-    return <CalcView navigator={navigator}/>;
+//    return <CalcView navigator={navigator}/>;
     if (route.settings) {
       return <Settings navigator={navigator}/>;
     }

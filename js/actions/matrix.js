@@ -1,8 +1,8 @@
-const setMatrix = (col, row, mType) => {
+const setMatrix = (row, col, mType) => {
   return {
     type: 'MATRIX',
-    col,
     row,
+    col,
     mType,
   };
 };
@@ -12,8 +12,8 @@ const setMatrixFromList = (matrixObj) => {
     type: 'FROM_LIST',
     matrix: matrixObj.matrix,
     name: matrixObj.name,
-    col: matrixObj.col,
     row: matrixObj.row,
+    col: matrixObj.col,
     mType: matrixObj.mType,
   };
 };
@@ -32,17 +32,17 @@ const setMatrixType = (mType) => {
   };
 };
 
-const setMatrixCol = (col) => {
-  return {
-    type: 'MATRIX_COL',
-    col,
-  };
-};
-
 const setMatrixRow = (row) => {
   return {
     type: 'MATRIX_ROW',
     row,
+  };
+};
+
+const setMatrixCol = (col) => {
+  return {
+    type: 'MATRIX_COL',
+    col,
   };
 };
 
@@ -66,8 +66,8 @@ module.exports = {
   setMatrixFromList,
   setMatrixName,
   setMatrixType,
-  setMatrixCol,
   setMatrixRow,
+  setMatrixCol,
   setMatrixItem,
   setMatrixTranspose,
-}
+};

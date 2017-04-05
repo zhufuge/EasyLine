@@ -29,10 +29,10 @@ class MatrixPanel extends React.Component{
       <View style={styles.container}>
         <View style={[styles.top]}>
           <MatrixBody />
-          <MatrixSide num={this.props.col} direction='column'/>
+          <MatrixSide num={this.props.row} direction='column'/>
         </View>
         <View style={[styles.bottom]}>
-          <MatrixSide num={this.props.row} direction='row'/>
+          <MatrixSide num={this.props.col} direction='row'/>
           <TouchableOpacity
             onPress={() => this._onPressTranspose()} >
             <Text style={[
@@ -53,8 +53,8 @@ class MatrixPanel extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    col: state.matrix.col,
-    row: state.matrix.row
+    row: state.matrix.row,
+    col: state.matrix.col
   };
 };
 

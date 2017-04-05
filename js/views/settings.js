@@ -8,12 +8,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
-  Picker,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { setDefaultCol } from '../actions';
 const Header = require('../common/BackHeader');
-import NumberPicker from '../common/NumberPicker';
 import { C_BASE } from '../common/ELColors';
 
 class Settings extends React.Component{
@@ -24,34 +21,11 @@ class Settings extends React.Component{
     };
   }
   render() {
-    const prevChildren = (text) => <Text style={styles.itemLabel}>{text}</Text>;
     return (
       <View style={styles.container}>
         <Header navigator={this.props.navigator} title='设置'/>
         <ScrollView
           style={styles.body}>
-          <NumberPicker
-            min={1}
-            selectedNumber={3}
-            style={styles.item}
-            numberStyles={styles.itemValue}
-            prevChildren={prevChildren('默认行数')}
-            />
-          <NumberPicker
-            min={1}
-            selectedNumber={3}
-            style={styles.item}
-            numberStyles={styles.itemValue}
-            prevChildren={prevChildren('默认列数')}
-            />
-          <NumberPicker
-            min={1}
-            max={26}
-            selectedNumber={6}
-            style={styles.item}
-            numberStyles={styles.itemValue}
-            prevChildren={prevChildren('保存数量')}
-            />
           <TouchableOpacity
             onPress={() => this.setState({nightMode: !this.state.nightMode})}
             activeOpacity={1}
@@ -69,11 +43,7 @@ class Settings extends React.Component{
 };
 
 const mapStateToProps = (state) => {
-  return {
-    col: state.default.col,
-    row: state.default.row,
-    storage: state.default.storage
-  };
+  return {};
 };
 
 var styles = StyleSheet.create({
@@ -99,11 +69,6 @@ var styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
-  itemValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginRight: 20,
-  }
 });
 
 module.exports = connect(mapStateToProps)(Settings);

@@ -1,6 +1,7 @@
 'use strict';
 
 const matrixAction = require('./matrix');
+const matrixList = require('./matrixList');
 
 const setShowMenu = (showMenu) => {
   return {
@@ -9,23 +10,9 @@ const setShowMenu = (showMenu) => {
   };
 };
 
-const setDefaultCol = (col) => {
-  return {
-    type: 'DEFAULT_COL',
-    col
-  };
-};
-
-const addMatrix = (matrix) => {
-  return {
-    type: 'ADD_MATRIX',
-    matrix,
-  };
-};
 
 module.exports = {
   ...matrixAction,
-  addMatrix,
+  ...matrixList,
   setShowMenu,
-  setDefaultCol,
 };

@@ -35,15 +35,15 @@ class ItemInput extends Component{
 
   onEndEditing(event) {
     const dispatch = this.props.dispatch,
-          col = this.props.col,
           row = this.props.row,
+          col = this.props.col,
           val = +event.nativeEvent.text;
     if (this.props.type === '\\' &&
         col !== row) {
-      dispatch(setMatrixItem(col, row, val));
       dispatch(setMatrixItem(row, col, val));
-    } else {
       dispatch(setMatrixItem(col, row, val));
+    } else {
+      dispatch(setMatrixItem(row, col, val));
     }
   }
 
@@ -69,7 +69,7 @@ class ItemInput extends Component{
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    item: state.matrix.matrix[ownProps.col][ownProps.row],
+    item: state.matrix.matrix[ownProps.row][ownProps.col],
     type: state.matrix.mType
   };
 };

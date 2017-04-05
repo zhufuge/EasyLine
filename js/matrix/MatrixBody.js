@@ -18,27 +18,27 @@ class MatrixItems extends React.Component{
   render() {
     return (
       <View style={styles.container}>
-        {this._createCol()}
+        {this._renderRow()}
       </View>
     );
   }
-  _createCol() {
-    return Algm.range(this.props.col).map(function(col){
+  _renderRow() {
+    return Algm.range(this.props.row).map(function(row){
       return (
-        <View key={'col' + col}
-              style={styles.col}>
-          {this._createItem(col)}
+        <View key={'row' + row}
+              style={styles.row}>
+          {this._createItem(row)}
         </View>);
     }.bind(this));
   }
-  _createItem(col) {
-    return Algm.range(this.props.row).map(function(row) {
+  _createItem(row) {
+    return Algm.range(this.props.col).map(function(col) {
       return (
         <ItemInput
-          key={col + ',' + row}
-          col={col}
+          key={row + ',' + col}
           row={row}
-          style={(col + row) % 2 === 0 ? {} : styles.itemOpacity}
+          col={col}
+          style={(row + col) % 2 === 0 ? {} : styles.itemOpacity}
           />
       );
     }.bind(this));
@@ -47,8 +47,8 @@ class MatrixItems extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    col: state.matrix.col,
     row: state.matrix.row,
+    col: state.matrix.col,
   };
 };
 
@@ -60,7 +60,7 @@ var styles = StyleSheet.create({
     height: 277.5,
     marginRight: 5.5,
   },
-  col: {
+  row: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 1.5,

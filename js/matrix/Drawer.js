@@ -57,7 +57,7 @@ class Drawer extends Component {
           onPress={() => this.props.dispatch(setMatrixFromList(matrix))}
           style={styles.itemTouchable}>
           <Text style={styles.itemName}>{matrix.name}</Text>
-          <Text style={styles.itemCR}>{`(${matrix.col}, ${matrix.row})`}</Text>
+          <Text style={styles.itemCR}>{`(${matrix.row}, ${matrix.col})`}</Text>
           <Text style={styles.itemData}>{matrix.matrix[0].join(' ')}</Text>
         </TouchableOpacity>
       </View>);
