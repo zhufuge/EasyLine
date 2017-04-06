@@ -26,32 +26,29 @@
   Algm.rows = (matrix) => matrix.length;
   Algm.cols = (matrix) => matrix[0].length;
 
-  Algm.isNumRow = (row) =>
-    NativeIsArray(row) &&
-    row.every((num) => typeof num === 'number');
-
   Algm.array = (len, num=0) => Array(len).fill(num);
+
   Algm.clone = (matrix) => matrix.map((row) => ArrayProto.slice.call(row));
 
   var create = (fn) =>
       (row=1, col=row) =>
       Algm.array(row).map(
         (r, rIndex) => Algm.array(col).map(
-          (c, cIndex) => fn(rIndex, cIndex, c)));
+          (c, cIndex) => fn(rIndex, cIndex)));
 
   Algm.eye = create((i, j) => (i === j) ? 1 : 0);
 
-  Algm.randomMatrix = create(() => floor(random() * 10));
+  Algm.rand = create(() => floor(random() * 10));
 
   Algm.create = (row=1, col=row, num='R') => {
-    if (num === 'R') return Algm.randomMatrix(row, col);
+    if (num === 'R') return Algm.rand(row, col);
     if (num === 'E') return Algm.eye(row, col);
     if (typeof num !== 'number') num = 0;
     return create(() => num)(row, col);
   };
 
   Algm.diag = (array) => {
-    if (!Algm.isNumRow(array)) return [[]];
+    if (!isNumArray(array)) return [[]];
     return create((i, j) => (i === j) ? array[i] : 0)(array.length);
   };
 
@@ -60,7 +57,7 @@
       stop = start || 0;
       start = 0;
     }
-    var length = Math.max(Math.ceil((stop - start) / step), 0);
+    var length = max(Math.ceil((stop - start) / step), 0);
     var range = Array(length);
 
     for (let idx = 0; idx < length; idx++, start += step) {
@@ -70,51 +67,56 @@
     return range;
   };
 
-  Algm.gcd = function(a, b) {
+  var gcd = function(a, b) {
     [a, b] = [abs(a), abs(b)];
     while (b > 0) [a, b] = [b, a % b];
     return a;
   };
 
-  Algm.lcm = (a, b) => a * b / Algm.gcd(a, b);
-
-  Algm.isZeroRow = (row) => row.every((num) => num === 0);
-  Algm.hasZeroRow = (matrix) => matrix.some((row) => Algm.isZeroRow(row));
-
-  Algm.isSquare = (matrix) => Algm.rows(matrix) === Algm.cols(matrix);
+  var lcm = (a, b) => a * b /  gcd(a, b);
 
   Algm.isMatrix = function(matrix) {
     if (!NativeIsArray(matrix) && !NativeIsArray(matrix[0])) return false;
     const cols = Algm.cols(matrix);
-    return cols > 0 &&
-      matrix.every((r) => Algm.isNumRow(r) && r.length === cols);
+    return cols > 0 && matrix.every((r) =>
+                                    isNumArray(r) && r.length === cols);
   };
+
+  var isNumArray = (array) =>
+    NativeIsArray(array) && array.every((num) => typeof num === 'number');
+  var isIntArray = (array) =>
+      NativeIsArray(array) && array.every((num) => Number.isInteger(num));
+  var isSquare = (matrix) => Algm.rows(matrix) === Algm.cols(matrix);
+  var isZeroRow = (row) => row.every((num) => num === 0);
+  var hasZeroRow = (matrix) => matrix.some((row) => isZeroRow(row));
+
+  Algm.isSingular = (matrix) =>
+    (!isSquare(matrix) ||
+     hasZeroRow(matrix) ||
+     hasZeroRow(Algm.T(matrix)) ||
+     Algm.rank(matrix) !== Algm.rows(matrix))
+    ? true : false;
 
   Algm.changeRow = function(matrix, row=0, num=0) {
     const cols = Algm.cols(matrix);
     for (let i = 0; i < abs(row); i++) {
-      if (row > 0) {
-        matrix.push(Algm.array(cols, num));
-      } else {
-        matrix.pop();
-      }
+      (row > 0)
+        ? matrix.push(Algm.array(cols, num))
+        : matrix.pop();
     }
   };
-
   Algm.changeCol = function(matrix, col=0, num=0) {
     for (let row of matrix) {
       for (let i = 0; i < abs(col); i++) {
-        if (col > 0) {
-          row.push(num);
-        } else {
-          row.pop();
-        }
+        (col > 0)
+          ? row.push(num)
+          : row.pop();
       }
     }
   };
 
   Algm.T = Algm.transpose = function(matrix) {
-    if (!Algm.isMatrix(matrix)) return NaN;
+    if (!Algm.isMatrix(matrix)) return [[]];
     const cols = Algm.cols(matrix),
           rows = Algm.rows(matrix);
     return  Algm.array(cols).map(
@@ -123,7 +125,6 @@
       )
     );
   };
-
 
   Algm.isAddable = (matrix, another) =>
     Algm.isMatrix(matrix) &&
@@ -144,16 +145,16 @@
   Algm.addUp = addiction();
   Algm.subUp = addiction(false);
 
-  function mulNumber(mul=true) {
+  function mulN(mul=true) {
     const operator = (a, b) => mul ? a * b : a / b;
-    return (matrix, num) =>
-      (Algm.isMatrix(matrix))
+    return (matrix, num=1) =>
+      (Algm.isMatrix(matrix) && typeof num === 'number')
       ? matrix.map((row) => row.map((col) => operator(col, num)))
       : matrix;
   };
 
-  Algm.mulNumber = mulNumber();
-  Algm.divNumber = mulNumber(false);
+  Algm.mulN = mulN();
+  Algm.divN = mulN(false);
 
   Algm.isMulable = (matrix, another) =>
     Algm.isMatrix(matrix) &&
@@ -163,12 +164,11 @@
   Algm.mulUp = function(matrix, another) {
     if (Algm.isMulable(matrix, another)) {
       const rows = Algm.rows(matrix),
-            cols = Algm.cols(another),
-            counts = Algm.cols(matrix);
+            cols = Algm.cols(another);
       var A = Algm.create(rows, cols, 0);
       for (let i = 0; i < rows; i++)
         for (let j = 0; j < cols; j++)
-          for (let k = 0; k < counts; k++)
+          for (let k = 0, n = Algm.cols(matrix); k < n; k++)
             A[i][j] += matrix[i][k] * another[k][j];
 
       return A;
@@ -176,18 +176,69 @@
     return matrix;
   };
 
-  function permutationOrder(matrix) {
+  Algm.divUp = (matrix, another) => Algm.mulUp(matrix, Algm.inv(another));
+
+  var arrayGcd = (row) => row.reduce((g, val) =>  gcd(g, val), 0);
+  var reduceRow = function(row) {
+    if (isIntArray(row)) {
+      const gcd = arrayGcd(row);
+      row.forEach((n, i, r) => {if (n !== 0) r[i] /= gcd;});
+    }
+  };
+
+  Algm.RowEchelon = function(matrix) {
+    var A = Algm.clone(matrix),
+        B = Array(),
+        col = Algm.cols(A);
+    for (let c = 0; c < col; c++) {
+      A.sort((a, b) => {
+        if (a[c] === 0) return 1;
+        if (b[c] === 0) return -1;
+        return abs(a[c]) - abs(b[c]);
+      });
+
+      var topR = A[0],
+          topRC = topR[c];
+      if (topRC !== 0) {
+        for (let i = 1, row = Algm.rows(A); i < row; i++) {
+          var iRow = A[i],
+              iRowC = iRow[c],
+              l = lcm(topRC, iRowC);
+          if (iRowC !== 0) {
+            for (let j = c; j < col; j++) {
+              iRow[j] = (iRow[j] * l / iRowC) - (topR[j] * l / topRC);
+            }
+          }
+          reduceRow(iRow);
+        }
+        B.push(A.shift());
+      }
+    }
+
+    return B;
+  };
+
+  Algm.rank = (matrix) => Algm.rows(Algm.RowEchelon(matrix));
+
+  function pmOrder(matrix) {
     var A = Algm.clone(matrix),
         n = Algm.rows(A),
         order = Algm.range(n);
-
-    var swap = (a, i, j) => [a[i], a[j]] = [a[j], a[i]];
+    var swapOf = (i, j, array) => [array[i], array[j]] = [array[j], array[i]];
     for (let k = 0; k < n; k++) {
-      var kCol = A.map((r, rIndex) => (rIndex >= k) ? abs(r[k]) : 0),
-          maxIndex = kCol.indexOf(max(...kCol));
+      var max = 0, maxIndex = 0;
+      for (let i = k; i < n; i++) {
+        var A_ik = abs(A[i][k]);
+        if (A_ik > max) {
+          max = A_ik;
+          maxIndex = i;
+        }
+      }
 
-      swap(order, k, maxIndex);
-      swap(A, k, maxIndex);
+      if (max === 0) throw Error('Singular matrix');
+
+      swapOf(k, maxIndex, order);
+      swapOf(k, maxIndex, A);
 
       for (let i = k + 1; i < n; i++) {
         A[i][k] = A[i][k] / A[k][k];
@@ -199,20 +250,12 @@
     return order;
   }
 
-  function permutation(matrix) {
-    const order = permutationOrder(matrix),
-          n = order.length;
-    var e = Algm.eye(n),
-        p = Algm.array(n);
-    for (let i = 0; i < n; i++) {
-      p[i] = e[order[i]];
-    }
-    return p;
-  };
+  var orderToPm = (o) => create((i, j) => (j === o[i]) ? 1 : 0)(o.length);
+  var pmToOrder = (matrix) => matrix.map((r) => r.indexOf(1));
 
   Algm.LUP = function(matrix) {
     const n = Algm.rows(matrix),
-          P = permutation(matrix);
+          P = orderToPm(pmOrder(matrix));
 
     var A = Algm.mulUp(P, matrix),
         U = Algm.create(n, n, 0),
@@ -236,93 +279,78 @@
     return [L, U, P];
   };
 
-  // TODO: Algm.divUp
-
-  // TODO: LUP 求逆
-
-    // TODO: 改用LUP 分解计算
-  function detInner(matrix) {
-    if (Algm.rows(matrix) === 1) return matrix[0][0];
-    if (Algm.hasZeroRow(matrix) ||
-        Algm.hasZeroRow(Algm.T(matrix)) ||
-        Algm.rank(matrix) !== Algm.rows(matrix)) {
-      return 0;
+  function LUPSolve(L, U, p, b) {
+    const n = Algm.rows(L);
+    var x = Algm.array(n),
+        y = Algm.array(n);
+    for (let i = 0; i < n; i++) {
+      var ly = 0;
+      for (let j = 0; j < i; j++) {
+        ly += L[i][j] * y[j];
+      }
+      y[i] = b[p[i]] - ly;
     }
 
-    return matrix[0].reduce((det, c, cIndex) => {
-      if (c === 0) return det;
-      return det += ((cIndex % 2 === 0) ? 1 : -1) * c *
-        detInner(Algm.cof(matrix, 0, cIndex));
-    }, 0);
+    for (let i = n - 1; i >= 0; i--) {
+      var ux = 0;
+      for (let j = i + 1; j < n; j++) {
+        ux += U[i][j] * x[j];
+      }
+      x[i] = precFloat((y[i] - ux) / U[i][i]);
+    }
+    return x;
   }
 
-  Algm.det = (matrix) =>
-    (Algm.isMatrix(matrix) && Algm.isSquare(matrix))
-    ? detInner(matrix)
-    : NaN;
+  Algm.inv = function(matrix) {
+    const n = Algm.rows(matrix);
+    var A = Array(n),
+        [L, U, P] = Algm.LUP(matrix),
+        p = pmToOrder(P);
+    for (let i = 0; i < n; i++) {
+      var b = Algm.array(n);
+      b[i] = 1;
+      A[i] = LUPSolve(L, U, p, b);
+    }
+    return Algm.T(A);
+  };
+
+  function permutationDet(matrix) {
+    const n = Algm.rows(matrix);
+    var det = 1;
+    for (let i = 0; i < n - 1; i++) {
+      for (var j = 0; matrix[j][i] !== 1; j++);
+      det *= (j % 2 === 0) ? 1 : -1;
+      matrix.splice(j, 1);
+    }
+    return det;
+  }
+
+  var diagDet = (matrix) => matrix.reduce((det, r, i) => det * r[i], 1);
+
+  var precFloat = (n, f=12) => Number.parseFloat(n.toFixed(f));
+
+  Algm.det = function(matrix) {
+    if (!(Algm.isMatrix(matrix) && isSquare(matrix))) return NaN;
+    if (Algm.isSingular(matrix)) return 0;
+
+    var [L, U, P] = Algm.LUP(matrix);
+    return precFloat(diagDet(L) * diagDet(U), 5) * permutationDet(P);
+  };
 
   Algm.cof = function(matrix, i, j) {
     const RCfilter = (pass) => (val, index) => (index === pass) ? false : true;
     return matrix.filter(RCfilter(i)).map((r) => r.filter(RCfilter(j)));
   };
 
-
-
-  var arrayGcd = (row) => row.reduce((gcd, val) => Algm.gcd(gcd, val), 0);
-
-  Algm.reduceRow = function(row) {
-    if (Algm.isNumRow(row)) {
-      // 取第一个非0数的符号
-      const gcd = arrayGcd(row) *
-            ((row.find((val) => val !== 0) > 0) ? 1 : -1);
-      row.forEach((n, i, r) => {if (n !== 0) r[i] /= gcd;});
-    }
-  };
-
-  Algm.reduceAllRow = function(matrix) {
-    if (Algm.isMatrix(matrix)) {
-      matrix.forEach((r) => Algm.reduceRow(r));
-    }
-  };
-
-  Algm.rowEchelon = function(matrix) {
-    var A = Algm.clone(matrix),
-        B = Array(),            // 保存梯子稳定的行
-        step = 0;
-    // 最小非0数在前，0在最后
-    const putZeroBottom = (a, b) => {
-      if (a[step] === 0) return 1;
-      if (b[step] === 0) return -1;
-      return a[step] - b[step];
-    };
-    const cols = Algm.cols(A);
-    while (step < cols && Algm.rows(A) > 0) {
-      A.sort(putZeroBottom);
-
-      var firstRow = A[0],
-          firstRowStep = firstRow[step];
-      // step 列 全为0 推进一列
-      if (firstRowStep !== 0) {
-        // 初等行变换
-        for (let i = 1, len = Algm.rows(A); i < len; i++) {
-          var IRowStep = A[i][step];
-          if (IRowStep !== 0) {
-            var lcm = Algm.lcm(firstRowStep, IRowStep);
-
-            A[i] = A[i].map((val, index, row) => {
-              if (index < step) return val;
-              return (val * lcm / IRowStep) -
-                (firstRow[index] * lcm / firstRowStep);
-            });
-          }
-        }
-        B.push(A.shift());
+  Algm.compan = function(matrix) {
+    if (!(Algm.isMatrix(matrix) && isSquare(matrix))) return [[]];
+    const n = Algm.rows(matrix);
+    var A = Algm.mulN(Algm.inv(matrix), Algm.det(matrix));
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        A[i][j] = precFloat(A[i][j], 5);
       }
-      step++;
     }
-
-    return B;
+    return A;
   };
-
-  Algm.rank = (matrix) => Algm.rows(Algm.rowEchelon(matrix));
 }).call(this);
