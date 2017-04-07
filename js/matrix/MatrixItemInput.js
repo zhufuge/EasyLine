@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   TextInput,
+  Text,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -28,8 +29,10 @@ class ItemInput extends Component{
   }
 
   onChangeText(text) {
-    if(+text === +text || text === '-' || text==='+'){
-      this.setState({text: text});
+    if (text.length <= 6) {
+      if (+text === +text || text === '-' || text==='+'){
+        this.setState({text: text});
+      }
     }
   }
 
@@ -48,20 +51,22 @@ class ItemInput extends Component{
   }
 
   render() {
+    const text = this.state.text;
+    const dots = (text.toString().length > 4) ? <Text style={styles.dots}>...</Text> : undefined;
     return (
       <View
         style={[styles.container, this.props.style]}>
         <TextInput
           onChangeText={(text) => this.onChangeText(text)}
           onEndEditing={(text) => this.onEndEditing(text)}
-          value={'' + this.state.text}
-          maxLength={3}
+          value={'' + text}
           keyboardType='numeric'
           caretHidden='true'
           returnKeyType='next'
           selectTextOnFocus={true}
           underlineColorAndroid='transparent'
           style={[styles.input]} />
+          {dots}
       </View>
     );
   }
@@ -92,7 +97,13 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     textAlignVertical: 'center',
-  }
+  },
+  dots: {
+    position: 'absolute',
+    bottom: -2,
+    fontSize: 24,
+    color: 'white',
+  },
 });
 
 module.exports = connect(mapStateToProps)(ItemInput);

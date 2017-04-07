@@ -9,7 +9,7 @@ const setMatrix = (row, col, mType) => {
 
 const setMatrixFromList = (matrixObj) => {
   return {
-    type: 'FROM_LIST',
+    type: 'SET_MATRIX',
     matrix: matrixObj.matrix,
     name: matrixObj.name,
     row: matrixObj.row,

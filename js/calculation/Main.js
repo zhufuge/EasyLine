@@ -28,7 +28,7 @@ class CalcMain extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.segment}></View>
-        <MatrixGroup />
+        <MatrixGroup navigator={this.props.navigator}/>
       </View>
     );
   }

@@ -24,7 +24,7 @@ function matrix(state = initialMatrixObject, action) {
         matrix = Algm.create(row, col, mType);
     return {...state, matrix, row, col, mType};
   }
-  case 'FROM_LIST': {
+  case 'SET_MATRIX': {
     let matrix = Algm.clone(action.matrix);
     return {
       matrix,

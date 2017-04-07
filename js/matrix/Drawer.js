@@ -29,7 +29,6 @@ class Drawer extends Component {
         <View style={styles.listContainer}>
           <Text style={styles.listTitle}>矩阵列表</Text>
           <ScrollView
-            showsVerticalScrollIndicator={false}
             pagingEnabled={true}>
             {this.props.matrixList.map((matrix, i) => this._renderRow(matrix, i))}
           </ScrollView>

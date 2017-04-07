@@ -21,7 +21,7 @@ class CalcView extends Component {
           iconStyle={styles.headerIcon}
           textStyle={styles.headerText}
           title='计算'/>
-        <Main />
+        <Main navigator={this.props.navigator}/>
       </View>
     );
   }

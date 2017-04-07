@@ -23,27 +23,22 @@
   const NativeIsArray = Array.isArray;
   const {abs, floor, random, max} = Math;
 
-  Algm.rows = (matrix) => matrix.length;
-  Algm.cols = (matrix) => matrix[0].length;
-
   Algm.array = (len, num=0) => Array(len).fill(num);
-
-  Algm.clone = (matrix) => matrix.map((row) => ArrayProto.slice.call(row));
-
   var create = (fn) =>
       (row=1, col=row) =>
       Algm.array(row).map(
         (r, rIndex) => Algm.array(col).map(
           (c, cIndex) => fn(rIndex, cIndex)));
 
+  Algm.zeros = create(() => 0);
+  Algm.ones = create(() =>　1);
   Algm.eye = create((i, j) => (i === j) ? 1 : 0);
-
   Algm.rand = create(() => floor(random() * 10));
 
   Algm.create = (row=1, col=row, num='R') => {
     if (num === 'R') return Algm.rand(row, col);
     if (num === 'E') return Algm.eye(row, col);
-    if (typeof num !== 'number') num = 0;
+    if (typeof num !== 'number') return Algm.zeros(row, col);
     return create(() => num)(row, col);
   };
 
@@ -51,6 +46,11 @@
     if (!isNumArray(array)) return [[]];
     return create((i, j) => (i === j) ? array[i] : 0)(array.length);
   };
+
+  Algm.rows = (matrix) => matrix.length;
+  Algm.cols = (matrix) => matrix[0].length;
+  Algm.clone = (matrix) => matrix.map((row) => ArrayProto.slice.call(row));
+
 
   Algm.range = function(start, stop, step=1) {
     if (stop == null) {
@@ -279,6 +279,8 @@
     return [L, U, P];
   };
 
+  var precFloat = (n, f=12) => Number.parseFloat(n.toFixed(f));
+
   function LUPSolve(L, U, p, b) {
     const n = Algm.rows(L);
     var x = Algm.array(n),
@@ -326,8 +328,6 @@
   }
 
   var diagDet = (matrix) => matrix.reduce((det, r, i) => det * r[i], 1);
-
-  var precFloat = (n, f=12) => Number.parseFloat(n.toFixed(f));
 
   Algm.det = function(matrix) {
     if (!(Algm.isMatrix(matrix) && isSquare(matrix))) return NaN;
