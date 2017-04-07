@@ -64,14 +64,14 @@ class MatrixStorey extends Component {
     );
   }
   _renderFirst() {
-    const matrix = this.props.matrix;
+    const matrixObj = this.props.matrix;
     const body = [(
       <Text key={'tf'} style={styles.itemT}>
-        {matrix.name}
+        {matrixObj.name}
       </Text>
     ), (
       <Text key={'bf'} style={styles.itemB}>
-        {`(${matrix.row}, ${matrix.col})`}
+        {`(${matrixObj.row}, ${matrixObj.col})`}
       </Text>
     )];
     return this._renderTouchable(body, 0);
@@ -80,9 +80,8 @@ class MatrixStorey extends Component {
     const matrixObj = this.props.matrix,
           isSingular = Algm.isSingular(matrixObj.matrix),
           name = matrixObj.name,
-          i = 1;
-
-    var color = isSingular ? {color: '#999'} : {};
+          i = 1,
+          color = isSingular ? {color: '#999'} : {};
     const body = [(
       <Text key={'t' + i} style={[styles.itemT, color]}>
         {name}
@@ -108,26 +107,38 @@ class MatrixStorey extends Component {
     return this._renderTouchable(body, i, onPress, isSingular);
   }
   _renderCompan() {
-    const name = this.props.matrix.name,
+    const matrixObj = this.props.matrix,
+          name = matrixObj.name,
+          isSquare = Algm.isSquare(matrixObj.matrix),
           i = 2,
-          color = this._color(this.props.i, 0);
+          color = isSquare ? {} : {color: '#999'};
     const body = [(
       <Text
         key={'t' + i}
-        style={[styles.itemT, {color}]}>
+        style={[styles.itemT, color]}>
         {name + defaultData.t[i]}
       </Text>
     ), (
       <Text
         key={'b' + i}
-        style={[styles.itemB, {color}]}>
+        style={[styles.itemB, color]}>
         {defaultData.b[i]}
       </Text>
     )];
-    return this._renderTouchable(body, i);
+    const onPress = () => {
+      var m = {
+        ...matrixObj,
+        matrix: Algm.compan(matrixObj.matrix),
+        name: 'Z',
+      };
+      this.props.dispatch(setMatrixFromList(m));
+      this.props.navigator.pop();
+    };
+    return this._renderTouchable(body, i, onPress, !isSquare);
   }
   _renderRowEch() {
-    const name = this.props.matrix.name,
+    const matrixObj = this.props.matrix,
+          name = this.props.matrix.name,
           i = 3,
           color = this._color(this.props.i, 0);
     const body = [(
@@ -142,7 +153,16 @@ class MatrixStorey extends Component {
         {defaultData.b[i]}
       </Text>
     )];
-    return this._renderTouchable(body, i);
+    const onPress = () => {
+      var m = {
+        ...matrixObj,
+        matrix: Algm.rowEchelon(matrixObj.matrix),
+        name: 'Z',
+      };
+      this.props.dispatch(setMatrixFromList(m));
+      this.props.navigator.pop();
+    };
+    return this._renderTouchable(body, i, onPress);
   }
   render() {
     const matrix = this.props.matrix;
@@ -195,8 +215,8 @@ var styles = StyleSheet.create({
   inv: {
     color: 'white',
     position: 'absolute',
-    top: 9,
-    right: 10,
+    top: 8,
+    right: 8,
     fontSize: 16,
     fontWeight: 'bold',
   },

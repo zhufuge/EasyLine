@@ -30,7 +30,7 @@ class Drawer extends Component {
           <Text style={styles.listTitle}>矩阵列表</Text>
           <ScrollView
             pagingEnabled={true}>
-            {this.props.matrixList.map((matrix, i) => this._renderRow(matrix, i))}
+            {this.props.matrixList.map((matrix, i) => this.renderRow(matrix, i))}
           </ScrollView>
         </View>
         <View style={styles.quitContainer}>
@@ -45,7 +45,16 @@ class Drawer extends Component {
       </View>
     );
   }
-  _renderRow(matrix, i) {
+  firstRowInfo(matrix) {
+    const first = matrix[0];
+    var info = first.join(' ');
+    if (info.length <= 12) {
+      return info;
+    } else {
+      return info.substr(0, 12) + '...';
+    }
+  }
+  renderRow(matrix, i) {
     return (
       <View
         key={i + matrix.name}
@@ -57,7 +66,7 @@ class Drawer extends Component {
           style={styles.itemTouchable}>
           <Text style={styles.itemName}>{matrix.name}</Text>
           <Text style={styles.itemCR}>{`(${matrix.row}, ${matrix.col})`}</Text>
-          <Text style={styles.itemData}>{matrix.matrix[0].join(' ')}</Text>
+          <Text style={styles.itemData}>{this.firstRowInfo(matrix.matrix)}</Text>
         </TouchableOpacity>
       </View>);
   }
@@ -117,7 +126,7 @@ var styles = StyleSheet.create({
   itemData: {
     marginLeft: 16,
     color: '#999',
-    paddingTop: 4,
+    paddingTop: 5,
   },
   quitContainer: {
     position: 'absolute',

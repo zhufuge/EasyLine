@@ -86,12 +86,12 @@
     NativeIsArray(array) && array.every((num) => typeof num === 'number');
   var isIntArray = (array) =>
       NativeIsArray(array) && array.every((num) => Number.isInteger(num));
-  var isSquare = (matrix) => Algm.rows(matrix) === Algm.cols(matrix);
   var isZeroRow = (row) => row.every((num) => num === 0);
   var hasZeroRow = (matrix) => matrix.some((row) => isZeroRow(row));
 
+  Algm.isSquare = (matrix) => Algm.rows(matrix) === Algm.cols(matrix);
   Algm.isSingular = (matrix) =>
-    (!isSquare(matrix) ||
+    (!Algm.isSquare(matrix) ||
      hasZeroRow(matrix) ||
      hasZeroRow(Algm.T(matrix)) ||
      Algm.rank(matrix) !== Algm.rows(matrix))
@@ -176,7 +176,13 @@
     return matrix;
   };
 
-  Algm.divUp = (matrix, another) => Algm.mulUp(matrix, Algm.inv(another));
+  Algm.isDivable = (matrix, another) => {
+    return Algm.isMulable(matrix, another) &&
+      !Algm.isSingular(another);
+  };
+  Algm.divUp = (matrix, another) => (Algm.isDivable(matrix, another))
+    ? Algm.mulUp(matrix, Algm.inv(another))
+    : matrix;
 
   var arrayGcd = (row) => row.reduce((g, val) =>  gcd(g, val), 0);
   var reduceRow = function(row) {
@@ -186,7 +192,7 @@
     }
   };
 
-  Algm.RowEchelon = function(matrix) {
+  var rowEchelon = function(matrix) {
     var A = Algm.clone(matrix),
         B = Array(),
         col = Algm.cols(A);
@@ -218,7 +224,17 @@
     return B;
   };
 
-  Algm.rank = (matrix) => Algm.rows(Algm.RowEchelon(matrix));
+  Algm.rank = (matrix) => Algm.rows(rowEchelon(matrix));
+  Algm.rowEchelon = function(matrix) {
+    var e = rowEchelon(matrix),
+        rows = Algm.rows(e);
+    if (rows === 0) {
+      return Algm.zeros(Algm.rows(matrix));
+    } else {
+      Algm.changeRow(e, Algm.rows(matrix) - rows);
+      return e;
+    }
+  };
 
   function pmOrder(matrix) {
     var A = Algm.clone(matrix),
@@ -330,7 +346,7 @@
   var diagDet = (matrix) => matrix.reduce((det, r, i) => det * r[i], 1);
 
   Algm.det = function(matrix) {
-    if (!(Algm.isMatrix(matrix) && isSquare(matrix))) return NaN;
+    if (!(Algm.isMatrix(matrix) && Algm.isSquare(matrix))) return NaN;
     if (Algm.isSingular(matrix)) return 0;
 
     var [L, U, P] = Algm.LUP(matrix);
@@ -343,14 +359,29 @@
   };
 
   Algm.compan = function(matrix) {
-    if (!(Algm.isMatrix(matrix) && isSquare(matrix))) return [[]];
-    const n = Algm.rows(matrix);
-    var A = Algm.mulN(Algm.inv(matrix), Algm.det(matrix));
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < n; j++) {
-        A[i][j] = precFloat(A[i][j], 5);
+    if (!(Algm.isMatrix(matrix) && Algm.isSquare(matrix))) return [[]];
+    if (!Algm.isSingular(matrix)) {
+      let A = Algm.mulN(Algm.inv(matrix), Algm.det(matrix));
+      for (let i = 0, n = Algm.rows(matrix); i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          A[i][j] = precFloat(A[i][j], 5);
+        }
       }
+      return A;
+    } else {
+      let n = Algm.rows(matrix),
+          A = Array(n);
+      if (n > 1) {
+        for (let i = 0; i < n; i++) {
+          A[i] = Array(n);
+          for (let j = 0; j < n; j++) {
+            A[i][j] = Algm.det(Algm.cof(matrix, i, j));
+          }
+        }
+      } else {
+        A[0] = [matrix[0][0]];
+      }
+      return A;
     }
-    return A;
   };
 }).call(this);
