@@ -13,7 +13,7 @@ var {
 const ic_logo = require('./img/ELLOGO_72.png'),
       ic_settings = require('./img/ic_settings_white_18dp.png'),
       ic_about = require('./img/ic_bubble_chart_white_18dp.png'),
-      { C_BASE } = require('./ELColors'),
+      { C_BASE } = require('../common/ELColors'),
       defaultData = {
         title: '简线'
       };
@@ -30,11 +30,6 @@ var Header = React.createClass({
         </View>
         <View style={styles.right}>
           <TouchableOpacity
-            onPress={this.onPressSettiings}>
-            <Image style={styles.image}
-                   source={ic_settings}/>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={this.onPressAbout}>
             <Image style={styles.image}
                    source={ic_about}/>
@@ -43,7 +38,16 @@ var Header = React.createClass({
       </View>
     );
   },
-  onPressSettiings: function() {
+  Settings: function() {
+    return (
+      <TouchableOpacity
+        onPress={this.onPressSettings}>
+        <Image style={styles.image}
+               source={ic_settings}/>
+      </TouchableOpacity>
+    );
+  },
+  onPressSettings: function() {
     this.props.navigator.push({settings: true});
   },
   onPressAbout: function() {

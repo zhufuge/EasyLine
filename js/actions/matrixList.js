@@ -7,6 +7,14 @@ const addMatrix = (matrix) => {
   };
 };
 
+const removeMatrix = (matrix) => {
+  return {
+    type: 'REMOVE_MATRIX',
+    matrix,
+  };
+};
+
 module.exports = {
   addMatrix,
+  removeMatrix,
 };

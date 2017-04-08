@@ -20,10 +20,13 @@ var About = React.createClass({
         <View style={styles.body}>
           <Image source={logo} />
           <Text style={styles.imgLabel}>EasyLine</Text>
-          <Text>版本号：v0.1.0</Text>
+          <Text>版本号：0.2.0</Text>
           <Text>策划：江流南</Text>
           <Text>开发：zhufuge</Text>
           <Text>设计：6ml </Text>
+        </View>
+        <View style={styles.footer}>
+          <Text>Copyright © 2017 zhufuge</Text>
         </View>
       </View>
     );
@@ -46,6 +49,14 @@ var styles = StyleSheet.create({
     fontSize: 28,
     color: 'black',
   },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    height: 54,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 module.exports = About;

@@ -11,7 +11,7 @@ var {
 
 import { connect } from 'react-redux';
 
-const Header = require('../common/Header');
+const Header = require('./Header');
 const Main = require('./Main');
 const Footer = require('./Footer');
 const Drawer = require('./Drawer');
@@ -24,7 +24,7 @@ class MatrixView extends React.Component {
     return (
       <DrawerLayoutAndroid
         ref="drawer"
-        drawerWidth={224}
+        drawerWidth={236}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         keyboardDismissMode='on-drag'
         renderNavigationView={() => this.renderDrawer()} >
