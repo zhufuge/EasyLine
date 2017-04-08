@@ -16,5 +16,6 @@ export default combineReducers({
   showMenu,
   matrix: require('./matrix'),
   matrixList: require('./matrixList'),
+  calcStack: require('./calculateStack'),
   default: require('./default'),
 });

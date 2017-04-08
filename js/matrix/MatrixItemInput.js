@@ -60,6 +60,7 @@ class ItemInput extends Component{
           onChangeText={(text) => this.onChangeText(text)}
           onEndEditing={(text) => this.onEndEditing(text)}
           value={'' + text}
+          maxLength={20}
           keyboardType='numeric'
           caretHidden='true'
           returnKeyType='next'

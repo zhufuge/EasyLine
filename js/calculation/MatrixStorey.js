@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { C_BASE, C_INVERT } from '../common/ELColors';
 
-import { setMatrixFromList } from '../actions';
+import { setMatrixFromList, calcPush } from '../actions';
 
 const Algm = require('../common/Algebra');
 const rowEcheIcon = require('./img/ic_row_echelon_white_18dp.png');
@@ -53,12 +53,16 @@ class MatrixStorey extends Component {
     }
   }
   _renderTouchable(child, i, onPress, disabled=false) {
+    const style = this._style(i);
+    const stylesColor = (disabled)
+          ? {...style, backgroundColor: 'white'}
+          : style;
     return (
       <TouchableOpacity
         delayPressIn={60}
         onPress={onPress}
         disabled={disabled}
-        style={[styles.opt, this._style(i)]}>
+        style={[styles.opt, stylesColor]}>
         {child}
       </TouchableOpacity>
     );
@@ -74,24 +78,26 @@ class MatrixStorey extends Component {
         {`(${matrixObj.row}, ${matrixObj.col})`}
       </Text>
     )];
-    return this._renderTouchable(body, 0);
+    const onPress = () => {
+      this.props.dispatch(calcPush(matrixObj));
+    };
+    return this._renderTouchable(body, 0, onPress);
   }
   _renderInv() {
     const matrixObj = this.props.matrix,
           isSingular = Algm.isSingular(matrixObj.matrix),
           name = matrixObj.name,
-          i = 1,
-          color = isSingular ? {color: '#999'} : {};
+          i = 1;
     const body = [(
-      <Text key={'t' + i} style={[styles.itemT, color]}>
+      <Text key={'t' + i} style={[styles.itemT]}>
         {name}
       </Text>
     ), (
       <Text
         key={'-' + i}
-        style={[styles.inv, color]}>-1</Text>
+        style={[styles.inv]}>-1</Text>
     ),(
-      <Text key={'b' + i} style={[styles.itemB, color]}>
+      <Text key={'b' + i} style={[styles.itemB]}>
         {defaultData.b[i]}
       </Text>
     )];
@@ -110,18 +116,17 @@ class MatrixStorey extends Component {
     const matrixObj = this.props.matrix,
           name = matrixObj.name,
           isSquare = Algm.isSquare(matrixObj.matrix),
-          i = 2,
-          color = isSquare ? {} : {color: '#999'};
+          i = 2;
     const body = [(
       <Text
         key={'t' + i}
-        style={[styles.itemT, color]}>
+        style={[styles.itemT]}>
         {name + defaultData.t[i]}
       </Text>
     ), (
       <Text
         key={'b' + i}
-        style={[styles.itemB, color]}>
+        style={[styles.itemB]}>
         {defaultData.b[i]}
       </Text>
     )];

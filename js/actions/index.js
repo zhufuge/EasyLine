@@ -2,6 +2,7 @@
 
 const matrixAction = require('./matrix');
 const matrixList = require('./matrixList');
+const calcStack = require('./calculateStack');
 
 const setShowMenu = (showMenu) => {
   return {
@@ -14,5 +15,6 @@ const setShowMenu = (showMenu) => {
 module.exports = {
   ...matrixAction,
   ...matrixList,
+  ...calcStack,
   setShowMenu,
 };

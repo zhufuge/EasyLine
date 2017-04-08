@@ -132,7 +132,7 @@
     Algm.rows(matrix) === Algm.rows(another) &&
     Algm.cols(matrix) === Algm.cols(another);
 
-  function addiction(add=true) {
+  function addition(add=true) {
     const operator = (a, b) => add ? a + b : a - b;
     return (matrix, another) =>
       (!Algm.isAddable(matrix, another))
@@ -142,8 +142,8 @@
           (col, cIndex) => operator(col, another[rIndex][cIndex])));
   }
 
-  Algm.addUp = addiction();
-  Algm.subUp = addiction(false);
+  Algm.addUp = addition();
+  Algm.subUp = addition(false);
 
   function mulN(mul=true) {
     const operator = (a, b) => mul ? a * b : a / b;

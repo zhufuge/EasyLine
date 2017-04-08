@@ -17,14 +17,17 @@ const Footer = require('./Footer');
 const Drawer = require('./Drawer');
 
 class MatrixView extends React.Component {
+  renderDrawer() {
+    return <Drawer drawer={this.refs.drawer} navigator={this.props.navigator}/>;
+  }
   render() {
-    const drawer = <Drawer navigator={this.props.navigator}/>;
     return (
       <DrawerLayoutAndroid
+        ref="drawer"
         drawerWidth={224}
-        drawerPosition={DrawerLayoutAndroid.positions.Right}
+        drawerPosition={DrawerLayoutAndroid.positions.Left}
         keyboardDismissMode='on-drag'
-        renderNavigationView={() => drawer} >
+        renderNavigationView={() => this.renderDrawer()} >
         <View
           style={styles.container}>
           <Header navigator={this.props.navigator}/>

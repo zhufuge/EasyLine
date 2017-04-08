@@ -23,9 +23,9 @@ const calcIcon = require('./img/ic_mode_edit_white_18dp.png'),
       { C_BASE } = require('../common/ELColors');
 
 var defaultData = [
-  ['计算', calcIcon, 'onPressCalculate'],
+  ['保存', saveIcon, 'onPressSave'],
   ['创建', createIcon, 'onPressCreate'],
-  ['保存', saveIcon, 'onPressSave']
+  ['计算', calcIcon, 'onPressCalculate'],
 ];
 
 class TabBar extends Component{

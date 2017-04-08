@@ -62,13 +62,17 @@ class Drawer extends Component {
         <TouchableOpacity
           delayPressIn={100}
           delayPressOut={100}
-          onPress={() => this.props.dispatch(setMatrixFromList(matrix))}
+          onPress={() => this.onPressItem(matrix)}
           style={styles.itemTouchable}>
           <Text style={styles.itemName}>{matrix.name}</Text>
           <Text style={styles.itemCR}>{`(${matrix.row}, ${matrix.col})`}</Text>
           <Text style={styles.itemData}>{this.firstRowInfo(matrix.matrix)}</Text>
         </TouchableOpacity>
       </View>);
+  }
+  onPressItem(matrix) {
+    this.props.dispatch(setMatrixFromList(matrix));
+    this.props.drawer.closeDrawer();
   }
 }
 

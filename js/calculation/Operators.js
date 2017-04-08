@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
+import { calcPush } from '../actions';
 import { C_BASE } from '../common/ELColors';
 
 const defaultData = [
@@ -33,9 +34,10 @@ class Operators extends Component {
       return (
         <TouchableOpacity
           key={val[0]}
+          onPress={() => this.props.dispatch(calcPush(val[0]))}
           style={[
             styles.operator,
-            defaultData.length - 1 === index ? styles.operatorLast : {},
+            (defaultData.length - 1 === index) ? styles.operatorLast : {},
             index % 2 === 1 ? styles.operatorOpacity : {}
           ]}>
           <Text style={styles.operatorIcon}>{val[0]}</Text>
