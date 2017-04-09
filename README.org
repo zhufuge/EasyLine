@@ -5,4 +5,9 @@
 
 ** screenshots
 
-[[./doc/img/matrix-view.jpg]]
+*** matrix page
+[[./doc/img/matrix.jpg]]
+*** drawer page
+[[./doc/img/list.jpg]]
+*** calculate page
+[[./doc/img/calculate.jpg]]
