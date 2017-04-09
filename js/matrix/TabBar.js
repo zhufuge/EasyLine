@@ -29,17 +29,23 @@ var defaultData = [
 ];
 
 class TabBar extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      showMenu: false
+    };
+  }
   render() {
     return (
       <View style={styles.container}>
         <View>
           <SlideUpMenu
-            show={this.props.showMenu}>
-            <MenuItems/>
+            show={this.state.showMenu}>
+            <MenuItems onPress={() => this.setState({showMenu: false})}/>
           </SlideUpMenu>
         </View>
         <View style={styles.tabBar}>
-          {this.props.showMenu
+          {this.state.showMenu
             ? this._renderHideMenu()
           : this._renderRow()}
         </View>
@@ -51,6 +57,7 @@ class TabBar extends Component{
     return (
       <TouchableOpacity
         key={rowData[0]}
+        delayPressIn={60}
         onPress={() => this[rowData[2]]()}
         style={styles.item}>
         <Image
@@ -68,19 +75,18 @@ class TabBar extends Component{
   _renderHideMenu() {
     return this._createTouchableItem(['', backIcon, 'onPressBack']);
   }
-  onPressCreate() {this.props.dispatch(setShowMenu(true));}
-  onPressBack() {this.props.dispatch(setShowMenu(false));}
+  onPressCreate() {this.setState({showMenu: true});}
+  onPressBack() {this.setState({showMenu: false});}
   onPressCalculate() {this.props.navigator.push({calc: true});}
   onPressSave() {
     this.props.dispatch(addMatrix(this.props.matrix));
-    ToastAndroid.show('保存矩阵 ' + this.props.matrix.name + ' .',
+    ToastAndroid.show('保存矩阵 ' + this.props.matrix.name,
                       ToastAndroid.SHORT);
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    showMenu: state.showMenu,
     matrix: state.matrix,
   };
 };

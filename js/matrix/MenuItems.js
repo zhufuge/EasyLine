@@ -10,7 +10,7 @@ var {
 } = ReactNative;
 
 import { connect } from 'react-redux';
-import { setMatrixType, setShowMenu } from '../actions';
+import { setMatrixType } from '../actions';
 import { C_APP, C_INVERT } from '../common/ELColors';
 
 const defaultDate = [
@@ -47,7 +47,7 @@ class MenuItems extends React.Component {
     }.bind(this));
   }
   _onPressItems(item) {
-    this.props.dispatch(setShowMenu(false));
+    this.props.onPress();
     this.props.dispatch(setMatrixType(item));
   }
 }
@@ -89,7 +89,7 @@ var styles = StyleSheet.create({
     fontSize: 10,
     color: '#666',
     textAlign: 'center',
-  }
+  },
 });
 
 module.exports = connect(mapStateToProps)(MenuItems);

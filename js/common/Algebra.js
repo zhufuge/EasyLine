@@ -196,7 +196,7 @@
     var A = Algm.clone(matrix),
         B = Array(),
         col = Algm.cols(A);
-    for (let c = 0; c < col; c++) {
+    for (let c = 0; c < col && Algm.rows(A) > 0; c++) {
       A.sort((a, b) => {
         if (a[c] === 0) return 1;
         if (b[c] === 0) return -1;
