@@ -13,6 +13,8 @@ import MatrixView from './matrix';
 import CalcView from './calculation';
 import Settings from './views/settings';
 import About from './views/about';
+import AboutUs from './views/aboutUs';
+import Intro from './views/intro';
 
 class ELNavigator extends React.Component{
   componentDidMount() {
@@ -42,7 +44,7 @@ class ELNavigator extends React.Component{
       <Navigator
         ref="navigator"
         initialRoute={{}}
-        renderScene={this.renderScene}
+        renderScene={(r, n) => this.renderScene(r, n)}
         configureScene={(route) => {
             return Navigator.SceneConfigs.PushFromRight;
         }}/>
@@ -50,11 +52,17 @@ class ELNavigator extends React.Component{
   }
 
   renderScene(route, navigator) {
+    if (route.intro || this.props.intro) {
+      return <Intro navigator={navigator}/>;
+    }
     if (route.settings) {
       return <Settings navigator={navigator}/>;
     }
     if (route.about) {
       return <About navigator={navigator}/>;
+    }
+    if (route.aboutUs) {
+      return <AboutUs navigator={navigator}/>;
     }
     if (route.calc) {
       return <CalcView navigator={navigator}/>;
@@ -63,4 +71,12 @@ class ELNavigator extends React.Component{
   }
 }
 
-module.exports = connect()(ELNavigator);
+const mapStateToProps = (state) => {
+  return {
+    intro: state.intro
+  };
+};
+
+
+
+module.exports = connect(mapStateToProps)(ELNavigator);

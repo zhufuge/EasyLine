@@ -3,7 +3,7 @@
 const night = false,
       initialState = {night};
 
-function defaultSet(state = initialState, action) {
+function defaultSet(state=initialState, action) {
   switch(action.type) {
   case 'DEFAULT_NIGHT':
     return {...state, night: !state.night};

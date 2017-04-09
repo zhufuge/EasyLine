@@ -7,7 +7,7 @@ import { AsyncStorage } from 'react-native';
 
 import reducers from '../reducers';
 
-function configureStore() {
+function configureStore(onComplete) {
   const store = createStore(
     reducers,
     undefined,
@@ -16,7 +16,8 @@ function configureStore() {
       autoRehydrate()
     )
   );
-  persistStore(store, {blacklist: ['showMenu'], storage: AsyncStorage});
+  const ps = persistStore(store, {storage: AsyncStorage}, onComplete);
+//  ps.purge();
   return store;
 }
 
