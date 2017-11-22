@@ -36,8 +36,8 @@ class Intro extends Component {
           <View style={styles.imgContainer} level={10}>
             <Image source={IntroImg_1} />
           </View>
-          <View level={0}><Text style={styles.title}>矩阵操作</Text></View>
-          <View level={-10}><Text style={styles.text}>
+          <View level={-10}><Text style={styles.title}>矩阵操作</Text></View>
+          <View level={-15}><Text style={styles.text}>
               简单地改变矩阵的大小，</Text></View>
           <View level={-20}><Text style={styles.text}>
               查看矩阵行列值和矩阵的秩</Text></View>
@@ -46,8 +46,8 @@ class Intro extends Component {
           <View style={styles.imgContainer} level={10}>
             <Image source={IntroImg_2} />
           </View>
-          <View level={0}><Text style={styles.title}>侧栏列表</Text></View>
-          <View level={-10}><Text style={styles.text}>
+          <View level={-10}><Text style={styles.title}>侧栏列表</Text></View>
+          <View level={-15}><Text style={styles.text}>
               简单地查看和选择矩阵，</Text></View>
           <View level={-20}><Text style={styles.text}>
               以及删除矩阵</Text></View>
@@ -56,8 +56,8 @@ class Intro extends Component {
           <View style={styles.imgContainer} level={10}>
             <Image source={IntroImg_3} />
           </View>
-          <View level={0}><Text style={styles.title}>矩阵运算</Text></View>
-          <View level={-10}><Text style={styles.text}>
+          <View level={-10}><Text style={styles.title}>矩阵运算</Text></View>
+          <View level={-15}><Text style={styles.text}>
               简单地矩阵运算，</Text></View>
           <View level={-20}><Text style={styles.text}>
               各种运算符和转换</Text></View>

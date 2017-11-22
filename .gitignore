@@ -54,4 +54,3 @@ fastlane/screenshots
 
 *.bat
 *.tern-port
-yarn.lock

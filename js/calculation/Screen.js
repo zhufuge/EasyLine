@@ -79,7 +79,7 @@ class Screen extends Component {
             onEndEditing={(text) => this.onEndEditing(text)}
             defaultValue={object + ''}
             returnKeyType='next'
-            maxLength={20}
+            maxLength={6}
             keyboardType='numeric'
             caretHidden='true'
             selectTextOnFocus={true}
